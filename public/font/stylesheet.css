@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'VT323';
+    src: url('VT323-Regular.eot');
+    src: url('VT323-Regular.eot?#iefix') format('embedded-opentype'),
+        url('VT323-Regular.woff2') format('woff2'),
+        url('VT323-Regular.woff') format('woff'),
+        url('VT323-Regular.svg#VT323-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+

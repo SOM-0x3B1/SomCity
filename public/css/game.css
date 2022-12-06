@@ -1,0 +1,41 @@
+.gameGrid{
+    position: fixed;
+    top: 52%;
+    left: 50%;
+    width: 200vh;
+    height: 200vh;
+
+    display: grid;
+    grid-gap: var(--grid-gap);
+    grid-template-rows: repeat(var(--grid-rows), 1fr);
+    grid-template-columns: repeat(var(--grid-cols), 1fr);
+
+    /*border: solid;
+    border-color: white;*/
+    transform: translate3d(-50%, -50%, 0);
+}
+
+.grid-item {
+    position: relative;
+    border: 1px solid rgba(221, 221, 221, 0.1);
+    text-align: center;
+
+    transition: border 0.2s;
+}
+
+.grid-item:hover {
+    border: 1px solid rgba(221, 221, 221, 0.5);
+    text-align: center;
+}
+
+.grid-item img{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: calc(100% + var(--grid-gap));
+    height: calc(100% + var(--grid-gap));
+
+    image-rendering: pixelated;
+}

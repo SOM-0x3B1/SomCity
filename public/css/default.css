@@ -1,0 +1,40 @@
+:root {
+    --pageBackgroundColor: rgb(15, 15, 15);
+    --grid-cols: 1;
+    --grid-rows: 1;
+    --grid-gap: 0.3vh;
+}
+
+@font-face {
+    font-family: 'VT323';
+    src: url('../font/VT323-Regular.eot');
+    src: url('../font/VT323-Regular.eot?#iefix') format('embedded-opentype'),
+        url('../font/VT323-Regular.woff2') format('woff2'),
+        url('../font/VT323-Regular.woff') format('woff'),
+        url('../font/VT323-Regular.ttf') format('truetype'),
+        url('../font/VT323-Regular.svg#VT323-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+body {
+    height: 100vh;
+    width: 100vw;
+
+    font-family: 'VT323', monospace;
+    background-color: var(--pageBackgroundColor);
+}
+
+h1{
+    color: white;
+    font-size: 30pt;
+    font-weight: normal;
+    padding: 4pt;
+}
