@@ -41,27 +41,27 @@ function setTransform() {
     mainDisplay.style.transform = "translate(" + pointX + "px, " + pointY + "px) scale(" + scale + ")";
 }
 
-mainDisplay.onmousedown = function (e) {
+document.onmousedown = function (e) {
     e.preventDefault();
     start = { x: e.clientX - pointX, y: e.clientY - pointY };
     panning = true;
 }
 
-mainDisplay.onmouseup = function (e) {
+document.onmouseup = function (e) {
     panning = false;
 }
 
-mainDisplay.onmousemove = function (e) {
+document.onmousemove = function (e) {
     e.preventDefault();
-    if (!panning) {
+    if (!panning)
         return;
-    }
+
     pointX = (e.clientX - start.x);
     pointY = (e.clientY - start.y);
     setTransform();
 }
 
-mainDisplay.onwheel = function (e) {
+document.onwheel = function (e) {
     e.preventDefault();
     var xs = (e.clientX - pointX) / scale,
         ys = (e.clientY - pointY) / scale,
