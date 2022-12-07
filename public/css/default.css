@@ -21,6 +21,7 @@
 * {
     margin: 0;
     padding: 0;
+    outline: 0;
 }
 
 
@@ -29,6 +30,8 @@ body {
     width: 100vw;
 
     font-family: 'VT323', monospace;
+
+    overflow: hidden;
     background-color: var(--pageBackgroundColor);
 }
 
