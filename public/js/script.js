@@ -1,24 +1,25 @@
-const container = document.getElementById("buildingGrid");
+const containers = document.getElementsByClassName("gameGrid");
 
 function makeRows(rows, cols) {
-    container.style.setProperty('--grid-rows', rows);
-    container.style.setProperty('--grid-cols', cols);
-    for (c = 0; c < (rows * cols); c++) {
-        let cell = document.createElement("div");
-        //cell.innerText = (c + 1);
+    for (const container of containers) {
+        container.style.setProperty('--grid-rows', rows);
+        container.style.setProperty('--grid-cols', cols);
+        for (c = 0; c < (rows * cols); c++) {
+            let cell = document.createElement("div");
+            //cell.innerText = (c + 1);
 
+            /*if (!rnd(30)) {
+                let image = document.createElement("img");
+                image.src = `assets/terrain/trees0${rnd(5) + 1}.png`;
+                cell.appendChild(image);
+            }*/
 
-        if (!rnd(30)) {
-            let image = document.createElement("img");
-            image.src = `assets/terrain/trees0${rnd(5) + 1}.png`;
-            cell.appendChild(image);
-        }
-
-        container.appendChild(cell).className = "grid-item";
-    };
+            container.appendChild(cell).className = "grid-item";
+        };
+    }
 };
 
-makeRows(50, 50);
+makeRows(80, 80);
 
 
 function rnd(num) {
