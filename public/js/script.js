@@ -1,25 +1,70 @@
 const containers = document.getElementsByClassName("gameGrid");
+let mapWidth = 60;
+let mapHeight = 60;
 
 function makeRows(rows, cols) {
     for (const container of containers) {
         container.style.setProperty('--grid-rows', rows);
         container.style.setProperty('--grid-cols', cols);
-        for (c = 0; c < (rows * cols); c++) {
-            let cell = document.createElement("div");
-            //cell.innerText = (c + 1);
 
-            /*if (!rnd(30)) {
-                let image = document.createElement("img");
-                image.src = `assets/terrain/trees0${rnd(5) + 1}.png`;
-                cell.appendChild(image);
-            }*/
+        for (let x = 0; x < rows; x++) {
+            for (let y = 0; y < rows; y++) {
+                let cell = document.createElement('div');
+                //cell.innerText = (c + 1);
 
-            container.appendChild(cell).className = "grid-item";
+                /*if (!rnd(30)) {
+                    let image = document.createElement("img");
+                    image.src = `assets/terrain/trees0${rnd(5) + 1}.png`;
+                    cell.appendChild(image);
+                }*/
+                cell.id = `${container.id}(${x};${y})`;
+                container.appendChild(cell).className = 'grid-item';
+            }
         };
     }
 };
 
-makeRows(80, 80);
+makeRows(mapWidth, mapHeight);
+
+
+function buildNewBaseMap() {
+    for (const container of containers) {
+        let img = new Image();
+        img.src = 'assets/maps/map1.png';
+
+        img.onload = () => {
+            img.width = img.width;
+            img.height = img.height;
+
+            let canvas = document.createElement('canvas');
+            canvas.width = mapWidth;
+            canvas.height = mapHeight;
+
+            console.log(img);
+
+            canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
+            let context = canvas.getContext('2d')
+
+            for (let x = 0; x < mapWidth; x++) {
+                for (let y = 0; y < mapHeight; y++) {
+                    let pixelData = context.getImageData(x, y, 1, 1).data;
+                    if (pixelData[3] > 0) {
+                        if (pixelData[1] == 255 && container.classList[1] == 'terrainGrid') {
+                            let cell = document.getElementById(`${container.id}(${x};${y})`);
+                            //console.log(`${container.id}(${x};${y})`);
+                            let image = document.createElement("img");
+                            image.src = `assets/terrain/trees0${rnd(5) + 1}.png`;
+                            cell.appendChild(image);
+                        }
+                    }
+                    //console.log(context.getImageData(x, y, 1, 1));          
+                }
+            }
+        }
+    }
+}
+
+buildNewBaseMap();
 
 
 function rnd(num) {
@@ -63,7 +108,7 @@ document.onmousemove = function (e) {
 }
 
 document.onwheel = function (e) {
-    e.preventDefault();
+    //e.preventDefault();
     var xs = (e.clientX - pointX) / scale,
         ys = (e.clientY - pointY) / scale,
         delta = (e.wheelDelta ? e.wheelDelta : -e.deltaY);

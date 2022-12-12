@@ -17,9 +17,14 @@
 }
 
 .city{
+    display: none;
     position: relative;
     width: 200vh;
     height: 200vh;
+}
+
+#myCity{
+    display: inline-block;
 }
 
 .gameGrid {
@@ -49,7 +54,7 @@
 
 .buildingGrid .grid-item {
     border: 1px solid rgba(221, 221, 221, 0.1);
-    transition: border 0.2s;
+    /*transition: border 0.2s;*/
 }
 
 .buildingGrid .grid-item:hover {
