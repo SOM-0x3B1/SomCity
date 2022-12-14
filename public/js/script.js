@@ -26,11 +26,22 @@ function makeRows(rows, cols) {
 
 makeRows(mapWidth, mapHeight);
 
+var buldingLayer = new Array(mapHeight);
+for (let i = 0; i < mapHeight; i++)
+    buldingLayer[i] = new Array(mapWidth)
+
+var terrainLayer = new Array(mapHeight);
+for (let i = 0; i < mapHeight; i++)
+    terrainLayer[i] = new Array(mapWidth);
+
+
 
 function buildNewBaseMap() {
-    for (const container of containers) {
+    const layers = ['b', 't'];
+
+    for (const layer of layers) {
         let img = new Image();
-        img.src = 'assets/maps/map1.png';
+        img.src = 'assets/maps/map1-' + layer + '.png';
 
         img.onload = () => {
             img.width = img.width;
@@ -40,28 +51,31 @@ function buildNewBaseMap() {
             canvas.width = mapWidth;
             canvas.height = mapHeight;
 
-            console.log(img);
-
-            canvas.getContext('2d').drawImage(img, 0, 0, img.width, img.height);
-            let context = canvas.getContext('2d')
+            canvas.getContext('2d', { willReadFrequently: true }).drawImage(img, 0, 0, img.width, img.height);
+            let context = canvas.getContext('2d', { willReadFrequently: true });
+            context.will
 
             for (let x = 0; x < mapWidth; x++) {
                 for (let y = 0; y < mapHeight; y++) {
                     let pixelData = context.getImageData(x, y, 1, 1).data;
                     if (pixelData[3] > 0) {
-                        if (pixelData[1] == 255 && container.classList[1] == 'terrainGrid') {
-                            let cell = document.getElementById(`${container.id}(${x};${y})`);
-                            //console.log(`${container.id}(${x};${y})`);
-                            let image = document.createElement("img");
-                            image.src = `assets/terrain/trees0${rnd(5) + 1}.png`;
-                            cell.appendChild(image);
-                        }
+                        if (layer == 't' && pixelData[1] == 255) //tree
+                            drawCell(x, y, layer, `assets/terrain/trees0${rnd(5) + 1}.png`);
+                        else if (layer == 'b' && pixelData[0] + pixelData[1] + pixelData[2] == 0) //main road
+                            drawCell(x, y, layer, `assets/roads/mainRoad-h.png`);
                     }
-                    //console.log(context.getImageData(x, y, 1, 1));          
                 }
             }
         }
+        console.log(img.src);
     }
+}
+
+function drawCell(y, x, layer, src) {
+    let cell = document.getElementById(`${layer == 't' ? 'terrainGrid' : 'buildingGrid'}(${x};${y})`);
+    let image = document.createElement("img");
+    image.src = src;
+    cell.appendChild(image);
 }
 
 buildNewBaseMap();
