@@ -52,12 +52,12 @@
 }
 
 
-.buildingGrid .grid-item {
+.terrainGrid .grid-item {
     border: 1px solid rgba(221, 221, 221, 0.1);
     /*transition: border 0.2s;*/
 }
 
-.buildingGrid .grid-item:hover {
+.terrainGrid .grid-item:hover {
     border: 1px solid rgba(221, 221, 221, 0.5);
 }
 
@@ -68,7 +68,7 @@
     transform: translate(-50%, -50%);
 
     width: calc(100% + 2 * var(--grid-gap));
-    height: calc(100% + 2* var(--grid-gap));
+    height: calc(100% + 2 * var(--grid-gap));
 
     image-rendering: pixelated;
 }

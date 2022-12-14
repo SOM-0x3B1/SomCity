@@ -7,8 +7,8 @@ function makeRows(rows, cols) {
         container.style.setProperty('--grid-rows', rows);
         container.style.setProperty('--grid-cols', cols);
 
-        for (let x = 0; x < rows; x++) {
-            for (let y = 0; y < rows; y++) {
+        for (let y = 0; y < rows; y++) {
+            for (let x = 0; x < rows; x++) {
                 let cell = document.createElement('div');
                 //cell.innerText = (c + 1);
 
@@ -71,7 +71,7 @@ function buildNewBaseMap() {
     }
 }
 
-function drawCell(y, x, layer, src) {
+function drawCell(x, y, layer, src) {
     let cell = document.getElementById(`${layer == 't' ? 'terrainGrid' : 'buildingGrid'}(${x};${y})`);
     let image = document.createElement("img");
     image.src = src;
