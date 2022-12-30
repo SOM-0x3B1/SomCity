@@ -47,13 +47,14 @@ function buildNewBaseMap() {
                 for (let y = 0; y < mapHeight; y++) {
                     let pixelData = context.getImageData(x, y, 1, 1).data;
                     if (pixelData[3] > 0) {
-                        if (layer == 't' && pixelData[1] == 255 && document.getElementById(`mainGrid(${x};${y})`).getElementsByTagName('img').length < 1) { //tree, and there's no road
+                        if (layer == 't' && pixelData[1] == 255 && !gameLayer[y][x]) { //tree, and there's no road
                             drawCell(x, y, `assets/terrain/trees0${rnd(5) + 1}.png`);
-                            //gameLayer[y][x] = 't';
+                            gameLayer[y][x] = 't';
                         }
                         else if (layer == 'b' && pixelData[0] + pixelData[1] + pixelData[2] == 0) { //main road
-                            drawCell(x, y, `assets/roads/h-h.png`);
-                            //gameLayer[y][x] = new Road();
+                            addImgToCell(x, y);
+                            gameLayer[y][x] = new Road(x, y, 'h', 40, false);
+                            gameLayer[y][x].updateDirections(true);
                         }
                     }
                 }
