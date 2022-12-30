@@ -67,8 +67,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    width: calc(100% + 2 * var(--grid-gap));
-    height: calc(100% + 2 * var(--grid-gap));
+    width: calc(100% + var(--grid-gap) + 1px);
+    height: calc(100% + var(--grid-gap) + 1px);
 
     image-rendering: pixelated;
 }

@@ -62,7 +62,7 @@ function buildNewBaseMap() {
                         if (layer == 't' && pixelData[1] == 255) //tree
                             drawCell(x, y, layer, `assets/terrain/trees0${rnd(5) + 1}.png`);
                         else if (layer == 'b' && pixelData[0] + pixelData[1] + pixelData[2] == 0) //main road
-                            drawCell(x, y, layer, `assets/roads/mainRoad-h.png`);
+                            drawCell(x, y, layer, `assets/roads/h-h.png`);
                     }
                 }
             }
