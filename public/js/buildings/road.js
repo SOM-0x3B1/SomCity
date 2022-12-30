@@ -2,20 +2,21 @@ class Road {
     constructor(x, y, type, capacity, deletable) {
         this.x = x;
         this.y = y;
-        this.type = type;
-        this.directions; // pl. 3j-u, v, h, etc.
-        this.capacity = capacity;
+        this.type = type; // eg. h as highway
+        this.directions; // eg. 3j-u, v, h, etc.
+        this.capacity = capacity; // how many cars can it hold
         this.cars = 0;
         this.deletable = deletable;
 
-        this.adjRoads = [];
-        this.destination = [];
+        this.adjRoads = []; // adjacent roads
+        this.destination = []; // not road neighbours
     }
 
     updateDirections(firstUpdate) {
         let x = this.x;
         let y = this.y;
 
+        // neigbouring buildings
         let top = false;
         let down = false;
         let left = false;
@@ -23,6 +24,7 @@ class Road {
 
         let isOnEdge = false;
 
+        // on one of the y edges
         if (y > 0)
             top = gameLayer[y - 1][x];
         else
@@ -33,7 +35,7 @@ class Road {
         else
             isOnEdge = true;
 
-
+        // on one of the x edges
         if (x > 0)
             left = gameLayer[y][x - 1];
         else
@@ -44,6 +46,7 @@ class Road {
         else
             isOnEdge = true;
 
+        // if this is a pregenerated highway on the edge, outsiders will spawn here
         if (!this.deletable && firstUpdate && isOnEdge)
             entryPoints.push(this);
 
@@ -52,17 +55,14 @@ class Road {
         let leftIsRoad = left instanceof Road;
         let rightIsRoad = right instanceof Road;
 
-        let neighBours = [top, left, down, right];
-        let neighBoursAreRoards = [topIsRoad, leftIsRoad, downIsRoad, rightIsRoad];
+        let neighbours = [top, left, down, right];
+        let neighboursAreRoads = [topIsRoad, leftIsRoad, downIsRoad, rightIsRoad];
 
         this.adjRoads = [];
         for (let i = 0; i < 4; i++) {
-            if (neighBours[i] && neighBoursAreRoards[i])
-                this.adjRoads.push(neighBours[i]);
+            if (neighbours[i] && neighboursAreRoads[i])
+                this.adjRoads.push(neighbours[i]);
         }
-
-        /*if(this.adjRoads.length > 1)
-            console.log(this.adjRoads.length);*/
 
         switch (this.adjRoads.length) {
             case 1:
@@ -98,86 +98,16 @@ class Road {
             case 4:
                 this.directions = '4j';
                 break;
-            /*default:
-                this.directions = 'h';*/
+            default:
+                this.directions = 'h';
+                break;
         }
-
 
         getImg(x, y).src = 'assets/roads/' + this.type + '-' + this.directions + '.png';
 
+        // update adjacent roads
         if (firstUpdate)
             for (let i = 0; i < this.adjRoads.length; i++)
                 this.adjRoads[i].updateDirections(false);
     }
 }
-
-
-/*if (topIsRoad && downIsRoad && leftIsRoad && rightIsRoad) {
-    this.directions = '4j';
-    this.adjRoads = [top, down, left, right];
-}
-else if(topIsRoad && leftIsRoad && rightIsRoad)
-{
-    this.directions = '3j-u';
-    this.adjRoads = [top, left, right];
-}
-else if(topIsRoad && rightIsRoad && downIsRoad)
-{
-    this.directions = '3j-r';
-    this.adjRoads = [top, right, down];
-}
-else if(leftIsRoad && downIsRoad && rightIsRoad)
-{
-    this.directions = '3j-d';
-    this.adjRoads = [down, left, right];
-}
-else if(downIsRoad && leftIsRoad && topIsRoad)
-{
-    this.directions = '3j-l';
-    this.adjRoads = [down, left, top];
-}
-else if(leftIsRoad && rightIsRoad){
-    this.directions = 'h';
-    this.adjRoads = [left, right];
-}
-else if(topIsRoad && downIsRoad){
-    this.directions = 'v';
-    this.adjRoads = [top, down];
-    console.log(y);
-}
-else if(topIsRoad && leftIsRoad){
-    this.directions = 't-ul';
-    this.adjRoads = [left, right];
-}
-else if(topIsRoad && downIsRoad){
-    this.directions = 'v';
-    this.adjRoads = [top, down];
-    console.log(y);
-}
-else if(leftIsRoad && rightIsRoad){
-    this.directions = 'h';
-    this.adjRoads = [left, right];
-}
-else if(topIsRoad && downIsRoad){
-    this.directions = 'v';
-    this.adjRoads = [top, down];
-    console.log(y);
-}
-else if(topIsRoad){
-    this.directions = 'v'
-    this.adjRoads = [top];
-}
-else if(downIsRoad){
-    this.directions = 'v'
-    this.adjRoads = [down];
-}
-else if(leftIsRoad){
-    this.directions = 'h'
-    this.adjRoads = [left];
-}       
-else if(rightIsRoad){
-    this.directions = 'h'
-    this.adjRoads = [right];
-}
-else
-    this.directions = 'h';*/
