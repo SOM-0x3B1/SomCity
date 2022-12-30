@@ -51,7 +51,7 @@ function buildNewBaseMap() {
                             drawCell(x, y, `assets/terrain/trees0${rnd(5) + 1}.png`);
                             gameLayer[y][x] = 't';
                         }
-                        else if (layer == 'b' && pixelData[0] + pixelData[1] + pixelData[2] == 0) { //main road
+                        else if (layer == 'b' && pixelData[0] + pixelData[1] + pixelData[2] == 0) { //undeletable highways
                             addImgToCell(x, y);
                             gameLayer[y][x] = new Road(x, y, 'h', 40, false);
                             gameLayer[y][x].updateDirections(true);

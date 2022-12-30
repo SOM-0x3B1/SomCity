@@ -21,14 +21,31 @@ class Road {
         let left = false;
         let right = false;
 
+        let isOnEdge = false;
+
         if (y > 0)
             top = gameLayer[y - 1][x];
+        else
+            isOnEdge = true;
+
         if (y < mapHeight - 1)
             down = gameLayer[y + 1][x];
+        else
+            isOnEdge = true;
+
+
         if (x > 0)
             left = gameLayer[y][x - 1];
+        else
+            isOnEdge = true;
+
         if (x < mapWidth - 1)
             right = gameLayer[y][x + 1];
+        else
+            isOnEdge = true;
+
+        if (!this.deletable && firstUpdate && isOnEdge)
+            entryPoints.push(this);
 
         let topIsRoad = top instanceof Road;
         let downIsRoad = down instanceof Road;
