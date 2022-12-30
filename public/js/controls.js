@@ -1,8 +1,5 @@
 const mainDisplay = document.getElementById("mainDisplay");
 
-
-
-
 var scale = 1,
     panning = false,
     pointX = 0,
@@ -14,17 +11,17 @@ function setTransform() {
     mainDisplay.style.transform = "translate(" + pointX + "px, " + pointY + "px) scale(" + scale + ")";
 }
 
-document.onmousedown = function (e) {
+document.onmousedown = (e) => {
     e.preventDefault();
     start = { x: e.clientX - pointX, y: e.clientY - pointY };
     panning = true;
 }
 
-document.onmouseup = function (e) {
+document.onmouseup = (e) => {
     panning = false;
 }
 
-document.onmousemove = function (e) {
+document.onmousemove = (e) => {
     e.preventDefault();
     if (!panning)
         return;
@@ -34,7 +31,7 @@ document.onmousemove = function (e) {
     setTransform();
 }
 
-document.onwheel = function (e) {
+document.onwheel = (e) => {
     //e.preventDefault();
     var xs = (e.clientX - pointX) / scale,
         ys = (e.clientY - pointY) / scale,
@@ -44,4 +41,29 @@ document.onwheel = function (e) {
     pointY = e.clientY - ys * scale;
 
     setTransform();
+}
+
+
+let sideAreaInterval;
+let movementSpeed = 8;
+
+let sideAreas = document.getElementsByClassName('sideAreas');
+let movements = [
+    () => { pointY += movementSpeed },
+    () => { pointX -= movementSpeed },
+    () => { pointY -= movementSpeed },
+    () => { pointX += movementSpeed }
+];
+
+for (let i = 0; i < sideAreas.length; i++) {
+    const sideArea = sideAreas[i];    
+    sideArea.onmouseover = (() => {
+        sideAreaInterval = setInterval(() => {
+            movements[i]();
+            setTransform();
+        }, 20);
+    });
+    sideArea.onmouseleave = (() => {
+        clearInterval(sideAreaInterval);
+    });
 }

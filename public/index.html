@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SomCity</title>
     <link rel="stylesheet" href="css/default.css">
-    <link rel="stylesheet" href="css/game.css">
+    <link rel="stylesheet" href="css/cityGrid.css">
+    <link rel="stylesheet" href="css/controls.css">
 </head>
 <body>
     <header>
@@ -16,24 +17,19 @@
     <main id="mainDisplay">
         <div id="myCity" class="city">
             <div id="mainGrid" class="gameGrid"></div>
-            <!--<div id="buildingGrid" class="gameGrid buildingGrid"></div>-->
         </div>
-
-        <!--<div id="1City" class="city">
-            <div id="1TerrainGrid" class="gameGrid terrainGrid"></div>
-            <div id="1BuildingGrid" class="gameGrid buildingGrid"></div>
-        </div>
-
-        <div id="2City" class="city">
-            <div id="2TerrainGrid" class="gameGrid terrainGrid"></div>
-            <div id="2BuildingGrid" class="gameGrid buildingGrid"></div>
-        </div>-->
     </main>
+
+    <div class="sideAreas ySideAreas" id="topSideArea"></div>
+    <div class="sideAreas xSideAreas" id="rightSideArea"></div>
+    <div class="sideAreas ySideAreas" id="downSideArea"></div>
+    <div class="sideAreas xSideAreas" id="leftSideArea"></div>
+
     
     <script src="js/global.js"></script>
     <script src="js/drawing.js"></script>
     <script src="js/mapBuilder.js"></script>
-    <script src="js/controls.js"></script>
+    <script src="js/controls.js" defer></script>
 
     <script src="js/buildings/road.js"></script>
 </body>

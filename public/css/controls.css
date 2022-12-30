@@ -1,0 +1,27 @@
+.sideAreas{
+    position: fixed;
+}
+
+.ySideAreas{
+    left: 8vw;
+    width: 84vw;
+    height: 10vh;
+}
+.xSideAreas{
+    top: 10vh;
+    width: 8vw;
+    height: 80vh;
+}
+
+#topSideArea{
+    top: 0;
+}
+#rightSideArea{
+    right: 0;
+}
+#downSideArea{
+    bottom: 0;
+}
+#leftSideArea{
+    left: 0;
+}
