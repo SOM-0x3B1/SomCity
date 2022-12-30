@@ -35,16 +35,15 @@
     grid-gap: var(--grid-gap);
     grid-template-rows: repeat(var(--grid-rows), 1fr);
     grid-template-columns: repeat(var(--grid-cols), 1fr);
-
     /*border: solid;
     border-color: white;*/
 }
 
-.buildingGrid{
+/*.buildingGrid{
     position: absolute;
     top: 0;
     left: 0;
-}
+}*/
 
 .grid-item {
     position: relative;    
@@ -52,23 +51,22 @@
 }
 
 
-.terrainGrid .grid-item {
+.gameGrid .grid-item {
     border: 1px solid rgba(221, 221, 221, 0.1);
     /*transition: border 0.2s;*/
 }
 
-.terrainGrid .grid-item:hover {
+.gameGrid .grid-item:hover {
     border: 1px solid rgba(221, 221, 221, 0.5);
 }
 
 .grid-item img {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    z-index: 1;
+    transform: translate(-50%, calc(-1 * var(--grid-gap)));
 
-    width: calc(100% + var(--grid-gap) + 1px);
-    height: calc(100% + var(--grid-gap) + 1px);
+    width: calc(100% + 2 * var(--grid-gap));
+    height: calc(100% + 2 * var(--grid-gap));
 
     image-rendering: pixelated;
 }

@@ -1,6 +1,6 @@
 const containers = document.getElementsByClassName("gameGrid");
-let mapWidth = 60;
-let mapHeight = 60;
+let mapWidth = 80;
+let mapHeight = 80;
 
 function makeRows(rows, cols) {
     for (const container of containers) {
@@ -26,43 +26,49 @@ function makeRows(rows, cols) {
 
 makeRows(mapWidth, mapHeight);
 
-var buldingLayer = new Array(mapHeight);
+var gameLayer = new Array(mapHeight);
 for (let i = 0; i < mapHeight; i++)
-    buldingLayer[i] = new Array(mapWidth)
+    gameLayer[i] = new Array(mapWidth)
 
-var terrainLayer = new Array(mapHeight);
+/*var terrainLayer = new Array(mapHeight);
 for (let i = 0; i < mapHeight; i++)
-    terrainLayer[i] = new Array(mapWidth);
+    terrainLayer[i] = new Array(mapWidth);*/
 
 
+
+function drawCell(x, y, src) {
+    let cell = document.getElementById(`mainGrid(${x};${y})`);
+    let image = document.createElement("img");
+    image.src = src;
+    cell.appendChild(image);
+}
 
 function buildNewBaseMap() {
     const layers = ['b', 't'];
+    let canvas = document.createElement('canvas');
+    canvas.width = mapWidth;
+    canvas.height = mapHeight;
+    let context = canvas.getContext('2d', { willReadFrequently: true });
 
     for (const layer of layers) {
         let img = new Image();
         img.src = 'assets/maps/map1-' + layer + '.png';
 
         img.onload = () => {
-            img.width = img.width;
-            img.height = img.height;
-
-            let canvas = document.createElement('canvas');
-            canvas.width = mapWidth;
-            canvas.height = mapHeight;
-
-            canvas.getContext('2d', { willReadFrequently: true }).drawImage(img, 0, 0, img.width, img.height);
-            let context = canvas.getContext('2d', { willReadFrequently: true });
-            context.will
+            context.drawImage(img, 0, 0, img.width, img.height);
 
             for (let x = 0; x < mapWidth; x++) {
                 for (let y = 0; y < mapHeight; y++) {
                     let pixelData = context.getImageData(x, y, 1, 1).data;
                     if (pixelData[3] > 0) {
-                        if (layer == 't' && pixelData[1] == 255) //tree
-                            drawCell(x, y, layer, `assets/terrain/trees0${rnd(5) + 1}.png`);
-                        else if (layer == 'b' && pixelData[0] + pixelData[1] + pixelData[2] == 0) //main road
-                            drawCell(x, y, layer, `assets/roads/h-h.png`);
+                        if (layer == 't' && pixelData[1] == 255 && document.getElementById(`mainGrid(${x};${y})`).getElementsByTagName('img').length < 1) { //tree, and there's no road
+                            drawCell(x, y, `assets/terrain/trees0${rnd(5) + 1}.png`);
+                            //gameLayer[y][x] = 't';
+                        }
+                        else if (layer == 'b' && pixelData[0] + pixelData[1] + pixelData[2] == 0) { //main road
+                            drawCell(x, y, `assets/roads/h-h.png`);
+                            //gameLayer[y][x] = new Road();
+                        }
                     }
                 }
             }
@@ -71,12 +77,7 @@ function buildNewBaseMap() {
     }
 }
 
-function drawCell(x, y, layer, src) {
-    let cell = document.getElementById(`${layer == 't' ? 'terrainGrid' : 'buildingGrid'}(${x};${y})`);
-    let image = document.createElement("img");
-    image.src = src;
-    cell.appendChild(image);
-}
+
 
 buildNewBaseMap();
 
