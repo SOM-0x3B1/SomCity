@@ -1,6 +1,6 @@
 const containers = document.getElementsByClassName("gameGrid");
-let mapWidth = 80;
-let mapHeight = 80;
+let mapWidth = 60;
+let mapHeight = 60;
 
 let gameLayer = new Array(mapHeight);
 for (let i = 0; i < mapHeight; i++)

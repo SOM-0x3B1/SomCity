@@ -8,6 +8,7 @@ function buildGrid(rows, cols) {
             for (let x = 0; x < rows; x++) {
                 let cell = document.createElement('div');
                 cell.id = `${container.id}(${x};${y})`;
+                cell.appendChild(document.createElement('div')).className = 'cellBorder';
                 container.appendChild(cell).className = 'grid-item';
             }
         };
