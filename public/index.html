@@ -8,10 +8,11 @@
     <link rel="stylesheet" href="css/default.css">
     <link rel="stylesheet" href="css/cityGrid.css">
     <link rel="stylesheet" href="css/controls.css">
+    <link rel="stylesheet" href="css/buildMenu.css">
 </head>
 <body>
     <header>
-        <h1>SomCity<h1>        
+        <h1>SomCity</h1>        
     </header>
 
     <main id="mainDisplay">
@@ -24,6 +25,26 @@
     <div class="sideAreas xSideAreas" id="rightSideArea"></div>
     <div class="sideAreas ySideAreas" id="downSideArea"></div>
     <div class="sideAreas xSideAreas" id="leftSideArea"></div>
+
+
+    <div id="buildMenu">
+        <div class="category" id="roads">
+            <img src="assets/icons/icon-roads.png" alt="">
+            <ul>
+                <li><div class="backStrip" id="BS-r-highway"></div>Highway</li>
+                <li><div class="backStrip" id="BS-r-mainRoad"></div>Main road</li>
+                <li><div class="backStrip" id="BS-r-street"></div>Street</li>
+            </ul>
+        </div>
+        <div class="category" id="zones">
+            <img src="assets/icons/icon-zones.png" alt="">
+            <ul>
+                <li><div class="backStrip" id="BS-z-residential"></div>Residential</li>
+                <li><div class="backStrip" id="BS-z-commerical"></div>Commercial</li>
+                <li><div class="backStrip" id="BS-z-industrial"></div>Industrial</li>
+            </ul>
+        </div>
+    </div>
 
     
     <script src="js/global.js"></script>

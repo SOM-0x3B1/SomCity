@@ -35,9 +35,15 @@ body {
     background-color: var(--pageBackgroundColor);
 }
 
-h1{
+h1{    
+    position: fixed;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+
     color: white;
     font-size: 30pt;
     font-weight: normal;
-    padding: 4pt;
+    padding: 0.5em;
+
+    cursor: default;
 }
