@@ -1,3 +1,15 @@
+const containers = document.getElementsByClassName("gameGrid");
+let mapWidth = 80;
+let mapHeight = 80;
+
+let mainLayer = new Array(mapHeight);
+for (let i = 0; i < mapHeight; i++)
+    mainLayer[i] = new Array(mapWidth)
+
+let planningLayer = new Array(mapHeight);
+for (let i = 0; i < mapHeight; i++)
+    planningLayer[i] = new Array(mapWidth)
+
 
 function buildGrid(rows, cols) {
     for (const container of containers) {
@@ -62,11 +74,11 @@ function buildNewBaseMap() {
                     let pixelData = context.getImageData(x, y, 1, 1).data; // get a pixel
                     if (pixelData[3] > 0) { // is not transparent
                         if (layer == 't' && pixelData[1] == 255 && !mainLayer[y][x]) { //tree, and there's no road
-                            drawCell(x, y, `assets/terrain/trees0${rnd(5) + 1}.png`, 'mainGrid');
+                            setImgOfCell(x, y, `assets/terrain/trees0${rnd(5) + 1}.png`, 'mainGrid');
                             mainLayer[y][x] = 't';
                         }
                         else if (layer == 'b' && pixelData[0] + pixelData[1] + pixelData[2] == 0) { //undeletable highways
-                            addImgToCell(x, y, 'mainGrid');
+                            addNewEmptyImgToCell(x, y, 'mainGrid');
                             mainLayer[y][x] = new Road(x, y, 'h', 40, false);
                             mainLayer[y][x].updateDirections(true);
                         }

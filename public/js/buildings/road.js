@@ -1,3 +1,5 @@
+let entryPoints = []; // outsiders spawn here
+
 let startRoadX;
 let startRoadY;
 
@@ -107,9 +109,9 @@ class Road extends Building {
         }
 
         if (this.layer == planningLayer)
-            getImg(x, y, 'planningGrid').src = 'assets/roads/' + this.type + '-' + this.directions + '.png';
+        setImgOfCell(x, y, 'assets/roads/' + this.type + '-' + this.directions + '.png', 'planningGrid');
         else
-            getImg(x, y, 'mainGrid').src = 'assets/roads/' + this.type + '-' + this.directions + '.png';
+        setImgOfCell(x, y, 'assets/roads/' + this.type + '-' + this.directions + '.png', 'mainGrid');
 
         // update adjacent roads
         if (firstUpdate)
@@ -118,10 +120,9 @@ class Road extends Building {
     }
 
     static setRoadStart(x, y) {
-        addImgToCell(x, y, 'planningGrid');
         previewCells.push(new COORD(x, y));
         planningLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable, planningLayer);
-        getImg(x, y, 'planningGrid').src = 'assets/roads/' + buildingUnderBuilding.type + '-h.png';
+        setImgOfCell(x, y, 'assets/roads/' + buildingUnderBuilding.type + '-h.png', 'planningGrid');
 
         startRoadX = x;
         startRoadY = y;
@@ -157,15 +158,19 @@ class Road extends Building {
 
     static drawRoadCell(x, y) {
         if (!firstOfTwoPoints) {
-            addImgToCell(x, y, 'planningGrid');
-            planningLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable, planningLayer);
-            planningLayer[y][x].updateDirections(true);
+            if(!isOccupied(x, y)){
+                planningLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable, planningLayer);
+                planningLayer[y][x].updateDirections(true);                
+            }
+            else
+                setImgOfCell(x, y, 'assets/red.png', 'planningGrid');
             previewCells.push(new COORD(x, y));
         }
         else {
-            addImgToCell(x, y, 'mainGrid');
-            mainLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable);
-            mainLayer[y][x].updateDirections(true);            
+            if(!isOccupied(x, y)){
+                mainLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable);
+                mainLayer[y][x].updateDirections(true);   
+            }         
         }
     }
 }

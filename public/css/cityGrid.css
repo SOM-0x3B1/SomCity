@@ -11,7 +11,7 @@
     transform-origin: 0px 0px;
     transform: scale(1) translate(0px, 0px);
 
-    transition: transform 20ms;
+    transition: transform 60ms;
 
     /*transform: translate3d(-50%, -50%, 0);*/
 }

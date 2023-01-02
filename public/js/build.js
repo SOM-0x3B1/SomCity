@@ -68,3 +68,10 @@ function deletePlanned(){
         ereaseCell(coord.x, coord.y, 'planningGrid');
     }
 }
+
+function isOccupied(x, y){
+    if(!mainLayer[y][x] || mainLayer[y][x] == 't')
+        return false;
+    else
+        return true;
+}
