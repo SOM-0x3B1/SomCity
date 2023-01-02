@@ -46,4 +46,6 @@ h1{
     padding: 0.5em;
 
     cursor: default;
+
+    z-index: 5000;
 }

@@ -1,24 +1,37 @@
-function getCell(x, y) {
-    return document.getElementById(`mainGrid(${x};${y})`);
+class COORD{
+    constructor(x, y){
+        this.x = x;
+        this.y = y;
+    }
 }
 
-function getImg(x, y) {
-    return document.getElementById(`img(${x};${y})`);
+function getCell(x, y, layer) {
+    return document.getElementById(`${layer}(${x};${y})`);
 }
 
-function drawCell(x, y, src) {
-    let cell = getCell(x, y);
+function getImg(x, y, layer) {
+    return document.getElementById(`${layer}-img(${x};${y})`);
+}
+
+function drawCell(x, y, src, layer) {
+    let cell = getCell(x, y, layer);
     let image = document.createElement("img");
     image.src = src;
-    image.id = `img(${x};${y})`;
+    image.id = `${layer}-img(${x};${y})`;
     cell.appendChild(image);
 }
 
-function addImgToCell(x, y,) {
-    let cell = getCell(x, y);
+function ereaseCell(x, y, layer){
+    let cell = getCell(x, y, layer);
+    cell.innerHTML = '';
+}
+
+function addImgToCell(x, y, layer) {
+    let cell = getCell(x, y, layer);
     if (cell.getElementsByTagName('img').length === 0) {
         let image = document.createElement("img");
-        image.id = `img(${x};${y})`;
-        cell.appendChild(image);
-    }
+        image.id = `${layer}-img(${x};${y})`;
+        cell.appendChild(image);        
+    }    
 }
+

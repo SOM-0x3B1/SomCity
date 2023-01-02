@@ -8,17 +8,28 @@ function buildGrid(rows, cols) {
             for (let x = 0; x < rows; x++) {
                 let cell = document.createElement('div');
                 cell.id = `${container.id}(${x};${y})`;
-                cell.appendChild(document.createElement('div')).className = 'cellBorder';
 
-                cell.onclick = () => {
-                    if (placing) {
-                        if (buildingUnderBuilding instanceof Road) {
-                            if (firstOfTwoPoints){
-                                Road.setRoadStart(x, y);
-                                firstOfTwoPoints = false;
+                if (container.id == 'mainGrid') {
+                    cell.appendChild(document.createElement('div')).className = 'cellBorder';
+
+                    cell.onclick = () => {
+                        if (placing) {
+                            if (buildingUnderBuilding instanceof Road) {
+                                if (firstOfTwoPoints) {
+                                    firstOfTwoPoints = false;                            
+                                }
+                                else
+                                    Road.setRoadEnd(x, y);
                             }
-                            else
-                                Road.setRoadEnd(x, y);
+                        }
+                    }
+                    cell.onmouseenter = () => {
+                        if (buildingUnderBuilding instanceof Road) {     
+                            deletePlanned();
+                            if(firstOfTwoPoints)
+                                Road.setRoadStart(x, y);                       
+                            else                                
+                                Road.drawRoadLine(x, y);                            
                         }
                     }
                 }
@@ -50,14 +61,14 @@ function buildNewBaseMap() {
                 for (let y = 0; y < mapHeight; y++) {
                     let pixelData = context.getImageData(x, y, 1, 1).data; // get a pixel
                     if (pixelData[3] > 0) { // is not transparent
-                        if (layer == 't' && pixelData[1] == 255 && !gameLayer[y][x]) { //tree, and there's no road
-                            drawCell(x, y, `assets/terrain/trees0${rnd(5) + 1}.png`);
-                            gameLayer[y][x] = 't';
+                        if (layer == 't' && pixelData[1] == 255 && !mainLayer[y][x]) { //tree, and there's no road
+                            drawCell(x, y, `assets/terrain/trees0${rnd(5) + 1}.png`, 'mainGrid');
+                            mainLayer[y][x] = 't';
                         }
                         else if (layer == 'b' && pixelData[0] + pixelData[1] + pixelData[2] == 0) { //undeletable highways
-                            addImgToCell(x, y);
-                            gameLayer[y][x] = new Road(x, y, 'h', 40, false);
-                            gameLayer[y][x].updateDirections(true);
+                            addImgToCell(x, y, 'mainGrid');
+                            mainLayer[y][x] = new Road(x, y, 'h', 40, false);
+                            mainLayer[y][x].updateDirections(true);
                         }
                     }
                 }

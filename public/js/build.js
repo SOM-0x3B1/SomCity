@@ -4,6 +4,8 @@ let buildingUnderBuilding;
 let currentCategory;
 let currentBackStrip;
 
+let previewCells = [];
+
 function startBuilding(selectedBuilding) {
     placing = true;
     let id = selectedBuilding.split('-');
@@ -17,7 +19,7 @@ function startBuilding(selectedBuilding) {
         currentCategory.style.display = 'inline-block';
     }
 
-    if (currentBackStrip && currentBackStrip.id != category)
+    if (currentBackStrip && currentBackStrip.id != 'BS-' + selectedBuilding)
         currentBackStrip.style.width = '';
     if (!currentBackStrip || currentBackStrip.id != 'BS-' + selectedBuilding) {
         currentBackStrip = document.getElementById('BS-' + selectedBuilding);
@@ -54,5 +56,15 @@ function stopBuilding(){
         if (currentBackStrip)
             currentBackStrip.style.width = '';
         currentBackStrip = null;
+
+        deletePlanned();
+    }
+}
+
+
+function deletePlanned(){
+    for (const coord of previewCells) {
+        planningLayer[coord.y][coord.x] = null;
+        ereaseCell(coord.x, coord.y, 'planningGrid');
     }
 }

@@ -18,6 +18,7 @@
     <main id="mainDisplay">
         <div id="myCity" class="city">
             <div id="mainGrid" class="gameGrid"></div>
+            <div id="planningGrid" class="gameGrid"></div>
         </div>
     </main>
 
@@ -31,17 +32,17 @@
         <div class="category">
             <img src="assets/icons/icon-roads.png" alt="">
             <ul id="r">
-                <li onclick="startBuilding('r-highway')"><div class="backStrip" id="BS-r-highway"></div>Highway</li>
-                <li onclick="startBuilding('r-mainRoad')"><div class="backStrip" id="BS-r-mainRoad"></div>Main road</li>
-                <li onclick="startBuilding('r-street')"><div class="backStrip" id="BS-r-street"></div>Street</li>
+                <li onclick="startBuilding('r-highway')"><div class="backStrip" id="BS-r-highway"></div>Highway (III)</li>
+                <li onclick="startBuilding('r-mainRoad')"><div class="backStrip" id="BS-r-mainRoad"></div>Main road (II)</li>
+                <li onclick="startBuilding('r-street')"><div class="backStrip" id="BS-r-street"></div>Street (I)</li>
             </ul>
         </div>
         <div class="category">
             <img src="assets/icons/icon-zones.png" alt="">
             <ul id="z">
-                <li onclick="startBuilding('z-residential')"><div class="backStrip" id="BS-z-residential"></div>Residential</li>
-                <li onclick="startBuilding('z-commercial')"><div class="backStrip" id="BS-z-commercial"></div>Commercial</li>
-                <li onclick="startBuilding('z-industrial')"><div class="backStrip" id="BS-z-industrial"></div>Industrial</li>
+                <li onclick="startBuilding('z-residential')"><div class="backStrip" id="BS-z-residential"></div>Residential (R)</li>
+                <li onclick="startBuilding('z-commercial')"><div class="backStrip" id="BS-z-commercial"></div>Commercial (C)</li>
+                <li onclick="startBuilding('z-industrial')"><div class="backStrip" id="BS-z-industrial"></div>Industrial (I)</li>
             </ul>
         </div>
     </div>
@@ -49,10 +50,12 @@
     
     <script src="js/global.js"></script>
     <script src="js/drawing.js"></script>
+
+    <script src="js/buildings/building.js"></script>
+    <script src="js/buildings/road.js"></script>
+    
     <script src="js/mapBuilder.js" defer></script>
     <script src="js/build.js"></script>
-    <script src="js/controls.js" defer></script>
-
-    <script src="js/buildings/road.js"></script>
+    <script src="js/controls.js" defer></script>    
 </body>
 </html>

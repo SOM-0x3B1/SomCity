@@ -43,9 +43,10 @@
     display: inline-block;
 }
 
-.category ul li{    
+.category ul li{        
     position: relative;
-    width: max-content;
+    width: 100%;
+    min-width: max-content;
     padding: 0.5ex;
 
     cursor: pointer;

@@ -1,11 +1,11 @@
 let startRoadX;
 let startRoadY;
 
-class Road {
-    constructor(x, y, type, capacity, deletable) {
-        this.x = x;
-        this.y = y;
-        this.type = type; // eg. h as highway
+class Road extends Building {
+    constructor(x, y, type, capacity, deletable, layer) {
+        // eg. h as highway
+        super(x, y, 1, 1, type, layer);
+
         this.directions; // eg. 3j-u, v, h, etc.
         this.capacity = capacity; // how many cars can it hold
         this.cars = 0;
@@ -29,23 +29,23 @@ class Road {
 
         // on one of the y edges
         if (y > 0)
-            top = gameLayer[y - 1][x];
+            top = this.layer[y - 1][x];
         else
             isOnEdge = true;
 
         if (y < mapHeight - 1)
-            down = gameLayer[y + 1][x];
+            down = this.layer[y + 1][x];
         else
             isOnEdge = true;
 
         // on one of the x edges
         if (x > 0)
-            left = gameLayer[y][x - 1];
+            left = this.layer[y][x - 1];
         else
             isOnEdge = true;
 
         if (x < mapWidth - 1)
-            right = gameLayer[y][x + 1];
+            right = this.layer[y][x + 1];
         else
             isOnEdge = true;
 
@@ -106,7 +106,10 @@ class Road {
                 break;
         }
 
-        getImg(x, y).src = 'assets/roads/' + this.type + '-' + this.directions + '.png';
+        if (this.layer == planningLayer)
+            getImg(x, y, 'planningGrid').src = 'assets/roads/' + this.type + '-' + this.directions + '.png';
+        else
+            getImg(x, y, 'mainGrid').src = 'assets/roads/' + this.type + '-' + this.directions + '.png';
 
         // update adjacent roads
         if (firstUpdate)
@@ -115,41 +118,54 @@ class Road {
     }
 
     static setRoadStart(x, y) {
-        addImgToCell(x, y);
-        gameLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable);
-        gameLayer[y][x].updateDirections(true);
+        addImgToCell(x, y, 'planningGrid');
+        previewCells.push(new COORD(x, y));
+        planningLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable, planningLayer);
+        getImg(x, y, 'planningGrid').src = 'assets/roads/' + buildingUnderBuilding.type + '-h.png';
 
         startRoadX = x;
         startRoadY = y;
     }
     static setRoadEnd(x, y) {
-        if (Math.abs(x - startRoadX) >= Math.abs(y - startRoadY)) {
-            if (x < startRoadX) {
-                for (; x < startRoadX; x++)
-                    this.drawRoadLine(x, startRoadY);
-            }
-            else {
-                for (; x > startRoadX; x--)
-                    this.drawRoadLine(x, startRoadY);
-            }
-        }
-        else{
-            if (y < startRoadY) {
-                for (; y < startRoadY; y++)
-                    this.drawRoadLine(startRoadX, y);
-            }
-            else {
-                for (; y > startRoadY; y--)
-                    this.drawRoadLine(startRoadX, y);
-            }
-        }
-
         firstOfTwoPoints = true;
+        this.drawRoadLine(x, y);        
+        deletePlanned();
     }
 
     static drawRoadLine(x, y) {
-        addImgToCell(x, y);
-        gameLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable);
-        gameLayer[y][x].updateDirections(true);
+        if (Math.abs(x - startRoadX) >= Math.abs(y - startRoadY)) {
+            if (x < startRoadX) {
+                for (; x <= startRoadX; x++)
+                    this.drawRoadCell(x, startRoadY);
+            }
+            else {
+                for (; x >= startRoadX; x--)
+                    this.drawRoadCell(x, startRoadY);
+            }
+        }
+        else {
+            if (y < startRoadY) {
+                for (; y <= startRoadY; y++)
+                    this.drawRoadCell(startRoadX, y);
+            }
+            else {
+                for (; y >= startRoadY; y--)
+                    this.drawRoadCell(startRoadX, y);
+            }
+        }
+    }
+
+    static drawRoadCell(x, y) {
+        if (!firstOfTwoPoints) {
+            addImgToCell(x, y, 'planningGrid');
+            planningLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable, planningLayer);
+            planningLayer[y][x].updateDirections(true);
+            previewCells.push(new COORD(x, y));
+        }
+        else {
+            addImgToCell(x, y, 'mainGrid');
+            mainLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable);
+            mainLayer[y][x].updateDirections(true);            
+        }
     }
 }

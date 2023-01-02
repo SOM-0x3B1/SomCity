@@ -11,7 +11,7 @@
     transform-origin: 0px 0px;
     transform: scale(1) translate(0px, 0px);
 
-    /*transition: transform 500ms;*/
+    transition: transform 20ms;
 
     /*transform: translate3d(-50%, -50%, 0);*/
 }
@@ -32,11 +32,26 @@
     height: 200vh;
 
     display: grid;
-    grid-gap: var(--grid-gap);
+    
     grid-template-rows: repeat(var(--grid-rows), 1fr);
     grid-template-columns: repeat(var(--grid-cols), 1fr);
     /*border: solid;
     border-color: white;*/
+}
+
+#mainGrid{
+    grid-gap: var(--grid-gap);
+}
+
+#planningGrid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+
+    opacity: 0.5;
+
+    z-index: 5;
 }
 
 /*.buildingGrid{
@@ -47,11 +62,15 @@
 
 .grid-item {
     position: relative;    
-    text-align: center;    
+    text-align: center;        
+}
+
+#planningGrid .grid-item {
+    overflow: hidden;
 }
 
 
-.cellBorder {
+#mainGrid .cellBorder {
     position: absolute;
     width: calc(100% - var(--grid-gap));
     height: calc(100% - var(--grid-gap));    
@@ -63,11 +82,11 @@
     /*transition: border 0.2s;*/
 }
 
-.cellBorder:hover {
+#mainGrid .cellBorder:hover {
     opacity: 0.5;
 }
 
-.grid-item img {
+#mainGrid .grid-item img {
     position: absolute;
     z-index: 1;
     transform: translate(-50%, calc(-1 * var(--grid-gap)));
@@ -75,5 +94,13 @@
     width: calc(100% + 2 * var(--grid-gap));
     height: calc(100% + 2 * var(--grid-gap));
 
+    image-rendering: pixelated;
+}
+
+#planningGrid img{
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     image-rendering: pixelated;
 }
