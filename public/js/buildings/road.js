@@ -109,9 +109,9 @@ class Road extends Building {
         }
 
         if (this.layer == planningLayer)
-        setImgOfCell(x, y, 'assets/roads/' + this.type + '-' + this.directions + '.png', 'planningGrid');
+        setImgOfCell(x, y, 'assets/roads/' + this.type + '-' + this.directions + '.png', Layers.Planning);
         else
-        setImgOfCell(x, y, 'assets/roads/' + this.type + '-' + this.directions + '.png', 'mainGrid');
+        setImgOfCell(x, y, 'assets/roads/' + this.type + '-' + this.directions + '.png', Layers.Main);
 
         // update adjacent roads
         if (firstUpdate)
@@ -122,7 +122,7 @@ class Road extends Building {
     static setRoadStart(x, y) {
         previewCells.push(new COORD(x, y));
         planningLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable, planningLayer);
-        setImgOfCell(x, y, 'assets/roads/' + buildingUnderBuilding.type + '-h.png', 'planningGrid');
+        setImgOfCell(x, y, 'assets/roads/' + buildingUnderBuilding.type + '-h.png', Layers.Planning);
 
         startRoadX = x;
         startRoadY = y;
@@ -163,7 +163,7 @@ class Road extends Building {
                 planningLayer[y][x].updateDirections(true);                
             }
             else
-                setImgOfCell(x, y, 'assets/red.png', 'planningGrid');
+                setImgOfCell(x, y, 'assets/red.png', Layers.Planning);
             previewCells.push(new COORD(x, y));
         }
         else {

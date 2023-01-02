@@ -4,11 +4,17 @@ let mapHeight = 80;
 
 let mainLayer = new Array(mapHeight);
 for (let i = 0; i < mapHeight; i++)
-    mainLayer[i] = new Array(mapWidth)
+    mainLayer[i] = new Array(mapWidth);
 
 let planningLayer = new Array(mapHeight);
 for (let i = 0; i < mapHeight; i++)
-    planningLayer[i] = new Array(mapWidth)
+    planningLayer[i] = new Array(mapWidth);
+
+
+const Layers = {
+    Main: "mainGrid",
+    Planning: "planningGrid"
+}
 
 
 function buildGrid(rows, cols) {
@@ -21,7 +27,7 @@ function buildGrid(rows, cols) {
                 let cell = document.createElement('div');
                 cell.id = `${container.id}(${x};${y})`;
 
-                if (container.id == 'mainGrid') {
+                if (container.id == Layers.Main) {
                     cell.appendChild(document.createElement('div')).className = 'cellBorder';
 
                     cell.onclick = () => {
@@ -74,11 +80,11 @@ function buildNewBaseMap() {
                     let pixelData = context.getImageData(x, y, 1, 1).data; // get a pixel
                     if (pixelData[3] > 0) { // is not transparent
                         if (layer == 't' && pixelData[1] == 255 && !mainLayer[y][x]) { //tree, and there's no road
-                            setImgOfCell(x, y, `assets/terrain/trees0${rnd(5) + 1}.png`, 'mainGrid');
+                            setImgOfCell(x, y, `assets/terrain/trees0${rnd(5) + 1}.png`, Layers.Main);
                             mainLayer[y][x] = 't';
                         }
                         else if (layer == 'b' && pixelData[0] + pixelData[1] + pixelData[2] == 0) { //undeletable highways
-                            addNewEmptyImgToCell(x, y, 'mainGrid');
+                            addNewEmptyImgToCell(x, y, Layers.Main);
                             mainLayer[y][x] = new Road(x, y, 'h', 40, false);
                             mainLayer[y][x].updateDirections(true);
                         }

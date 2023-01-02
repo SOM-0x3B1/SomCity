@@ -65,7 +65,7 @@ function stopBuilding(){
 function deletePlanned(){
     for (const coord of previewCells) {
         planningLayer[coord.y][coord.x] = null;
-        ereaseCell(coord.x, coord.y, 'planningGrid');
+        ereaseCell(coord.x, coord.y, Layers.Planning);
     }
 }
 
