@@ -11,7 +11,8 @@ The projects is based on *simple* city simulation elements and convenient HTML f
 - household simulation
 
 ### Secondary objectives
-- public services (police, fire department, power, water, sewage, etc)
+- public services (police, fire department, power, water, sewage, power, water, etc)
 - education
 - multiplayer
 - area development
+- transportation
