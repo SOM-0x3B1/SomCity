@@ -7,18 +7,38 @@ var scale = 1,
     start = { x: 0, y: 0 };
 
 
+
+let sideAreaInterval;
+let movementSpeed = 8;
+
+let sideAreas = document.getElementsByClassName('sideAreas');
+let movements = [
+    () => { pointY += movementSpeed },
+    () => { pointX -= movementSpeed },
+    () => { pointY -= movementSpeed },
+    () => { pointX += movementSpeed }
+];
+
+
+
 function setTransform() {
     mainDisplay.style.transform = "translate(" + pointX + "px, " + pointY + "px) scale(" + scale + ")";
 }
 
 document.onmousedown = (e) => {
-    e.preventDefault();
-    start = { x: e.clientX - pointX, y: e.clientY - pointY };
-    panning = true;
+    if (!placing) {
+        e.preventDefault();
+        start = { x: e.clientX - pointX, y: e.clientY - pointY };
+        panning = true;
+    }
 }
 
 document.onmouseup = (e) => {
     panning = false;
+
+    if (placing) {
+        return
+    }
 }
 
 document.onmousemove = (e) => {
@@ -44,19 +64,17 @@ document.onwheel = (e) => {
 }
 
 
-let sideAreaInterval;
-let movementSpeed = 8;
+document.onkeydown = (e) => {
+    switch (e.key) {
+        case 'Escape':
+            stopBuilding();
+            break;
+    }
+}
 
-let sideAreas = document.getElementsByClassName('sideAreas');
-let movements = [
-    () => { pointY += movementSpeed },
-    () => { pointX -= movementSpeed },
-    () => { pointY -= movementSpeed },
-    () => { pointX += movementSpeed }
-];
 
 for (let i = 0; i < sideAreas.length; i++) {
-    const sideArea = sideAreas[i];    
+    const sideArea = sideAreas[i];
     sideArea.onmouseover = (() => {
         sideAreaInterval = setInterval(() => {
             movements[i]();

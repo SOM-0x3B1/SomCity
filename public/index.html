@@ -28,20 +28,20 @@
 
 
     <div id="buildMenu">
-        <div class="category" id="roads">
+        <div class="category">
             <img src="assets/icons/icon-roads.png" alt="">
-            <ul>
-                <li><div class="backStrip" id="BS-r-highway"></div>Highway</li>
-                <li><div class="backStrip" id="BS-r-mainRoad"></div>Main road</li>
-                <li><div class="backStrip" id="BS-r-street"></div>Street</li>
+            <ul id="r">
+                <li onclick="startBuilding('r-highway')"><div class="backStrip" id="BS-r-highway"></div>Highway</li>
+                <li onclick="startBuilding('r-mainRoad')"><div class="backStrip" id="BS-r-mainRoad"></div>Main road</li>
+                <li onclick="startBuilding('r-street')"><div class="backStrip" id="BS-r-street"></div>Street</li>
             </ul>
         </div>
-        <div class="category" id="zones">
+        <div class="category">
             <img src="assets/icons/icon-zones.png" alt="">
-            <ul>
-                <li><div class="backStrip" id="BS-z-residential"></div>Residential</li>
-                <li><div class="backStrip" id="BS-z-commerical"></div>Commercial</li>
-                <li><div class="backStrip" id="BS-z-industrial"></div>Industrial</li>
+            <ul id="z">
+                <li onclick="startBuilding('z-residential')"><div class="backStrip" id="BS-z-residential"></div>Residential</li>
+                <li onclick="startBuilding('z-commercial')"><div class="backStrip" id="BS-z-commercial"></div>Commercial</li>
+                <li onclick="startBuilding('z-industrial')"><div class="backStrip" id="BS-z-industrial"></div>Industrial</li>
             </ul>
         </div>
     </div>
@@ -49,7 +49,8 @@
     
     <script src="js/global.js"></script>
     <script src="js/drawing.js"></script>
-    <script src="js/mapBuilder.js"></script>
+    <script src="js/mapBuilder.js" defer></script>
+    <script src="js/build.js"></script>
     <script src="js/controls.js" defer></script>
 
     <script src="js/buildings/road.js"></script>

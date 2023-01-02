@@ -9,6 +9,20 @@ function buildGrid(rows, cols) {
                 let cell = document.createElement('div');
                 cell.id = `${container.id}(${x};${y})`;
                 cell.appendChild(document.createElement('div')).className = 'cellBorder';
+
+                cell.onclick = () => {
+                    if (placing) {
+                        if (buildingUnderBuilding instanceof Road) {
+                            if (firstOfTwoPoints){
+                                Road.setRoadStart(x, y);
+                                firstOfTwoPoints = false;
+                            }
+                            else
+                                Road.setRoadEnd(x, y);
+                        }
+                    }
+                }
+
                 container.appendChild(cell).className = 'grid-item';
             }
         };

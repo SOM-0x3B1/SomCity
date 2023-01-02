@@ -1,3 +1,6 @@
+let startRoadX;
+let startRoadY;
+
 class Road {
     constructor(x, y, type, capacity, deletable) {
         this.x = x;
@@ -109,5 +112,44 @@ class Road {
         if (firstUpdate)
             for (let i = 0; i < this.adjRoads.length; i++)
                 this.adjRoads[i].updateDirections(false);
+    }
+
+    static setRoadStart(x, y) {
+        addImgToCell(x, y);
+        gameLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable);
+        gameLayer[y][x].updateDirections(true);
+
+        startRoadX = x;
+        startRoadY = y;
+    }
+    static setRoadEnd(x, y) {
+        if (Math.abs(x - startRoadX) >= Math.abs(y - startRoadY)) {
+            if (x < startRoadX) {
+                for (; x < startRoadX; x++)
+                    this.drawRoadLine(x, startRoadY);
+            }
+            else {
+                for (; x > startRoadX; x--)
+                    this.drawRoadLine(x, startRoadY);
+            }
+        }
+        else{
+            if (y < startRoadY) {
+                for (; y < startRoadY; y++)
+                    this.drawRoadLine(startRoadX, y);
+            }
+            else {
+                for (; y > startRoadY; y--)
+                    this.drawRoadLine(startRoadX, y);
+            }
+        }
+
+        firstOfTwoPoints = true;
+    }
+
+    static drawRoadLine(x, y) {
+        addImgToCell(x, y);
+        gameLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable);
+        gameLayer[y][x].updateDirections(true);
     }
 }
