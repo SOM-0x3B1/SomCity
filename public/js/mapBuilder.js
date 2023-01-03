@@ -82,7 +82,7 @@ function buildGrid(rows, cols) {
                             bulldozingFirstPos = new COORD(x, y);
                     }
                     cell.onmouseup = () => {
-                        if (bulldozingFirstPos) {
+                        if (bulldozing && bulldozingFirstPos) {
                             for (let ix = bulldozingFirstPos.x; bulldozingFirstPos.x < x ? ix <= x : ix >= x; bulldozingFirstPos.x < x ? ix++ : ix--) {
                                 for (let iy = bulldozingFirstPos.y; bulldozingFirstPos.y < y ? iy <= y : iy >= y; bulldozingFirstPos.y < y ? iy++ : iy--) {
                                     let target = mainLayer[iy][ix];

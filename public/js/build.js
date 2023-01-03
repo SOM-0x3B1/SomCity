@@ -97,6 +97,7 @@ function startBulldoze() {
 
 function stopBulldoze() {
     bulldozing = false;
+    bulldozingFirstPos = undefined;
     document.getElementById('cancel').style = '';
     document.getElementById('bulldoze').style = 'invert(0)';
     deletePlanned();
