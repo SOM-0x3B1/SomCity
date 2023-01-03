@@ -26,24 +26,33 @@ function startBuilding(selectedBuilding) {
         currentBackStrip.style.width = '100%';
     }
 
-    if (category === 'r') {
-        firstOfTwoPoints = true;
+    switch (category) {
+        case 'r':
+            firstOfTwoPoints = true;
 
-        switch (name) {
-            case 'highway':
-                buildingUnderBuilding = new Road(null, null, 'h', 40, true);
-                break;
-            case 'mainRoad':
-                buildingUnderBuilding = new Road(null, null, 'm', 20, true);
-                break;
-            case 'street':
-                buildingUnderBuilding = new Road(null, null, 's', 10, true);
-                break;
-        }
+            switch (name) {
+                case 'highway':
+                    buildingUnderBuilding = new Road(null, null, 'h', 40, true, planningLayer);
+                    break;
+                case 'mainRoad':
+                    buildingUnderBuilding = new Road(null, null, 'm', 20, true, planningLayer);
+                    break;
+                case 'street':
+                    buildingUnderBuilding = new Road(null, null, 's', 10, true, planningLayer   );
+                    break;
+            }
+            break;
+        case 'z':
+            switch (name) {
+                case 'residential':
+                    buildingUnderBuilding = new RZone(null, null, planningLayer);
+                    break;
+            }
+            break;
     }
 }
 
-function stopBuilding(){
+function stopBuilding() {
     if (placing) {
         placing = false;
         firstOfTwoPoints = false;
@@ -62,15 +71,15 @@ function stopBuilding(){
 }
 
 
-function deletePlanned(){
+function deletePlanned() {
     for (const coord of previewCells) {
         planningLayer[coord.y][coord.x] = null;
-        ereaseCell(coord.x, coord.y, Layers.Planning);
+        ereaseCell(coord.x, coord.y, LayerIDs.Planning);
     }
 }
 
-function isOccupied(x, y){
-    if(!mainLayer[y][x] || mainLayer[y][x] == 't')
+function isOccupied(x, y) {
+    if (!mainLayer[y][x] || mainLayer[y][x] == 't')
         return false;
     else
         return true;

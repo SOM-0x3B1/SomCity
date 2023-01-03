@@ -6,8 +6,9 @@ let startRoadY;
 class Road extends Building {
     constructor(x, y, type, capacity, deletable, layer) {
         // eg. h as highway
-        super(x, y, 1, 1, type, layer);
+        super(x, y, 1, 1, '', layer);
 
+        this.type = type;
         this.directions; // eg. 3j-u, v, h, etc.
         this.capacity = capacity; // how many cars can it hold
         this.cars = 0;
@@ -109,9 +110,9 @@ class Road extends Building {
         }
 
         if (this.layer == planningLayer)
-        setImgOfCell(x, y, 'assets/roads/' + this.type + '-' + this.directions + '.png', Layers.Planning);
+            setImgOfCell(x, y, 'assets/roads/' + this.type + '-' + this.directions + '.png', LayerIDs.Planning);
         else
-        setImgOfCell(x, y, 'assets/roads/' + this.type + '-' + this.directions + '.png', Layers.Main);
+            setImgOfCell(x, y, 'assets/roads/' + this.type + '-' + this.directions + '.png', LayerIDs.Main);
 
         // update adjacent roads
         if (firstUpdate)
@@ -122,7 +123,7 @@ class Road extends Building {
     static setRoadStart(x, y) {
         previewCells.push(new COORD(x, y));
         planningLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable, planningLayer);
-        setImgOfCell(x, y, 'assets/roads/' + buildingUnderBuilding.type + '-h.png', Layers.Planning);
+        setImgOfCell(x, y, 'assets/roads/' + buildingUnderBuilding.type + '-h.png', LayerIDs.Planning);
 
         startRoadX = x;
         startRoadY = y;
@@ -163,12 +164,12 @@ class Road extends Building {
                 planningLayer[y][x].updateDirections(true);                
             }
             else
-                setImgOfCell(x, y, 'assets/red.png', Layers.Planning);
+                setImgOfCell(x, y, 'assets/red.png', LayerIDs.Planning);
             previewCells.push(new COORD(x, y));
         }
         else {
             if(!isOccupied(x, y)){
-                mainLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable);
+                mainLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable, mainLayer);
                 mainLayer[y][x].updateDirections(true);   
             }         
         }

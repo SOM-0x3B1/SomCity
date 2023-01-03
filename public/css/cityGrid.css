@@ -65,10 +65,6 @@
     text-align: center;        
 }
 
-#planningGrid .grid-item {
-    overflow: hidden;
-}
-
 
 #mainGrid .cellBorder {
     position: absolute;
@@ -88,8 +84,11 @@
 
 #mainGrid .grid-item img {
     position: absolute;
+    top: 0;
+    left: 0;
+
     z-index: 1;
-    transform: translate(-50%, calc(-1 * var(--grid-gap)));
+    transform: translate(calc(-0.5 * var(--grid-gap)), calc(-0.5 * var(--grid-gap)));
 
     width: calc(100% + var(--grid-gap));
     height: calc(100% + var(--grid-gap));
@@ -98,6 +97,7 @@
 }
 
 #planningGrid img{
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;

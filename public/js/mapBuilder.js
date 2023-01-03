@@ -1,6 +1,6 @@
 const containers = document.getElementsByClassName("gameGrid");
-let mapWidth = 80;
-let mapHeight = 80;
+let mapWidth = 75;
+let mapHeight = 75;
 
 let mainLayer = new Array(mapHeight);
 for (let i = 0; i < mapHeight; i++)
@@ -11,7 +11,7 @@ for (let i = 0; i < mapHeight; i++)
     planningLayer[i] = new Array(mapWidth);
 
 
-const Layers = {
+const LayerIDs = {
     Main: "mainGrid",
     Planning: "planningGrid"
 }
@@ -27,7 +27,7 @@ function buildGrid(rows, cols) {
                 let cell = document.createElement('div');
                 cell.id = `${container.id}(${x};${y})`;
 
-                if (container.id == Layers.Main) {
+                if (container.id == LayerIDs.Main) {
                     cell.appendChild(document.createElement('div')).className = 'cellBorder';
 
                     cell.onclick = () => {
@@ -39,6 +39,10 @@ function buildGrid(rows, cols) {
                                 else
                                     Road.setRoadEnd(x, y);
                             }
+                            else if (buildingUnderBuilding instanceof RZone){
+                                let newZone = new RZone(x, y, mainLayer);
+                                newZone.place(x, y);
+                            }                 
                         }
                     }
                     cell.onmouseenter = () => {
@@ -49,6 +53,8 @@ function buildGrid(rows, cols) {
                             else                                
                                 Road.drawRoadLine(x, y);                            
                         }
+                        else if (buildingUnderBuilding instanceof Zone)
+                                buildingUnderBuilding.place(x, y);     
                     }
                 }
 
@@ -80,12 +86,12 @@ function buildNewBaseMap() {
                     let pixelData = context.getImageData(x, y, 1, 1).data; // get a pixel
                     if (pixelData[3] > 0) { // is not transparent
                         if (layer == 't' && pixelData[1] == 255 && !mainLayer[y][x]) { //tree, and there's no road
-                            setImgOfCell(x, y, `assets/terrain/trees0${rnd(5) + 1}.png`, Layers.Main);
+                            setImgOfCell(x, y, `assets/terrain/trees0${rnd(5) + 1}.png`, LayerIDs.Main);
                             mainLayer[y][x] = 't';
                         }
                         else if (layer == 'b' && pixelData[0] + pixelData[1] + pixelData[2] == 0) { //undeletable highways
-                            addNewEmptyImgToCell(x, y, Layers.Main);
-                            mainLayer[y][x] = new Road(x, y, 'h', 40, false);
+                            addNewEmptyImgToCell(x, y, LayerIDs.Main);
+                            mainLayer[y][x] = new Road(x, y, 'h', 40, false, mainLayer);
                             mainLayer[y][x].updateDirections(true);
                         }
                     }
