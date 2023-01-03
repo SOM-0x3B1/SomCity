@@ -19,13 +19,13 @@
 
 .category{
     position: relative;
-    margin-left: 1em;
-    margin-right: 1em;
+    margin-left: 1.5em;
+    margin-right: 1.5em;
 }
 
 .category img{
     height: 80%;
-    image-rendering:crisp-edges;
+    image-rendering: optimizeQuality;
 }
 
 .category ul{
@@ -66,4 +66,16 @@
 
 .category ul li:hover .backStrip{
     width: 100%;
+}
+
+.noList{
+    cursor: pointer;
+}
+
+.noList:hover{
+    filter: invert(1);
+}
+
+#cancel{
+    opacity: 0.2;
 }

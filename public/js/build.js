@@ -1,4 +1,5 @@
 let placing = false;
+let bulldozing = false;
 let firstOfTwoPoints = false;
 let buildingUnderBuilding;
 let currentCategory;
@@ -7,7 +8,12 @@ let currentBackStrip;
 let previewCells = [];
 
 function startBuilding(selectedBuilding) {
+    if (bulldozing)
+        stopBulldoze();
+
     placing = true;
+    document.getElementById('cancel').style.opacity = 1;
+
     let id = selectedBuilding.split('-');
     let category = id[0];
     let name = id[1];
@@ -38,7 +44,7 @@ function startBuilding(selectedBuilding) {
                     buildingUnderBuilding = new Road(null, null, 'm', 20, true, planningLayer);
                     break;
                 case 'street':
-                    buildingUnderBuilding = new Road(null, null, 's', 10, true, planningLayer   );
+                    buildingUnderBuilding = new Road(null, null, 's', 10, true, planningLayer);
                     break;
             }
             break;
@@ -52,11 +58,12 @@ function startBuilding(selectedBuilding) {
     }
 }
 
-function stopBuilding() {
-    if (placing) {
-        placing = false;
+function stopBuilding(){
+    placing = false;
         firstOfTwoPoints = false;
         buildingUnderBuilding = null;
+
+        document.getElementById('cancel').style = '';
 
         if (currentCategory)
             currentCategory.style.display = '';
@@ -67,9 +74,30 @@ function stopBuilding() {
         currentBackStrip = null;
 
         deletePlanned();
-    }
 }
 
+function stopModification() {
+    if (placing) 
+        stopBuilding();
+    if (bulldozing) 
+        stopBulldoze();    
+}
+
+function startBulldoze() {
+    if(placing)
+        stopBuilding();
+    bulldozing = true;
+    document.getElementById('cancel').style.opacity = 1;
+    document.getElementById('bulldoze').style.filter = 'invert(1)';
+    deletePlanned();
+}
+
+function stopBulldoze() {
+    bulldozing = false;
+    document.getElementById('cancel').style = '';
+    document.getElementById('bulldoze').style = 'invert(0)';
+    deletePlanned();
+}
 
 function deletePlanned() {
     for (const coord of previewCells) {
@@ -83,4 +111,20 @@ function isOccupied(x, y) {
         return false;
     else
         return true;
+}
+
+
+function drawBulldoze(x, y) {
+    let target = mainLayer[y][x];
+    deletePlanned();
+
+    previewCells.push(new COORD(x, y));
+    if (target) {
+        if (target instanceof Building) {
+            setImgOfCell(target.x, target.y, `assets/red.png`, LayerIDs.Planning);
+            resizeImg(target.x, target.y, target.width, target.height, LayerIDs.Planning);
+        }
+        else if (target == 't')
+            setImgOfCell(x, y, `assets/red.png`, LayerIDs.Planning);
+    }
 }

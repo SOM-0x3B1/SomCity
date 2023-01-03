@@ -26,7 +26,7 @@ function setTransform() {
 }
 
 document.onmousedown = (e) => {
-    if (!placing) {
+    if (!placing && !bulldozing) {
         e.preventDefault();
         start = { x: e.clientX - pointX, y: e.clientY - pointY };
         panning = true;
@@ -35,10 +35,6 @@ document.onmousedown = (e) => {
 
 document.onmouseup = (e) => {
     panning = false;
-
-    if (placing) {
-        return
-    }
 }
 
 document.onmousemove = (e) => {
@@ -67,7 +63,27 @@ document.onwheel = (e) => {
 document.onkeydown = (e) => {
     switch (e.key) {
         case 'Escape':
-            stopBuilding();
+            stopModification();
+            break;
+        case 'w':
+        case 'ArrowUp':
+            pointY += 2 * movementSpeed;
+            setTransform();
+            break;
+        case 'd':
+        case 'ArrowRight':
+            pointX -= 2 * movementSpeed;
+            setTransform();
+            break;
+        case 's':
+        case 'ArrowDown':
+            pointY -= 2 * movementSpeed;
+            setTransform();
+            break;
+        case 'a':
+        case 'ArrowLeft':
+            pointX += 2 * movementSpeed;
+            setTransform();
             break;
     }
 }

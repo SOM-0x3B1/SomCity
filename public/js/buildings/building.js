@@ -12,9 +12,9 @@ class Building {
     }
 
     place(x, y) {
-        deletePlanned();        
+        deletePlanned();
 
-        if(this.layer == planningLayer)
+        if (this.layer == planningLayer)
             previewCells.push(new COORD(x, y))
 
         let occupied = false;
@@ -26,22 +26,22 @@ class Building {
         }
 
         if (!occupied && this.layer == mainLayer) {
-            for (let iy = y; iy < y + this.height; iy++){
-                for (let ix = x; ix < x + this.width; ix++){
+            for (let iy = y; iy < y + this.height; iy++) {
+                for (let ix = x; ix < x + this.width; ix++) {
                     ereaseCell(ix, iy, LayerIDs.Main);
                     mainLayer[iy][ix] = this;
                 }
             }
         }
 
-        if (!occupied){
+        if (!occupied) {
             setImgOfCell(x, y, this.texture, this.layer == mainLayer ? LayerIDs.Main : LayerIDs.Planning);
             resizeImg(x, y, this.width, this.height, this.layer == mainLayer ? LayerIDs.Main : LayerIDs.Planning);
         }
-        else if (this.layer == planningLayer){
+        else if (this.layer == planningLayer) {
             setImgOfCell(x, y, 'assets/red.png', this.layer == mainLayer ? LayerIDs.Main : LayerIDs.Planning);
             resizeImg(x, y, this.width, this.height, this.layer == mainLayer ? LayerIDs.Main : LayerIDs.Planning);
-        }       
+        }
     }
 
     updateAdjRoads() {
@@ -72,5 +72,16 @@ class Building {
             if (neighbours[i] && neighboursAreRoads[i])
                 this.adjRoads.push(neighbours[i]);
         }
+    }
+
+    remove() {
+        for (let ix = this.x; ix < this.x + this.width; ix++)
+            for (let iy = this.y; iy < this.y + this.height; iy++)
+                mainLayer[iy][ix] = undefined;
+
+        if (this instanceof Road)
+            this.updateDirections(true);
+
+        ereaseCell(this.x, this.y, LayerIDs.Main);
     }
 }

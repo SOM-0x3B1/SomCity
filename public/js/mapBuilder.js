@@ -1,6 +1,6 @@
 const containers = document.getElementsByClassName("gameGrid");
-let mapWidth = 75;
-let mapHeight = 75;
+let mapWidth = 60;
+let mapHeight = 60;
 
 let mainLayer = new Array(mapHeight);
 for (let i = 0; i < mapHeight; i++)
@@ -33,28 +33,41 @@ function buildGrid(rows, cols) {
                     cell.onclick = () => {
                         if (placing) {
                             if (buildingUnderBuilding instanceof Road) {
-                                if (firstOfTwoPoints) {
-                                    firstOfTwoPoints = false;                            
-                                }
+                                if (firstOfTwoPoints)
+                                    firstOfTwoPoints = false;
                                 else
                                     Road.setRoadEnd(x, y);
                             }
-                            else if (buildingUnderBuilding instanceof RZone){
+                            else if (buildingUnderBuilding instanceof RZone) {
                                 let newZone = new RZone(x, y, mainLayer);
                                 newZone.place(x, y);
-                            }                 
+                            }
+                        }
+                        else if (bulldozing) {
+                            let target = mainLayer[y][x];
+                            if (target && target instanceof Building)
+                                target.remove();
+                            else if (target == 't'){
+                                target = null;
+                                ereaseCell(x, y, LayerIDs.Main);
+                            }
+                            deletePlanned();
                         }
                     }
                     cell.onmouseenter = () => {
-                        if (buildingUnderBuilding instanceof Road) {     
-                            deletePlanned();
-                            if(firstOfTwoPoints)
-                                Road.setRoadStart(x, y);                       
-                            else                                
-                                Road.drawRoadLine(x, y);                            
+                        if (placing) {
+                            if (buildingUnderBuilding instanceof Road) {
+                                deletePlanned();
+                                if (firstOfTwoPoints)
+                                    Road.setRoadStart(x, y);
+                                else
+                                    Road.drawRoadLine(x, y);
+                            }
+                            else if (buildingUnderBuilding instanceof Zone)
+                                buildingUnderBuilding.place(x, y);
                         }
-                        else if (buildingUnderBuilding instanceof Zone)
-                                buildingUnderBuilding.place(x, y);     
+                        else if (bulldozing)
+                            drawBulldoze(x, y);
                     }
                 }
 
