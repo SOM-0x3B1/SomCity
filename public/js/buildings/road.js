@@ -6,13 +6,12 @@ let startRoadY;
 class Road extends Building {
     constructor(x, y, type, capacity, deletable, layer) {
         // eg. h as highway
-        super(x, y, 1, 1, '', layer);
+        super(x, y, 1, 1, '', deletable, layer);
 
         this.type = type;
         this.directions; // eg. 3j-u, v, h, etc.
         this.capacity = capacity; // how many cars can it hold
-        this.cars = 0;
-        this.deletable = deletable;
+        this.cars = 0;        
 
         this.adjRoads = []; // adjacent roads
         this.destination = []; // not road neighbours

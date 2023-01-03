@@ -1,5 +1,7 @@
 let placing = false;
 let bulldozing = false;
+let bulldozingFirstPos;
+
 let firstOfTwoPoints = false;
 let buildingUnderBuilding;
 let currentCategory;
@@ -89,6 +91,7 @@ function startBulldoze() {
     bulldozing = true;
     document.getElementById('cancel').style.opacity = 1;
     document.getElementById('bulldoze').style.filter = 'invert(1)';
+    
     deletePlanned();
 }
 
@@ -116,11 +119,12 @@ function isOccupied(x, y) {
 
 function drawBulldoze(x, y) {
     let target = mainLayer[y][x];
-    deletePlanned();
+    if(!bulldozingFirstPos)
+        deletePlanned();
 
     previewCells.push(new COORD(x, y));
     if (target) {
-        if (target instanceof Building) {
+        if (target instanceof Building && target.deletable) {
             setImgOfCell(target.x, target.y, `assets/red.png`, LayerIDs.Planning);
             resizeImg(target.x, target.y, target.width, target.height, LayerIDs.Planning);
         }

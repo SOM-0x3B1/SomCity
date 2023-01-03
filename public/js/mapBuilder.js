@@ -43,16 +43,16 @@ function buildGrid(rows, cols) {
                                 newZone.place(x, y);
                             }
                         }
-                        else if (bulldozing) {
+                        /*else if (bulldozing) {
                             let target = mainLayer[y][x];
                             if (target && target instanceof Building)
                                 target.remove();
-                            else if (target == 't'){
+                            else if (target == 't') {
                                 target = null;
                                 ereaseCell(x, y, LayerIDs.Main);
                             }
                             deletePlanned();
-                        }
+                        }*/
                     }
                     cell.onmouseenter = () => {
                         if (placing) {
@@ -66,8 +66,37 @@ function buildGrid(rows, cols) {
                             else if (buildingUnderBuilding instanceof Zone)
                                 buildingUnderBuilding.place(x, y);
                         }
-                        else if (bulldozing)
-                            drawBulldoze(x, y);
+                        else if (bulldozing) {
+                            if (bulldozingFirstPos) {
+                                deletePlanned();
+                                for (let ix = bulldozingFirstPos.x; bulldozingFirstPos.x < x ? ix <= x : ix >= x; bulldozingFirstPos.x < x ? ix++ : ix--)
+                                    for (let iy = bulldozingFirstPos.y; bulldozingFirstPos.y < y ? iy <= y : iy >= y; bulldozingFirstPos.y < y ? iy++ : iy--)
+                                        drawBulldoze(ix, iy);                                        
+                            }
+                            else
+                                drawBulldoze(x, y);
+                        }
+                    }
+                    cell.onmousedown = () => {
+                        if (bulldozing)
+                            bulldozingFirstPos = new COORD(x, y);
+                    }
+                    cell.onmouseup = () => {
+                        if (bulldozingFirstPos) {
+                            for (let ix = bulldozingFirstPos.x; bulldozingFirstPos.x < x ? ix <= x : ix >= x; bulldozingFirstPos.x < x ? ix++ : ix--) {
+                                for (let iy = bulldozingFirstPos.y; bulldozingFirstPos.y < y ? iy <= y : iy >= y; bulldozingFirstPos.y < y ? iy++ : iy--) {
+                                    let target = mainLayer[iy][ix];
+                                    if (target && target instanceof Building && target.deletable)
+                                        target.remove();
+                                    else if (target == 't') {
+                                        target = null;
+                                        ereaseCell(ix, iy, LayerIDs.Main);
+                                    }
+                                }
+                            }
+                            deletePlanned();
+                            bulldozingFirstPos = undefined;
+                        }
                     }
                 }
 

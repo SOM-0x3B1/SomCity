@@ -1,5 +1,5 @@
 class Building {
-    constructor(x, y, width, height, texture, layer) {
+    constructor(x, y, width, height, texture, deletable, layer) {
         this.x = x;
         this.y = y;
 
@@ -7,6 +7,8 @@ class Building {
         this.height = height;
 
         this.texture = texture;
+
+        this.deletable = deletable;
 
         this.layer = layer;
     }
