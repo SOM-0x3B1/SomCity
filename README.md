@@ -7,7 +7,9 @@ The projects is based on *simple* city simulation elements and convenient HTML f
 - road building
 - traffic system
 - zone allocation
-- automatic city population
+- dynamic population growth
+- supply & demand simulation
+- individual schedule simulation
 - household simulation
 
 ### Secondary objectives
