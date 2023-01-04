@@ -83,6 +83,13 @@ document.onkeydown = (e) => {
             pointX += 2 * movementSpeed;
             setTransform();
             break;
+        case 'b':
+        case 'Delete':
+            if(!bulldozing)
+                startBulldoze();
+            else
+                stopModification();
+            break;
     }
 }
 
