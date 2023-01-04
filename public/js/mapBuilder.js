@@ -46,8 +46,14 @@ function buildGrid(rows, cols) {
                                 else
                                     Road.setRoadEnd(x, y);
                             }
-                            else if (buildingUnderBuilding instanceof RZone)
-                                new RZone(x, y, mainLayer).place(x, y);
+                            else if (buildingUnderBuilding instanceof Zone) {
+                                if (buildingUnderBuilding instanceof RZone)
+                                    new RZone(x, y, mainLayer).place(x, y);
+                                else if (buildingUnderBuilding instanceof CZone)
+                                    new CZone(x, y, mainLayer).place(x, y);
+                                else if (buildingUnderBuilding instanceof IZone)
+                                    new IZone(x, y, mainLayer).place(x, y);
+                            }
                         }
                     }
                     cell.onmouseenter = () => {
@@ -68,7 +74,7 @@ function buildGrid(rows, cols) {
                                 // Please ignore the content of the following fors, I will make them prettier later
                                 for (let ix = bulldozingFirstPos.x; bulldozingFirstPos.x < x ? ix <= x : ix >= x; bulldozingFirstPos.x < x ? ix++ : ix--)
                                     for (let iy = bulldozingFirstPos.y; bulldozingFirstPos.y < y ? iy <= y : iy >= y; bulldozingFirstPos.y < y ? iy++ : iy--)
-                                        drawBulldoze(ix, iy);                                        
+                                        drawBulldoze(ix, iy);
                             }
                             else
                                 drawBulldoze(x, y);

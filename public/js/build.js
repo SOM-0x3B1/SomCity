@@ -17,10 +17,10 @@ let previewCells = [];
 
 /** Cancels any active map modification. */
 function stopModification() {
-    if (placing) 
+    if (placing)
         stopBuilding();
-    if (bulldozing) 
-        stopBulldoze();    
+    if (bulldozing)
+        stopBulldoze();
 }
 
 /** Starts a new building placement. */
@@ -69,38 +69,44 @@ function startBuilding(selectedBuilding) {
                 case 'residential':
                     buildingUnderBuilding = new RZone(null, null, planLayer);
                     break;
+                case 'commercial':
+                    buildingUnderBuilding = new CZone(null, null, planLayer);
+                    break;
+                case 'industrial':
+                    buildingUnderBuilding = new IZone(null, null, planLayer);
+                    break;
             }
             break;
     }
 }
 
 /** Cancels the new building placement. */
-function stopBuilding(){
+function stopBuilding() {
     placing = false;
-        firstOfTwoPoints = false;
-        buildingUnderBuilding = null;
+    firstOfTwoPoints = false;
+    buildingUnderBuilding = null;
 
-        document.getElementById('cancel').style = '';
+    document.getElementById('cancel').style = '';
 
-        if (currentCategory)
-            currentCategory.style.display = '';
-        currentCategory = null;
+    if (currentCategory)
+        currentCategory.style.display = '';
+    currentCategory = null;
 
-        if (currentBackStrip)
-            currentBackStrip.style.width = '';
-        currentBackStrip = null;
+    if (currentBackStrip)
+        currentBackStrip.style.width = '';
+    currentBackStrip = null;
 
-        clearPlanned();
+    clearPlanned();
 }
 
 /** Starts the bulldozer. */
 function startBulldoze() {
-    if(placing)
+    if (placing)
         stopBuilding();
     bulldozing = true;
     document.getElementById('cancel').style.opacity = 1;
     document.getElementById('bulldoze').style.filter = 'invert(1)';
-    
+
     clearPlanned();
 }
 
@@ -136,7 +142,7 @@ function isOccupied(x, y) {
 /** If the cell is deletable, draws the red overlay on top of them. */
 function drawBulldoze(x, y) {
     let target = mainLayer[y][x];
-    if(!bulldozingFirstPos)
+    if (!bulldozingFirstPos)
         clearPlanned();
 
     previewCells.push(new COORD(x, y));
