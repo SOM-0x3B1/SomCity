@@ -13,10 +13,11 @@ class Building {
         this.layer = layer;
     }
 
+    /** Places the building. */
     place(x, y) {
-        deletePlanned();
+        clearPlanned();
 
-        if (this.layer == planningLayer)
+        if (this.layer == planLayer)
             previewCells.push(new COORD(x, y))
 
         let occupied = false;
@@ -37,16 +38,17 @@ class Building {
         }
 
         if (!occupied) {
-            setImgOfCell(x, y, this.texture, this.layer == mainLayer ? LayerIDs.Main : LayerIDs.Planning);
-            resizeImg(x, y, this.width, this.height, this.layer == mainLayer ? LayerIDs.Main : LayerIDs.Planning);
+            setImgOfCell(x, y, this.texture, this.layer == mainLayer ? LayerIDs.Main : LayerIDs.plan);
+            resizeImg(x, y, this.width, this.height, this.layer == mainLayer ? LayerIDs.Main : LayerIDs.plan);
         }
-        else if (this.layer == planningLayer) {
-            setImgOfCell(x, y, 'assets/red.png', this.layer == mainLayer ? LayerIDs.Main : LayerIDs.Planning);
-            resizeImg(x, y, this.width, this.height, this.layer == mainLayer ? LayerIDs.Main : LayerIDs.Planning);
+        else if (this.layer == planLayer) {
+            setImgOfCell(x, y, 'assets/red.png', this.layer == mainLayer ? LayerIDs.Main : LayerIDs.plan);
+            resizeImg(x, y, this.width, this.height, this.layer == mainLayer ? LayerIDs.Main : LayerIDs.plan);
         }
     }
 
-    updateAdjRoads() {
+    /** Updates the list of adjacent buildings. */
+    updateAdjBuildings() {
         let top = false;
         let down = false;
         let left = false;
@@ -69,13 +71,14 @@ class Building {
         let neighbours = [top, left, down, right];
         let neighboursAreRoads = [topIsRoad, leftIsRoad, downIsRoad, rightIsRoad];
 
-        this.adjRoads = []; // adjacent roads
+        this.adjRoads = []; // clears adjacent roads
         for (let i = 0; i < 4; i++) {
             if (neighbours[i] && neighboursAreRoads[i])
                 this.adjRoads.push(neighbours[i]);
         }
     }
 
+    /** Deletes this road. */
     remove() {
         for (let ix = this.x; ix < this.x + this.width; ix++)
             for (let iy = this.y; iy < this.y + this.height; iy++)

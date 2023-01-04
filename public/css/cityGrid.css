@@ -43,7 +43,7 @@
     grid-gap: var(--grid-gap);
 }
 
-#planningGrid {
+#planGrid {
     position: absolute;
     top: 0;
     left: 0;
@@ -96,7 +96,7 @@
     image-rendering: pixelated;
 }
 
-#planningGrid img{
+#planGrid img{
     position: absolute;
     top: 0;
     left: 0;

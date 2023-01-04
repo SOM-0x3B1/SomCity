@@ -1,3 +1,4 @@
+/** Contains all the layers. */
 const mainDisplay = document.getElementById("mainDisplay");
 
 var scale = 1,
@@ -5,7 +6,6 @@ var scale = 1,
     pointX = 0,
     pointY = 0,
     start = { x: 0, y: 0 };
-
 
 
 let sideAreaInterval;
@@ -19,8 +19,7 @@ let movements = [
     () => { pointX += movementSpeed }
 ];
 
-
-
+/** Updates the transform positions of the mainDisplay. */
 function setTransform() {
     mainDisplay.style.transform = "translate(" + pointX + "px, " + pointY + "px) scale(" + scale + ")";
 }
@@ -48,7 +47,6 @@ document.onmousemove = (e) => {
 }
 
 document.onwheel = (e) => {
-    //e.preventDefault();
     var xs = (e.clientX - pointX) / scale,
         ys = (e.clientY - pointY) / scale,
         delta = (e.wheelDelta ? e.wheelDelta : -e.deltaY);
@@ -88,7 +86,7 @@ document.onkeydown = (e) => {
     }
 }
 
-
+// Adds the camera movement events to the sideareas
 for (let i = 0; i < sideAreas.length; i++) {
     const sideArea = sideAreas[i];
     sideArea.onmouseover = (() => {

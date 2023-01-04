@@ -1,7 +1,6 @@
 let entryPoints = []; // outsiders spawn here
 
-let startRoadX;
-let startRoadY;
+let startRoadPos;
 
 class Road extends Building {
     constructor(x, y, type, capacity, deletable, layer) {
@@ -17,15 +16,19 @@ class Road extends Building {
         this.destination = []; // not road neighbours
     }
 
+    /**
+     * Updates the adjacent buildings and sets the appropriate texture.
+     * @param {*} firstUpdate - If true, the function will also update the adjacent roads.
+     */
     updateDirections(firstUpdate) {
         let x = this.x;
         let y = this.y;
 
         // neigbouring buildings
-        let top = false;
-        let down = false;
-        let left = false;
-        let right = false;
+        let top;
+        let down;
+        let left;
+        let right;
 
         let isOnEdge = false;
 
@@ -108,8 +111,8 @@ class Road extends Building {
                 break;
         }
 
-        if (this.layer == planningLayer)
-            setImgOfCell(x, y, 'assets/roads/' + this.type + '-' + this.directions + '.png', LayerIDs.Planning);
+        if (this.layer == planLayer)
+            setImgOfCell(x, y, 'assets/roads/' + this.type + '-' + this.directions + '.png', LayerIDs.plan);
         else
             setImgOfCell(x, y, 'assets/roads/' + this.type + '-' + this.directions + '.png', LayerIDs.Main);
 
@@ -119,54 +122,61 @@ class Road extends Building {
                 this.adjRoads[i].updateDirections(false);
     }
 
+
+    /** Places the first cell of the road onto the plan layer. */
     static setRoadStart(x, y) {
         previewCells.push(new COORD(x, y));
-        planningLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable, planningLayer);
-        setImgOfCell(x, y, 'assets/roads/' + buildingUnderBuilding.type + '-h.png', LayerIDs.Planning);
+        planLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable, planLayer);
+        setImgOfCell(x, y, 'assets/roads/' + buildingUnderBuilding.type + '-h.png', LayerIDs.plan);
 
-        startRoadX = x;
-        startRoadY = y;
+        startRoadPos = new COORD(x, y);
     }
+    /** Places the road onto the main layer. */
     static setRoadEnd(x, y) {
         firstOfTwoPoints = true;
         this.drawRoadLine(x, y);        
-        deletePlanned();
+        clearPlanned();
     }
 
+    /**
+     * Draws the full line of road (wether on the main layer or not will be decided in the drawRoadCell function).
+     * @param {*} x - The ending x position of the road.
+     * @param {*} y - The ending y position of the road.
+     */
     static drawRoadLine(x, y) {
-        if (Math.abs(x - startRoadX) >= Math.abs(y - startRoadY)) {
-            if (x < startRoadX) {
-                for (; x <= startRoadX; x++)
-                    this.drawRoadCell(x, startRoadY);
+        if (Math.abs(x - startRoadPos.x) >= Math.abs(y - startRoadPos.y)) {
+            if (x < startRoadPos.x) {
+                for (; x <= startRoadPos.x; x++)
+                    this.drawRoadCell(x, startRoadPos.y);
             }
             else {
-                for (; x >= startRoadX; x--)
-                    this.drawRoadCell(x, startRoadY);
+                for (; x >= startRoadPos.x; x--)
+                    this.drawRoadCell(x, startRoadPos.y);
             }
         }
         else {
-            if (y < startRoadY) {
-                for (; y <= startRoadY; y++)
-                    this.drawRoadCell(startRoadX, y);
+            if (y < startRoadPos.y) {
+                for (; y <= startRoadPos.y; y++)
+                    this.drawRoadCell(startRoadPos.x, y);
             }
             else {
-                for (; y >= startRoadY; y--)
-                    this.drawRoadCell(startRoadX, y);
+                for (; y >= startRoadPos.y; y--)
+                    this.drawRoadCell(startRoadPos.x, y);
             }
         }
     }
 
     static drawRoadCell(x, y) {
-        if (!firstOfTwoPoints) {
+        if (!firstOfTwoPoints) { // The road is still being planned ==> plan layer
             if(!isOccupied(x, y)){
-                planningLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable, planningLayer);
-                planningLayer[y][x].updateDirections(true);                
+                planLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable, planLayer);
+                planLayer[y][x].updateDirections(true);                
             }
             else
-                setImgOfCell(x, y, 'assets/red.png', LayerIDs.Planning);
+                setImgOfCell(x, y, 'assets/red.png', LayerIDs.plan);
             previewCells.push(new COORD(x, y));
         }
-        else {
+        else { // The road is actually being placed ==> main layer
             if(!isOccupied(x, y)){
                 mainLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable, mainLayer);
                 mainLayer[y][x].updateDirections(true);   
