@@ -49,3 +49,30 @@ h1{
 
     z-index: 5000;
 }
+
+nav{
+    display: flex;
+    justify-content: flex-end;
+
+    width: 100%;
+    padding: 0.5em;
+
+    position: fixed;
+    right: 0;
+    z-index: 5001;
+
+    font-size: 30pt;
+}
+
+nav img{
+    height: 0.9em;
+    image-rendering: pixelated;
+    margin-left: 0.5em;
+    filter: invert(0.5);
+
+    cursor: pointer;
+}
+
+nav img:hover{
+    filter: invert(0);
+}

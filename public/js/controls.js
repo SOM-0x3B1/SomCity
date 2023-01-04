@@ -85,7 +85,7 @@ document.onkeydown = (e) => {
             break;
         case 'b':
         case 'Delete':
-            if(!bulldozing)
+            if (!bulldozing)
                 startBulldoze();
             else
                 stopModification();
@@ -98,8 +98,10 @@ for (let i = 0; i < sideAreas.length; i++) {
     const sideArea = sideAreas[i];
     sideArea.onmouseover = (() => {
         sideAreaInterval = setInterval(() => {
-            movements[i]();
-            setTransform();
+            if (placing || bulldozing) {
+                movements[i]();
+                setTransform();
+            }
         }, 20);
     });
     sideArea.onmouseleave = (() => {
