@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/cityGrid.css">
     <link rel="stylesheet" href="css/controls.css">
     <link rel="stylesheet" href="css/buildMenu.css">
+    <link rel="stylesheet" href="css/mainStats.css">
 </head>
 <body>
     <header>
@@ -21,6 +22,19 @@
             <div id="planGrid" class="gameGrid"></div>
         </div>
     </main>
+
+    <aside id="mainStats">
+        <div id="mainStat-population" class="mainStatRow"><span>Population: </span><span id="mainStat-population-value">0</span></div>
+        <div id="mainStat-demands" class="mainStatRow">
+            <div id="mainStat-demands-bars">
+                <div class="barContainer"><div id="mainStat-demands-bar-r" class="mainStatDemandBar"></div></div>
+                <div class="barContainer"><div id="mainStat-demands-bar-c" class="mainStatDemandBar"></div></div>
+                <div class="barContainer"><div id="mainStat-demands-bar-i" class="mainStatDemandBar"></div></div>
+            </div>
+            <div id="mainStat-demands-centerline"></div>
+        </div>
+        <div id="mainStat-money" class="mainStatRow"><span>Money: </span><span id="mainStat-monay-value">$2000</span></div>
+    </aside>
 
     <div class="sideAreas ySideAreas" id="topSideArea"></div>
     <div class="sideAreas xSideAreas" id="rightSideArea"></div>
