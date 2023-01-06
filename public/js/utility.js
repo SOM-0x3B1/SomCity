@@ -1,5 +1,10 @@
 function rnd(num) {
-    return Math.floor(Math.random() * num);
+    return Math.round(Math.random() * num);
+}
+
+/** Creates a string key from two numbers ('x,y') */
+function coordsToKey(x, y){
+    return `${x},${y}`;
 }
 
 

@@ -47,8 +47,11 @@ function buildGrid(rows, cols) {
                                     Road.setRoadEnd(x, y);
                             }
                             else if (buildingUnderBuilding instanceof Zone) {
-                                if (buildingUnderBuilding instanceof RZone)
-                                    new RZone(x, y, mainLayer).place(x, y);
+                                if (buildingUnderBuilding instanceof RZone){
+                                    let newRZone = new RZone(x, y, mainLayer);
+                                    newRZone.place(x, y);
+                                    newRZone.register();
+                                }
                                 else if (buildingUnderBuilding instanceof CZone)
                                     new CZone(x, y, mainLayer).place(x, y);
                                 else if (buildingUnderBuilding instanceof IZone)
@@ -89,8 +92,13 @@ function buildGrid(rows, cols) {
                             for (let ix = bulldozingFirstPos.x; bulldozingFirstPos.x < x ? ix <= x : ix >= x; bulldozingFirstPos.x < x ? ix++ : ix--) {
                                 for (let iy = bulldozingFirstPos.y; bulldozingFirstPos.y < y ? iy <= y : iy >= y; bulldozingFirstPos.y < y ? iy++ : iy--) {
                                     let target = mainLayer[iy][ix];
-                                    if (target && target instanceof Building && target.deletable)
+                                    if (target && target instanceof Building && target.deletable){                                        
+                                        if(target instanceof Road){
+                                            listOfRoads.splice(listOfRoads.indexOf(roads[coordsToKey(ix,iy)]), 1);
+                                            delete roads[coordsToKey(ix,iy)];
+                                        }
                                         target.remove();
+                                    }
                                     else if (target == 't') {
                                         target = null;
                                         ereaseCell(ix, iy, LayerIDs.Main);
@@ -132,13 +140,14 @@ function buildNewBaseMap() {
                     let pixelData = context.getImageData(x, y, 1, 1).data; // Get a pixel
                     if (pixelData[3] > 0) { // Is not transparent
                         if (layer == 't' && pixelData[1] == 255 && !mainLayer[y][x]) { // Tree, and there's no road
-                            setImgOfCell(x, y, `assets/terrain/trees0${rnd(5) + 1}.png`, LayerIDs.Main);
+                            setImgOfCell(x, y, `assets/terrain/trees0${1 + rnd(4)}.png`, LayerIDs.Main);
                             mainLayer[y][x] = 't';
                         }
                         else if (layer == 'b' && pixelData[0] + pixelData[1] + pixelData[2] == 0) { // Undeletable highways
                             addNewEmptyImgToCell(x, y, LayerIDs.Main);
                             mainLayer[y][x] = new Road(x, y, 'h', 40, false, mainLayer);
-                            mainLayer[y][x].updateDirections(true);
+                            mainLayer[y][x].updateDirections(true);         
+                            mainLayer[y][x].register();                   
                         }
                     }
                 }

@@ -2,10 +2,12 @@ class Building {
     constructor(x, y, width, height, texture, deletable, layer) {
         this.x = x;
         this.y = y;
+        this.adjBuildings = [];
+        this.adjRoads = [];
+        this.entrance;
 
         this.width = width
         this.height = height;
-
         this.texture = texture;
 
         this.deletable = deletable;
@@ -48,34 +50,46 @@ class Building {
     }
 
     /** Updates the list of adjacent buildings. */
-    updateAdjBuildings() {
-        let top = false;
-        let down = false;
-        let left = false;
-        let right = false;
-
-        if (this.y > 0)
-            top = this.layer[this.y - 1][this.x];
-        if (this.y < mapHeight - 1)
-            down = this.layer[this.y + 1][this.x];
-        if (this.x > 0)
-            left = this.layer[this.y][this.x - 1];
-        if (this.x < mapWidth - 1)
-            right = this.layer[this.y][this.x + 1];
-
-        let topIsRoad = top instanceof Road;
-        let downIsRoad = down instanceof Road;
-        let leftIsRoad = left instanceof Road;
-        let rightIsRoad = right instanceof Road;
-
-        let neighbours = [top, left, down, right];
-        let neighboursAreRoads = [topIsRoad, leftIsRoad, downIsRoad, rightIsRoad];
-
+    updateAdjBuildingsAndRoads() {
         this.adjRoads = []; // clears adjacent roads
-        for (let i = 0; i < 4; i++) {
-            if (neighbours[i] && neighboursAreRoads[i])
-                this.adjRoads.push(neighbours[i]);
+        this.adjBuildings = [];
+
+        for (let ix = this.x; ix < this.x + this.width; ix++) {
+            for (let iy = this.y; iy < this.y + this.height; iy++) {
+                let top = false;
+                let down = false;
+                let left = false;
+                let right = false;
+
+                if (iy > 0)
+                    top = this.layer[iy - 1][ix];
+                if (iy < mapHeight - 1)
+                    down = this.layer[iy + 1][ix];
+                if (ix > 0)
+                    left = this.layer[iy][ix - 1];
+                if (ix < mapWidth - 1)
+                    right = this.layer[iy][ix + 1];
+
+                let topIsRoad = top instanceof Road;
+                let downIsRoad = down instanceof Road;
+                let leftIsRoad = left instanceof Road;
+                let rightIsRoad = right instanceof Road;
+
+                let neighbours = [top, left, down, right];
+                let neighboursAreRoads = [topIsRoad, leftIsRoad, downIsRoad, rightIsRoad];
+                
+                for (let i = 0; i < 4; i++) {
+                    if (neighbours[i] && neighboursAreRoads[i])
+                        this.adjRoads.push(neighbours[i]);
+                    else
+                        this.adjBuildings.push(neighbours[i]);
+                    //console.log(this.adjRoads);
+                }
+            }
         }
+
+        this.entrance = this.adjRoads[rnd(this.adjRoads.length - 1)];
+
     }
 
     /** Deletes this road. */

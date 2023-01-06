@@ -1,4 +1,6 @@
 let entryPoints = []; // outsiders spawn here
+let roads = {};
+let listOfRoads = [];
 
 let startRoadPos;
 
@@ -10,10 +12,14 @@ class Road extends Building {
         this.type = type;
         this.directions; // eg. 3j-u, v, h, etc.
         this.capacity = capacity; // how many cars can it hold
-        this.cars = 0;        
+        this.cars = 0;
 
-        this.adjRoads = []; // adjacent roads
         this.destination = []; // not road neighbours
+    }
+
+    register() {
+        roads[coordsToKey(this.x, this.y)] = mainLayer[this.y][this.x];
+        listOfRoads.push(this);
     }
 
     /**
@@ -134,7 +140,7 @@ class Road extends Building {
     /** Places the road onto the main layer. */
     static setRoadEnd(x, y) {
         firstOfTwoPoints = true;
-        this.drawRoadLine(x, y);        
+        this.drawRoadLine(x, y);
         clearPlanned();
     }
 
@@ -168,19 +174,20 @@ class Road extends Building {
 
     static drawRoadCell(x, y) {
         if (!firstOfTwoPoints) { // The road is still being planned ==> plan layer
-            if(!isOccupied(x, y)){
+            if (!isOccupied(x, y)) {
                 planLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable, planLayer);
-                planLayer[y][x].updateDirections(true);                
+                planLayer[y][x].updateDirections(true);
             }
             else
                 setImgOfCell(x, y, 'assets/red.png', LayerIDs.plan);
             previewCells.push(new COORD(x, y));
         }
         else { // The road is actually being placed ==> main layer
-            if(!isOccupied(x, y)){
+            if (!isOccupied(x, y)) {
                 mainLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable, mainLayer);
-                mainLayer[y][x].updateDirections(true);   
-            }         
+                mainLayer[y][x].updateDirections(true);
+                mainLayer[y][x].register();
+            }
         }
     }
 }

@@ -132,10 +132,10 @@ function clearPlanned() {
  * @returns true: the cell is not vacant. - false: the cell is vacant.
  */
 function isOccupied(x, y) {
-    if (!mainLayer[y][x] || mainLayer[y][x] == 't')
-        return false;
-    else
+    if (!mainLayer[y] || x > mainLayer[y].length - 1 || (mainLayer[y][x] && mainLayer[y][x] != 't'))
         return true;
+    else
+        return false;
 }
 
 
