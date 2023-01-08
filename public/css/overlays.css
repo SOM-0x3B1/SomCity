@@ -1,0 +1,13 @@
+.car{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    z-index: 2;
+    transform: translate(-50%, -50%);
+
+    width: 40%;
+    height: 40%;
+
+    image-rendering: pixelated;
+}

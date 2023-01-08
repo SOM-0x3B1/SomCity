@@ -1,10 +1,12 @@
 let freeRZones = [];
+let maxPopulation = 0;
 
 class RZone extends Zone {
     constructor(x, y, layer) {
         super(x, y, 'assets/zones/r.png', layer);
 
         this.capacity = 2;
+
         this.households = [];
     }
 

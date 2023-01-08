@@ -6,8 +6,9 @@ class Car {
         this.y = startingCell.y;
         this.targetEntrance;
 
-        this.route = [];
+        this.color = '#' + rnd(16777215).toString(16);
 
+        this.route = [];
         this.cRoutePoint = 0;
     }
 
@@ -16,9 +17,17 @@ class Car {
         this.targetEntrance = targetEntrance;
         if(targetEntrance)
             this.route = astar.search(listOfRoads.indexOf(roads[coordsToKey(this.x, this.y)]), listOfRoads.indexOf(roads[coordsToKey(targetEntrance.x, targetEntrance.y)]));
-        this.route.forEach(i => {
+        /*this.route.forEach(i => {
             console.log(i);
-        });
+        });*/
+    }
+
+    drawOverlay(){
+        let carIcon = document.createElement('div');
+        carIcon.className = 'car';
+        carIcon.style.backgroundColor = this.color;
+        getCell(this.x, this.y, LayerIDs.Main).appendChild(carIcon);
+        console.log(carIcon);
     }
 }
 
@@ -59,7 +68,7 @@ const astar = {
                 let curr = currentNode;
                 let ret = [];
                 while (curr.parent != start) {
-                    ret.push(coordsToKey(curr.x, curr.y));
+                    ret.push(new COORD(curr.x, curr.y));
                     curr = curr.parent;
                 }
                 return ret.reverse();

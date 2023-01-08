@@ -1,4 +1,5 @@
 let people = [];
+let targetedPeople = [];
 
 class Person {
     constructor() {        
@@ -6,6 +7,6 @@ class Person {
         this.household;
         people.push(this);
 
-        document.getElementById('mainStat-population-value').innerText = people.length;
+        document.getElementById('mainStat-population-value').innerText = people.length + ' / ' + maxPopulation;
     }
 }

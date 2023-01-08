@@ -15,7 +15,9 @@ class Household {
         //console.log(this.homeZone);
         for (let i = 0; i < this.countOfMembers; i++){
             //console.log(this.homeZone.entrance);
-            this.members[i].car.calcRoute(this.homeZone.entrance);            
+            this.members[i].car.calcRoute(this.homeZone.entrance);    
+            targetedPeople.push(this.members[i]);  
+            this.members[i].car.drawOverlay();
         }
     }
-}0
+}
