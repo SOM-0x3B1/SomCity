@@ -33,7 +33,7 @@ function setImgOfCell(x, y, src, layerID) {
         image.id = `${layerID}-img(${x};${y})`;
         cell.appendChild(image);
     }
-    else{
+    else {
         addNewEmptyImgToCell(x, y, layerID);
         getImg(x, y, layerID).src = src;
     }
@@ -59,7 +59,7 @@ function addNewEmptyImgToCell(x, y, layerID) {
 function ereaseCell(x, y, layerID) {
     let cell = getCell(x, y, layerID);
     let images = cell.getElementsByTagName('img');
-    for (const image of images) 
+    for (const image of images)
         image.remove();
 }
 
@@ -67,14 +67,19 @@ function ereaseCell(x, y, layerID) {
  * Resizes the image of a cell.
  * @param {*} layerID - The string id of the layer.
  */
-function resizeImg(x, y, width, height, layerID){
+function resizeImg(x, y, width, height, layerID) {
     let img = getImg(x, y, layerID);
-    if(layerID == LayerIDs.Main){
+    if (layerID == LayerIDs.Main) {
         img.style.width = `calc(${width} * 100% + ${width} * var(--grid-gap))`;
-        img.style.height = `calc(${height} * 100% + ${height} * var(--grid-gap))`;  
+        img.style.height = `calc(${height} * 100% + ${height} * var(--grid-gap))`;
     }
-    else{
+    else {
         img.style.width = `calc(${width} * 100%)`;
-        img.style.height = `calc(${height} * 100%)`;  
+        img.style.height = `calc(${height} * 100%)`;
     }
+}
+
+function resizeStaticImg(img, width, height) {
+    img.style.width = `calc(${width} * 100% + ${width} * var(--grid-gap))`;
+    img.style.height = `calc(${height} * 100% + ${height} * var(--grid-gap))`;
 }

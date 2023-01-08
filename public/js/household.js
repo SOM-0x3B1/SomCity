@@ -20,6 +20,4 @@ class Household {
             this.members[i].car.drawOverlay();
         }
     }
-
-    
 }
