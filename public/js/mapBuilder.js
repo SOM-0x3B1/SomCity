@@ -93,9 +93,10 @@ function buildGrid(rows, cols) {
                                 for (let iy = bulldozingFirstPos.y; bulldozingFirstPos.y < y ? iy <= y : iy >= y; bulldozingFirstPos.y < y ? iy++ : iy--) {
                                     let target = mainLayer[iy][ix];
                                     if (target && target instanceof Building && target.deletable){                                        
-                                        if(target instanceof Road){
+                                        if(target instanceof Road)
                                             delete roads[coordsToKey(ix,iy)];
-                                        }
+                                        else if(target instanceof RZone)
+                                            target.removeRZone();
                                         target.remove();
                                     }
                                     else if (target == 't') {

@@ -7,6 +7,13 @@ class Person {
         this.household;
         people.push(this);
 
-        document.getElementById('mainStat-population-value').innerText = people.length + ' / ' + maxPopulation;
+        document.getElementById('mainStat-population-value').innerText = people.length;
+    }
+
+    remove(){
+        people.splice(people.indexOf(this), 1);
+        document.getElementById('mainStat-population-value').innerText = people.length;
+        this.household = undefined;
+        this.car.remove();
     }
 }

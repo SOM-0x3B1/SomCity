@@ -20,4 +20,10 @@ class Household {
             this.members[i].car.drawOverlay();
         }
     }
+
+    remove(){
+        this.homeZone = undefined;
+        for (let i = 0; i < this.countOfMembers; i++)
+            this.members[i].remove();
+    }
 }

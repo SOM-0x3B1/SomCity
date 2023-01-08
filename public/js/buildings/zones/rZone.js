@@ -15,6 +15,8 @@ class RZone extends Zone {
         this.constructionPhase = 0;
         this.constructionInterval;
 
+        this.started = false;
+
         this.households = [];
     }
 
@@ -34,9 +36,10 @@ class RZone extends Zone {
 
         if (!this.free)
             freeRZones.splice(freeRZones[freeRZones.indexOf(this)], 1);
+    }
 
-
-        
+    startConstruction(){
+        this.started = true;
         this.buildingImg.src = `assets/construction/construction${this.constructionPhase}.png`;
         getCell(this.x, this.y, LayerIDs.Main).appendChild(this.buildingImg);
         resizeStaticImg(this.buildingImg, 2, 2);
@@ -54,5 +57,11 @@ class RZone extends Zone {
     finishConstruction() {
         clearInterval(this.constructionInterval);
         this.buildingImg.src = `assets/zoneTextures/rz-${this.level}-${this.buildingTexture}.png`;
+    }
+
+    removeRZone(){
+        for (let i = 0; i < this.households.length; i++)
+            this.households[i].remove();
+        this.buildingImg.remove();
     }
 }

@@ -27,7 +27,7 @@ class Car {
         let targetEntrance = target.entrance;
         if (targetEntrance)
             this.route = this.Dijkstra(coordsToKey(this.x, this.y), coordsToKey(targetEntrance.x, targetEntrance.y));
-        console.log(this.route);
+        //console.log(this.route);
         /*this.route.forEach(i => {
             console.log(i);
         });*/
@@ -52,9 +52,12 @@ class Car {
     }
 
     enterTargetBuilding() {
+        //console.log(this.target);
         this.x = this.target.x;
         this.y = this.target.y;
         this.clearOverlay();
+        if(!this.target.started)
+            this.target.startConstruction();
     }
 
     drawOverlay() {
@@ -115,6 +118,12 @@ class Car {
             }
         }
         return path.concat(new COORD(roads[smallestKey].x, roads[smallestKey].y)).reverse();
+    }
+
+
+    remove(){
+        this.clearOverlay();
+        //movingCars.splice(movingCars.indexOf(this), 1);
     }
 }
 

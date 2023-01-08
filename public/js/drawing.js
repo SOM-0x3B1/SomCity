@@ -59,8 +59,8 @@ function addNewEmptyImgToCell(x, y, layerID) {
 function ereaseCell(x, y, layerID) {
     let cell = getCell(x, y, layerID);
     let images = cell.getElementsByTagName('img');
-    for (const image of images)
-        image.remove();
+    for (let i = 0; i < images.length; i++)
+        images[0].remove();        
 }
 
 /**
