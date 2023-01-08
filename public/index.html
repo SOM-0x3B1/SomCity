@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,11 +12,20 @@
     <link rel="stylesheet" href="css/buildMenu.css">
     <link rel="stylesheet" href="css/mainStats.css">
     <link rel="stylesheet" href="css/overlays.css">
+
+    <link rel="apple-touch-icon" sizes="76x76" href="icon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icon/favicon-16x16.png">
+    <link rel="manifest" href="icon/site.webmanifest">
+    <link rel="mask-icon" href="icon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="theme-color" content="#ffffff">
 </head>
+
 <body>
     <header>
-        <h1>SomCity</h1>        
-        <nav>            
+        <h1>SomCity</h1>
+        <nav>
             <img src="assets/icons/icon-save.png" alt="">
             <img src="assets/icons/icon-settings.png" alt="">
         </nav>
@@ -29,16 +39,24 @@
     </main>
 
     <aside id="mainStats">
-        <div id="mainStat-population" class="mainStatRow"><span>Population: </span><span id="mainStat-population-value">0</span></div>
+        <div id="mainStat-population" class="mainStatRow"><span>Population: </span><span
+                id="mainStat-population-value">0</span></div>
         <div id="mainStat-demands" class="mainStatRow">
             <div id="mainStat-demands-bars">
-                <div class="barContainer"><div id="mainStat-demands-bar-r" class="mainStatDemandBar"></div></div>
-                <div class="barContainer"><div id="mainStat-demands-bar-c" class="mainStatDemandBar"></div></div>
-                <div class="barContainer"><div id="mainStat-demands-bar-i" class="mainStatDemandBar"></div></div>
+                <div class="barContainer">
+                    <div id="mainStat-demands-bar-r" class="mainStatDemandBar"></div>
+                </div>
+                <div class="barContainer">
+                    <div id="mainStat-demands-bar-c" class="mainStatDemandBar"></div>
+                </div>
+                <div class="barContainer">
+                    <div id="mainStat-demands-bar-i" class="mainStatDemandBar"></div>
+                </div>
             </div>
             <div id="mainStat-demands-centerline"></div>
         </div>
-        <div id="mainStat-money" class="mainStatRow"><span>Money: </span><span id="mainStat-monay-value">$2000</span></div>
+        <div id="mainStat-money" class="mainStatRow"><span>Money: </span><span id="mainStat-monay-value">$2000</span>
+        </div>
     </aside>
 
     <div class="sideAreas ySideAreas" id="topSideArea"></div>
@@ -51,17 +69,29 @@
         <div class="category">
             <img src="assets/icons/icon-roads.png" alt="">
             <ul id="r">
-                <li onclick="startBuilding('r-highway')"><div class="backStrip" id="BS-r-highway"></div>Highway (III)</li>
-                <li onclick="startBuilding('r-mainRoad')"><div class="backStrip" id="BS-r-mainRoad"></div>Main road (II)</li>
-                <li onclick="startBuilding('r-street')"><div class="backStrip" id="BS-r-street"></div>Street (I)</li>
+                <li onclick="startBuilding('r-highway')">
+                    <div class="backStrip" id="BS-r-highway"></div>Highway (III)
+                </li>
+                <li onclick="startBuilding('r-mainRoad')">
+                    <div class="backStrip" id="BS-r-mainRoad"></div>Main road (II)
+                </li>
+                <li onclick="startBuilding('r-street')">
+                    <div class="backStrip" id="BS-r-street"></div>Street (I)
+                </li>
             </ul>
         </div>
         <div class="category">
             <img src="assets/icons/icon-zones.png" alt="">
             <ul id="z">
-                <li onclick="startBuilding('z-residential')"><div class="backStrip" id="BS-z-residential"></div>Residential (R)</li>
-                <li onclick="startBuilding('z-commercial')"><div class="backStrip" id="BS-z-commercial"></div>Commercial (C)</li>
-                <li onclick="startBuilding('z-industrial')"><div class="backStrip" id="BS-z-industrial"></div>Industrial (I)</li>
+                <li onclick="startBuilding('z-residential')">
+                    <div class="backStrip" id="BS-z-residential"></div>Residential (R)
+                </li>
+                <li onclick="startBuilding('z-commercial')">
+                    <div class="backStrip" id="BS-z-commercial"></div>Commercial (C)
+                </li>
+                <li onclick="startBuilding('z-industrial')">
+                    <div class="backStrip" id="BS-z-industrial"></div>Industrial (I)
+                </li>
             </ul>
         </div>
         <div class="category noList" id="bulldoze" onclick="startBulldoze()">
@@ -75,11 +105,11 @@
 
     <span id="versionWarn">PRE-ALPHA BUILD<br>Do not share</span>
 
-    
+
     <script src="js/utility.js"></script>
     <script src="js/priorityQueue.js"></script>
 
-    <script src="js/drawing.js"></script>    
+    <script src="js/drawing.js"></script>
 
     <script src="js/car.js"></script>
     <script src="js/person.js"></script>
@@ -92,11 +122,12 @@
     <script src="js/buildings/zones/rZone.js"></script>
     <script src="js/buildings/zones/cZone.js"></script>
     <script src="js/buildings/zones/iZone.js"></script>
-    
+
     <script src="js/mapBuilder.js" defer></script>
     <script src="js/build.js"></script>
-    <script src="js/controls.js" defer></script> 
-    
+    <script src="js/controls.js" defer></script>
+
     <script src="js/clocks.js"></script>
 </body>
+
 </html>
