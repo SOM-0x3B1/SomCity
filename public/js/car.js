@@ -74,6 +74,7 @@ class Car {
         const nodes = new PriorityQueue();
         const distances = {};
         const previous = {};
+        const finish = roads[finishKey];
         let path = []; //to return at end
         let smallestKey;
         //build up initial state
@@ -104,20 +105,23 @@ class Car {
                     //find neighboring node
                     let nextNodeKey = roads[smallestKey].adjRoads[i];
                     //calculate new distance to neighboring node
-                    let candidate = distances[smallestKey] + /*nodes[nextNodeKey].weight*/ 1;
+                    let gscore = distances[smallestKey] + roads[nextNodeKey].DijkstraWeight + this.heuristic(roads[nextNodeKey], finish);
 
-                    if (candidate < distances[nextNodeKey]) {
+                    if (gscore < distances[nextNodeKey]) {
                         //updating new smallest distance to neighbor
-                        distances[nextNodeKey] = candidate;
+                        distances[nextNodeKey] = gscore;
                         //updating previous - How we got to neighbor
                         previous[nextNodeKey] = smallestKey;
                         //enqueue in priority queue with new priority
-                        nodes.enqueue(nextNodeKey, candidate);
+                        nodes.enqueue(nextNodeKey, gscore);
                     }
                 }
             }
         }
         return path.concat(new COORD(roads[smallestKey].x, roads[smallestKey].y)).reverse();
+    }
+    heuristic(node, finish){
+        return (Math.abs(finish.x - node.x) + Math.abs(finish.y - node.y)) / 10;
     }
 
 

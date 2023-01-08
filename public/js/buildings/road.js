@@ -9,6 +9,19 @@ class Road extends Building {
         super(x, y, 1, 1, '', deletable, layer);
 
         this.type = type;
+        this.DijkstraWeight;
+        switch (this.type) {
+            case 'h':
+                this.DijkstraWeight = 0.6;
+                break;
+            case 'm':
+                this.DijkstraWeight = 0.8;
+                break;
+            case 's':
+                this.DijkstraWeight = 1;
+                break;
+        }
+
         this.directions; // eg. 3j-u, v, h, etc.
         this.capacity = capacity; // how many cars can it hold
         this.cars = 0;
@@ -72,9 +85,9 @@ class Road extends Building {
         for (let i = 0; i < 4; i++) {
             if (neighbours[i] && neighboursAreRoads[i])
                 this.adjRoads.push(neighbours[i]);
-            else if (neighbours[i] && neighbours[i] instanceof Building){
+            else if (neighbours[i] && neighbours[i] instanceof Building) {
                 neighbours[i].updateAdjBuildingsAndRoads();
-                this.adjBuildings.push(neighbours[i]);                
+                this.adjBuildings.push(neighbours[i]);
             }
         }
 
@@ -120,7 +133,7 @@ class Road extends Building {
 
         if (this.layer == planLayer)
             setImgOfCell(x, y, 'assets/roads/' + this.type + '-' + this.directions + '.png', LayerIDs.plan);
-        else{
+        else {
             setImgOfCell(x, y, 'assets/roads/' + this.type + '-' + this.directions + '.png', LayerIDs.Main);
             this.register();
         }
@@ -195,14 +208,15 @@ class Road extends Building {
     }
 }
 
-class SimplifiedRoad{
-    constructor(road){
+class SimplifiedRoad {
+    constructor(road) {
         this.x = road.x;
         this.y = road.y;
-        this.type = road.type;
+        //this.type = road.type;
+        this.DijkstraWeight = road.DijkstraWeight;
         this.adjRoads = [];
-        
+
         for (let i = 0; i < road.adjRoads.length; i++)
-            this.adjRoads.push(coordsToKey(road.adjRoads[i].x, road.adjRoads[i].y));              
+            this.adjRoads.push(coordsToKey(road.adjRoads[i].x, road.adjRoads[i].y));
     }
 }
