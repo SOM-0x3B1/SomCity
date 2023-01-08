@@ -7,27 +7,39 @@ class Car {
         this.targetEntrance;
 
         this.color = '#' + rnd(16777215).toString(16);
+        this.carIcon = document.createElement('div');
+        this.carIcon.className = 'car';
+        this.carIcon.id = `car(${this.x},${this.x})`;
+        this.carIcon.style.backgroundColor = this.color;
 
         this.route = [];
         this.cRoutePoint = 0;
+
+        this.drawOverlay();
     }
 
     calcRoute(targetEntrance) {
         this.cRoutePoint = 0;
         this.targetEntrance = targetEntrance;
-        if(targetEntrance)
+        if (targetEntrance)
             this.route = astar.search(listOfRoads.indexOf(roads[coordsToKey(this.x, this.y)]), listOfRoads.indexOf(roads[coordsToKey(targetEntrance.x, targetEntrance.y)]));
         /*this.route.forEach(i => {
             console.log(i);
         });*/
     }
 
-    drawOverlay(){
-        let carIcon = document.createElement('div');
-        carIcon.className = 'car';
-        carIcon.style.backgroundColor = this.color;
-        getCell(this.x, this.y, LayerIDs.Main).appendChild(carIcon);
-        console.log(carIcon);
+    move() {
+        if (this.cRoutePoint < this.route.length - 1) {
+            this.cRoutePoint++;
+            let cRoute = this.route[this.cRoutePoint];
+            this.x = cRoute.x;
+            this.y = cRoute.y;
+            this.drawOverlay();
+        }
+    }
+
+    drawOverlay() {
+        getCell(this.x, this.y, LayerIDs.Main).appendChild(this.carIcon);
     }
 }
 
