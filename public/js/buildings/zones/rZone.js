@@ -17,7 +17,8 @@ class RZone extends Zone {
     register() {
         freeRZones.push(this);
         this.updateAdjBuildingsAndRoads();
-        new Household().assignZone();
+        for (let i = 0; i < this.capacity; i++) 
+            new Household().assignZone();        
     }
 
     addHouseHold(household) {

@@ -1,117 +1,71 @@
-const root = 0;
-const left = i => (i << 1) + 1;
-const right = i => (i + 1) << 1;
-const parent = i => ((i + 1) >> 1) - 1;
+class Node {
+    constructor(val, priority) {
+        this.val = val;
+        this.priority = priority;
+    }
+}
 
+
+//https://gist.github.com/Prottoy2938/66849e04b0bac459606059f5f9f3aa1a
 class PriorityQueue {
-
     constructor() {
-        this._heap = [];
+        this.values = [];
     }
-
-    size() {
-        return this._heap.length;
+    enqueue(val, priority) {
+        let newNode = new Node(val, priority);
+        this.values.push(newNode);
+        this.bubbleUp();
     }
-
-    peek() {
-        return this._heap[0];
-    }
-
-    build_heap(values) {
-        values.forEach(value => {
-            this._heap.push(value);
-        });
-
-        let n = values.length;
-        let lastNonLeafNode = (n >> 1) - 1;
-
-        for (let i = lastNonLeafNode; i >= 0; i--) {
-            this.heapify(i);
+    bubbleUp() {
+        let idx = this.values.length - 1;
+        const element = this.values[idx];
+        while (idx > 0) {
+            let parentIdx = Math.floor((idx - 1) / 2);
+            let parent = this.values[parentIdx];
+            if (element.priority >= parent.priority) break;
+            this.values[parentIdx] = element;
+            this.values[idx] = parent;
+            idx = parentIdx;
         }
     }
-
-    heapify(i) {
-        let node = i;
-        let l = left(node);
-        let r = right(node);
-        let n = this.size();
-
-        if (l < n && this._heap[node] > this._heap[l]) {
-            node = l;
+    dequeue() {
+        const min = this.values[0];
+        const end = this.values.pop();
+        if (this.values.length > 0) {
+            this.values[0] = end;
+            this.sinkDown();
         }
-
-        if (r < n && this._heap[node] > this._heap[r]) {
-            node = r;
-        }
-
-        if (node !== i) {
-            this.swap(node, i);
-            this.heapify(node);
-        }
+        return min;
     }
+    sinkDown() {
+        let idx = 0;
+        const length = this.values.length;
+        const element = this.values[0];
+        while (true) {
+            let leftChildIdx = 2 * idx + 1;
+            let rightChildIdx = 2 * idx + 2;
+            let leftChild, rightChild;
+            let swap = null;
 
-    insert(...values) {
-        values.forEach(value => {
-            this._heap.push(value);
-            this.heapifyUp();
-        })
-    }
-
-    extract_min() {
-        let poppedVal = this.peek();
-        let last = this.size() - 1;
-        let top = 0;
-
-        // swap top with last
-        if (last > top)
-            this.swap(top, last);
-
-        // remove last node
-        this._heap.pop();
-
-        this.heapifyDown();
-
-        return poppedVal;
-    }
-
-    swap(i, j) {
-        let temp = this._heap[i];
-        this._heap[i] = this._heap[j];
-        this._heap[j] = temp;
-    }
-
-    heapifyUp() {
-        let node = this.size() - 1;
-
-        while (node > 0 && this._heap[node] < this._heap[parent(node)]) {
-            this.swap(node, parent(node));
-            node = parent(node);
-        }
-    }
-
-    heapifyDown() {
-        let node = root;
-        let n = this.size();
-        let min;
-
-        while (left(node) < n && this._heap[node] > this._heap[left(node)] ||
-            right(node) < n && this._heap[node] > this._heap[right(node)]) {
-
-            min = this._heap[left(node)];
-
-            min = this._heap[right(node)] !== undefined ? Math.min(min, this._heap[right(node)]) : min;
-
-            if (this._heap[node] < min) {
-                break;
+            if (leftChildIdx < length) {
+                leftChild = this.values[leftChildIdx];
+                if (leftChild.priority < element.priority) {
+                    swap = leftChildIdx;
+                }
             }
-
-            if (min === this._heap[left(node)]) {
-                this.swap(node, left(node));
-                node = left(node);
-            } else {
-                this.swap(node, right(node));
-                node = right(node);
+            if (rightChildIdx < length) {
+                rightChild = this.values[rightChildIdx];
+                if (
+                    (swap === null && rightChild.priority < element.priority) ||
+                    (swap !== null && rightChild.priority < leftChild.priority)
+                ) {
+                    swap = rightChildIdx;
+                }
             }
+            if (swap === null) break;
+            this.values[idx] = this.values[swap];
+            this.values[swap] = element;
+            idx = swap;
         }
     }
 }

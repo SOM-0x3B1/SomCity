@@ -49,8 +49,8 @@ function buildGrid(rows, cols) {
                             else if (buildingUnderBuilding instanceof Zone) {
                                 if (buildingUnderBuilding instanceof RZone){
                                     let newRZone = new RZone(x, y, mainLayer);
-                                    newRZone.place(x, y);
-                                    newRZone.register();
+                                    if(newRZone.place(x, y))
+                                        newRZone.register();
                                 }
                                 else if (buildingUnderBuilding instanceof CZone)
                                     new CZone(x, y, mainLayer).place(x, y);
@@ -94,7 +94,6 @@ function buildGrid(rows, cols) {
                                     let target = mainLayer[iy][ix];
                                     if (target && target instanceof Building && target.deletable){                                        
                                         if(target instanceof Road){
-                                            listOfRoads.splice(listOfRoads.indexOf(roads[coordsToKey(ix,iy)]), 1);
                                             delete roads[coordsToKey(ix,iy)];
                                         }
                                         target.remove();

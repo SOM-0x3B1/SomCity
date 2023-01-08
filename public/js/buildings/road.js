@@ -1,6 +1,5 @@
 let entryPoints = []; // outsiders spawn here
 let roads = {};
-let listOfRoads = [];
 
 let startRoadPos;
 
@@ -13,13 +12,10 @@ class Road extends Building {
         this.directions; // eg. 3j-u, v, h, etc.
         this.capacity = capacity; // how many cars can it hold
         this.cars = 0;
-
-        this.destination = []; // not road neighbours
     }
 
     register() {
-        roads[coordsToKey(this.x, this.y)] = mainLayer[this.y][this.x];
-        listOfRoads.push(this);
+        roads[coordsToKey(this.x, this.y)] = new SimplifiedRoad(this);
     }
 
     /**
@@ -76,6 +72,10 @@ class Road extends Building {
         for (let i = 0; i < 4; i++) {
             if (neighbours[i] && neighboursAreRoads[i])
                 this.adjRoads.push(neighbours[i]);
+            else if (neighbours[i] && neighbours[i] instanceof Building){
+                neighbours[i].updateAdjBuildingsAndRoads();
+                this.adjBuildings.push(neighbours[i]);                
+            }
         }
 
         switch (this.adjRoads.length) {
@@ -117,10 +117,13 @@ class Road extends Building {
                 break;
         }
 
+
         if (this.layer == planLayer)
             setImgOfCell(x, y, 'assets/roads/' + this.type + '-' + this.directions + '.png', LayerIDs.plan);
-        else
+        else{
             setImgOfCell(x, y, 'assets/roads/' + this.type + '-' + this.directions + '.png', LayerIDs.Main);
+            this.register();
+        }
 
         // update adjacent roads
         if (firstUpdate)
@@ -189,5 +192,17 @@ class Road extends Building {
                 mainLayer[y][x].register();
             }
         }
+    }
+}
+
+class SimplifiedRoad{
+    constructor(road){
+        this.x = road.x;
+        this.y = road.y;
+        this.type = road.type;
+        this.adjRoads = [];
+        
+        for (let i = 0; i < road.adjRoads.length; i++)
+            this.adjRoads.push(coordsToKey(road.adjRoads[i].x, road.adjRoads[i].y));              
     }
 }

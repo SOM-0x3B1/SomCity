@@ -3,8 +3,15 @@ function rnd(num) {
 }
 
 /** Creates a string key from two numbers ('x,y') */
-function coordsToKey(x, y){
+function coordsToKey(x, y) {
     return `${x},${y}`;
+}
+
+function S4() {
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+};
+function guidGenerator() {    
+    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
 }
 
 

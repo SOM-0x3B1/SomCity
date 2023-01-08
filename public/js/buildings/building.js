@@ -15,7 +15,7 @@ class Building {
         this.layer = layer;
     }
 
-    /** Places the building. */
+    /** Places the building, and returns wether it was placed on a free area. */
     place(x, y) {
         clearPlanned();
 
@@ -47,6 +47,8 @@ class Building {
             setImgOfCell(x, y, 'assets/red.png', this.layer == mainLayer ? LayerIDs.Main : LayerIDs.plan);
             resizeImg(x, y, this.width, this.height, this.layer == mainLayer ? LayerIDs.Main : LayerIDs.plan);
         }
+
+        return !occupied;
     }
 
     /** Updates the list of adjacent buildings. */
