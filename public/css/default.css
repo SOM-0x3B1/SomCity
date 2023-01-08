@@ -76,3 +76,13 @@ nav img{
 nav img:hover{
     filter: invert(0);
 }
+
+
+#versionWarn{
+    position: fixed;
+    bottom: 6vh;
+    margin: 1ex;
+
+    color: white;
+    font-size: 24pt;    
+}
