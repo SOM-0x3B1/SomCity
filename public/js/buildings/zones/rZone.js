@@ -11,7 +11,7 @@ class RZone extends Zone {
         this.capacity = rZoneLevels[this.level];
 
         this.buildingImg = new Image();
-        this.buildingTexture = rnd(1);
+        this.buildingTexture = rnd(5);
         this.constructionPhase = 0;
         this.constructionInterval;
 
@@ -42,7 +42,7 @@ class RZone extends Zone {
         this.started = true;
         this.buildingImg.src = `assets/construction/construction${this.constructionPhase}.png`;
         getCell(this.x, this.y, LayerIDs.Main).appendChild(this.buildingImg);
-        resizeStaticImg(this.buildingImg, 2, 2);
+        resizeStaticImg(this.buildingImg, 2, 2);        
 
         this.constructionInterval = setInterval(() => {
             this.constructionPhase++;
@@ -57,6 +57,7 @@ class RZone extends Zone {
     finishConstruction() {
         clearInterval(this.constructionInterval);
         this.buildingImg.src = `assets/zoneTextures/rz-${this.level}-${this.buildingTexture}.png`;
+        rotateStaticImg(this.buildingImg, this.facing);
     }
 
     removeRZone(){

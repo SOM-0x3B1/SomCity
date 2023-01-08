@@ -9,6 +9,7 @@ class Building {
         this.width = width
         this.height = height;
         this.texture = texture;
+        this.facing = 0;
 
         this.deletable = deletable;
 
@@ -79,7 +80,7 @@ class Building {
 
                 let neighbours = [top, left, down, right];
                 let neighboursAreRoads = [topIsRoad, leftIsRoad, downIsRoad, rightIsRoad];
-                
+
                 for (let i = 0; i < 4; i++) {
                     if (neighbours[i] && neighboursAreRoads[i])
                         this.adjRoads.push(neighbours[i]);
@@ -92,6 +93,12 @@ class Building {
 
         this.entrance = this.adjRoads[rnd(this.adjRoads.length - 1)];
 
+        if (this.entrance.x < this.x)
+            this.facing = 90;
+        else if (this.entrance.y < this.y)
+            this.facing = 180;
+        else if (this.entrance.x > this.x + this.width - 1)
+            this.facing = 270;
     }
 
     /** Deletes this road. */

@@ -64,7 +64,7 @@ function ereaseCell(x, y, layerID) {
 }
 
 /**
- * Resizes the image of a cell.
+ * Resizes the image of cell.
  * @param {*} layerID - The string id of the layer.
  */
 function resizeImg(x, y, width, height, layerID) {
@@ -79,7 +79,15 @@ function resizeImg(x, y, width, height, layerID) {
     }
 }
 
+/**
+ * Resizes an image.
+ * @param {*} layerID - The string id of the layer.
+ */
 function resizeStaticImg(img, width, height) {
     img.style.width = `calc(${width} * 100% + ${width} * var(--grid-gap))`;
     img.style.height = `calc(${height} * 100% + ${height} * var(--grid-gap))`;
+}
+
+function rotateStaticImg(img, angle){
+    img.style.transform = `translate(calc(-0.5 * var(--grid-gap)), calc(-0.5 * var(--grid-gap))) rotate(${angle}deg)`;
 }
