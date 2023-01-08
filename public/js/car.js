@@ -2,7 +2,7 @@ let movingCars = {};
 
 class Car {
     constructor() {
-        let id = guidGenerator();
+        this.id = guidGenerator();
         let startingCell = entryPoints[rnd(entryPoints.length - 1)];
 
         this.x = startingCell.x;
@@ -16,13 +16,16 @@ class Car {
         this.carIcon.style.backgroundColor = this.color;
 
         this.route = [];
-        this.cRoutePoint = 0;
+        this.cRoutePoint = 1;
+        this.lastRoutePoint = 0;
+        this.waiting = false;
 
         this.drawOverlay();
     }
 
     calcRoute(target) {
-        this.cRoutePoint = 0;
+        movingCars[this.id] = this;
+        this.cRoutePoint = 1;
         this.target = target;
         let targetEntrance = target.entrance;
         if (targetEntrance)
@@ -34,21 +37,25 @@ class Car {
     }
 
     move() {
-        if (this.route.length > 0) {
-            if (this.cRoutePoint < this.route.length - 1) {
-                this.cRoutePoint++;
-                let cRoute = this.route[this.cRoutePoint];
-                this.x = cRoute.x;
-                this.y = cRoute.y;
-                this.drawOverlay();
+        if (!this.waiting) {
+            if (this.route.length > 0) {
+                if (this.cRoutePoint < this.route.length - 1) {                    
+                    let cWayPoint = this.route[this.cRoutePoint];
+                    this.lastWayPoint = this.route[this.cRoutePoint - 1];                    
+                    roads[coordsToKey(cWayPoint.x, cWayPoint.y)].queues[coordsToKey(this.lastWayPoint.x, this.lastWayPoint.y)].push(this);
+                    //console.log(roads[coordsToKey(cWayPoint.x, cWayPoint.y)].queues[coordsToKey(lastWayPoint.x, lastWayPoint.y)]);
+                    this.waiting = true;
+                    /*this.x = cRoute.x;
+                    this.y = cRoute.y;*/                    
+                }
+                else {
+                    delete movingCars[this.id];
+                    this.enterTargetBuilding();
+                }
             }
-            else {
-                delete movingCars[this.id];
-                this.enterTargetBuilding();
-            }
+            else
+                this.calcRoute(this.target);
         }
-        else
-            this.calcRoute(this.target);
     }
 
     enterTargetBuilding() {
@@ -56,7 +63,7 @@ class Car {
         this.x = this.target.x;
         this.y = this.target.y;
         this.clearOverlay();
-        if(!this.target.started)
+        if (!this.target.started)
             this.target.startConstruction();
     }
 
@@ -72,18 +79,18 @@ class Car {
     //https://gist.github.com/Prottoy2938/66849e04b0bac459606059f5f9f3aa1a
     Dijkstra(startKey, finishKey) {
         const nodes = new PriorityQueue();
-        const distances = {};
+        const scores = {};
         const previous = {};
-        const finish = roads[finishKey];
+        const finish = simplRoads[finishKey];
         let path = []; //to return at end
         let smallestKey;
         //build up initial state
-        for (let vertexKey in roads) {
+        for (let vertexKey in simplRoads) {
             if (vertexKey === startKey) {
-                distances[vertexKey] = 0;
+                scores[vertexKey] = 0;
                 nodes.enqueue(vertexKey, 0);
             } else {
-                distances[vertexKey] = Infinity;
+                scores[vertexKey] = Infinity;
                 nodes.enqueue(vertexKey, Infinity);
             }
             previous[vertexKey] = null;
@@ -95,21 +102,22 @@ class Car {
                 //WE ARE DONE
                 //BUILD UP PATH TO RETURN AT END
                 while (previous[smallestKey]) {
-                    path.push(new COORD(roads[smallestKey].x, roads[smallestKey].y));
+                    path.push(new COORD(simplRoads[smallestKey].x, simplRoads[smallestKey].y));
                     smallestKey = previous[smallestKey];
                 }
                 break;
             }
-            if (smallestKey || distances[smallestKey] !== Infinity) {
-                for (let i = 0; i < roads[smallestKey].adjRoads.length; i++) {
+            if (smallestKey || scores[smallestKey] !== Infinity) {
+                for (let i = 0; i < simplRoads[smallestKey].adjRoads.length; i++) {
                     //find neighboring node
-                    let nextNodeKey = roads[smallestKey].adjRoads[i];
+                    let nextNodeKey = simplRoads[smallestKey].adjRoads[i];
                     //calculate new distance to neighboring node
-                    let gscore = distances[smallestKey] + roads[nextNodeKey].DijkstraWeight + this.heuristic(roads[nextNodeKey], finish);
+                    let gscore = scores[smallestKey] + simplRoads[nextNodeKey].DijkstraWeight /*+ this.heuristic(simplRoads[nextNodeKey], finish)*/;
+                    console.log(gscore);
 
-                    if (gscore < distances[nextNodeKey]) {
+                    if (gscore < scores[nextNodeKey]) {
                         //updating new smallest distance to neighbor
-                        distances[nextNodeKey] = gscore;
+                        scores[nextNodeKey] = gscore;
                         //updating previous - How we got to neighbor
                         previous[nextNodeKey] = smallestKey;
                         //enqueue in priority queue with new priority
@@ -118,14 +126,14 @@ class Car {
                 }
             }
         }
-        return path.concat(new COORD(roads[smallestKey].x, roads[smallestKey].y)).reverse();
+        return path.concat(new COORD(simplRoads[smallestKey].x, simplRoads[smallestKey].y)).reverse();
     }
-    heuristic(node, finish){
+    heuristic(node, finish) {
         return (Math.abs(finish.x - node.x) + Math.abs(finish.y - node.y)) / 10;
     }
 
 
-    remove(){
+    remove() {
         this.clearOverlay();
         //movingCars.splice(movingCars.indexOf(this), 1);
     }

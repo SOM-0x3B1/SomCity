@@ -93,12 +93,14 @@ class Building {
 
         this.entrance = this.adjRoads[rnd(this.adjRoads.length - 1)];
 
-        if (this.entrance.x < this.x)
-            this.facing = 90;
-        else if (this.entrance.y < this.y)
-            this.facing = 180;
-        else if (this.entrance.x > this.x + this.width - 1)
-            this.facing = 270;
+        if (this.entrance) {
+            if (this.entrance.x < this.x)
+                this.facing = 90;
+            else if (this.entrance.y < this.y)
+                this.facing = 180;
+            else if (this.entrance.x > this.x + this.width - 1)
+                this.facing = 270;
+        }
     }
 
     /** Deletes this road. */

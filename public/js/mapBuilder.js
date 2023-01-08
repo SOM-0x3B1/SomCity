@@ -94,7 +94,7 @@ function buildGrid(rows, cols) {
                                     let target = mainLayer[iy][ix];
                                     if (target && target instanceof Building && target.deletable){                                        
                                         if(target instanceof Road)
-                                            delete roads[coordsToKey(ix,iy)];
+                                            delete simplRoads[coordsToKey(ix,iy)];
                                         else if(target instanceof RZone)
                                             target.removeRZone();
                                         target.remove();
@@ -145,7 +145,7 @@ function buildNewBaseMap() {
                         }
                         else if (layer == 'b' && pixelData[0] + pixelData[1] + pixelData[2] == 0) { // Undeletable highways
                             addNewEmptyImgToCell(x, y, LayerIDs.Main);
-                            mainLayer[y][x] = new Road(x, y, 'h', 40, false, mainLayer);
+                            mainLayer[y][x] = new Road(x, y, 'h', false, mainLayer);
                             mainLayer[y][x].updateDirections(true);         
                             mainLayer[y][x].register();                   
                         }

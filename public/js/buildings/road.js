@@ -1,34 +1,47 @@
 let entryPoints = []; // outsiders spawn here
 let roads = {};
+let simplRoads = {};
 
 let startRoadPos;
 
 class Road extends Building {
-    constructor(x, y, type, capacity, deletable, layer) {
+    constructor(x, y, type, deletable, layer) {
         // eg. h as highway
         super(x, y, 1, 1, '', deletable, layer);
 
+        this.directions; // eg. 3j-u, v, h, etc.
+
+        this.cars = 0;
+        this.queues = {};
+
         this.type = type;
+        this.capacity;
         this.DijkstraWeight;
         switch (this.type) {
             case 'h':
                 this.DijkstraWeight = 0.6;
+                this.capacity = 40;
+
                 break;
             case 'm':
                 this.DijkstraWeight = 0.8;
+                this.capacity = 20;
                 break;
             case 's':
                 this.DijkstraWeight = 1;
+                this.capacity = 12;
                 break;
         }
+        this.speedPerQueue = this.capacity / 4;
+    }
 
-        this.directions; // eg. 3j-u, v, h, etc.
-        this.capacity = capacity; // how many cars can it hold
-        this.cars = 0;
+    get full() {
+        return this.capacity <= this.cars;
     }
 
     register() {
-        roads[coordsToKey(this.x, this.y)] = new SimplifiedRoad(this);
+        roads[coordsToKey(this.x, this.y)] = this;
+        simplRoads[coordsToKey(this.x, this.y)] = new SimplifiedRoad(this);
     }
 
     /**
@@ -83,11 +96,14 @@ class Road extends Building {
 
         this.adjRoads = [];
         for (let i = 0; i < 4; i++) {
-            if (neighbours[i] && neighboursAreRoads[i])
-                this.adjRoads.push(neighbours[i]);
-            else if (neighbours[i] && neighbours[i] instanceof Building) {
-                neighbours[i].updateAdjBuildingsAndRoads();
-                this.adjBuildings.push(neighbours[i]);
+            let neighbor = neighbours[i];
+            if (neighbor && neighboursAreRoads[i]) {
+                this.adjRoads.push(neighbor);
+                this.queues[coordsToKey(neighbor.x, neighbor.y)] = new Array();
+            }
+            else if (neighbor && neighbor instanceof Building) {
+                neighbor.updateAdjBuildingsAndRoads();
+                this.adjBuildings.push(neighbor);
             }
         }
 
@@ -145,10 +161,27 @@ class Road extends Building {
     }
 
 
+    moveCars() {
+        for (const key in this.queues) {
+            let queue = this.queues[key];
+            for (let i = 0; i < this.speedPerQueue && queue.length > 0 && !this.full; i++) {
+                let car = queue.shift();
+                car.x = this.x;
+                car.y = this.y;
+                car.cRoutePoint++;
+                car.waiting = false;
+                car.drawOverlay();
+                this.cars++;
+                roads[coordsToKey(car.lastWayPoint.x, car.lastWayPoint.y)].cars--;
+            }
+        }
+    }
+
+
     /** Places the first cell of the road onto the plan layer. */
     static setRoadStart(x, y) {
         previewCells.push(new COORD(x, y));
-        planLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable, planLayer);
+        planLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.deletable, planLayer);
         setImgOfCell(x, y, 'assets/roads/' + buildingUnderBuilding.type + '-h.png', LayerIDs.plan);
 
         startRoadPos = new COORD(x, y);
@@ -191,7 +224,7 @@ class Road extends Building {
     static drawRoadCell(x, y) {
         if (!firstOfTwoPoints) { // The road is still being planned ==> plan layer
             if (!isOccupied(x, y)) {
-                planLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable, planLayer);
+                planLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.deletable, planLayer);
                 planLayer[y][x].updateDirections(true);
             }
             else
@@ -200,7 +233,7 @@ class Road extends Building {
         }
         else { // The road is actually being placed ==> main layer
             if (!isOccupied(x, y)) {
-                mainLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.capacity, buildingUnderBuilding.deletable, mainLayer);
+                mainLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.deletable, mainLayer);
                 mainLayer[y][x].updateDirections(true);
                 mainLayer[y][x].register();
             }

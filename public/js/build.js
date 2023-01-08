@@ -54,13 +54,13 @@ function startBuilding(selectedBuilding) {
             firstOfTwoPoints = true;
             switch (name) {
                 case 'highway':
-                    buildingUnderBuilding = new Road(null, null, 'h', 40, true, planLayer);
+                    buildingUnderBuilding = new Road(null, null, 'h', true, planLayer);
                     break;
                 case 'mainRoad':
-                    buildingUnderBuilding = new Road(null, null, 'm', 20, true, planLayer);
+                    buildingUnderBuilding = new Road(null, null, 'm', true, planLayer);
                     break;
                 case 'street':
-                    buildingUnderBuilding = new Road(null, null, 's', 10, true, planLayer);
+                    buildingUnderBuilding = new Road(null, null, 's', true, planLayer);
                     break;
             }
             break;

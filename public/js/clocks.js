@@ -1,5 +1,6 @@
-let tickCars = setInterval(()=>{
-    people.forEach(i => {
-        i.car.move();
-    });
+let tickCars = setInterval(() => {
+    for (const car in movingCars)
+        movingCars[car].move();
+    for (const key in roads)
+        roads[key].moveCars();
 }, 100);
