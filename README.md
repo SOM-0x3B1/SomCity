@@ -3,10 +3,10 @@
 Somcity is a budget clone of the legendary city-building video game series.<br>
 The projects is based on *simple* city simulation elements and convenient HTML features.
 
-### Required gameplay elements
-- road building
-- traffic system
-- zone allocation
+### Primary objectives
+- building ✅
+- traffic system ✅
+- zone allocation ✅
 - dynamic population growth
 - supply & demand simulation
 - individual schedule simulation
