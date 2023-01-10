@@ -9,7 +9,7 @@
     color: white;
     font-size: 14pt;
 
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: var(--opaqueBGColor);
     /*border-radius: 1ex 0 0 1ex;*/
 }
 

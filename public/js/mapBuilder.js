@@ -47,9 +47,9 @@ function buildGrid(rows, cols) {
                                     Road.setRoadEnd(x, y);
                             }
                             else if (buildingUnderBuilding instanceof Zone) {
-                                if (buildingUnderBuilding instanceof RZone){
+                                if (buildingUnderBuilding instanceof RZone) {
                                     let newRZone = new RZone(x, y, mainLayer);
-                                    if(newRZone.place(x, y))
+                                    if (newRZone.place(x, y))
                                         newRZone.register();
                                 }
                                 else if (buildingUnderBuilding instanceof CZone)
@@ -57,6 +57,11 @@ function buildGrid(rows, cols) {
                                 else if (buildingUnderBuilding instanceof IZone)
                                     new IZone(x, y, mainLayer).place(x, y);
                             }
+                        }
+                        else if (!bulldozing && mainLayer[y][x] instanceof Building) {
+                            cell.appendChild(cellInfo);
+                            cellInfo.style.display = 'inline-block';
+                            mainLayer[y][x].fillCellInfo();
                         }
                     }
                     cell.onmouseenter = () => {
@@ -82,6 +87,9 @@ function buildGrid(rows, cols) {
                             else
                                 drawBulldoze(x, y);
                         }
+                        else if (cellInfo.style.display != 'none') {
+                            cellInfo.style.display = 'none';
+                        }
                     }
                     cell.onmousedown = () => {
                         if (bulldozing)
@@ -92,10 +100,10 @@ function buildGrid(rows, cols) {
                             for (let ix = bulldozingFirstPos.x; bulldozingFirstPos.x < x ? ix <= x : ix >= x; bulldozingFirstPos.x < x ? ix++ : ix--) {
                                 for (let iy = bulldozingFirstPos.y; bulldozingFirstPos.y < y ? iy <= y : iy >= y; bulldozingFirstPos.y < y ? iy++ : iy--) {
                                     let target = mainLayer[iy][ix];
-                                    if (target && target instanceof Building && target.deletable){                                        
-                                        if(target instanceof Road)
-                                            delete simplRoads[coordsToKey(ix,iy)];
-                                        else if(target instanceof RZone)
+                                    if (target && target instanceof Building && target.deletable) {
+                                        if (target instanceof Road)
+                                            delete simplRoads[coordsToKey(ix, iy)];
+                                        else if (target instanceof RZone)
                                             target.removeRZone();
                                         target.remove();
                                     }
@@ -146,8 +154,8 @@ function buildNewBaseMap() {
                         else if (layer == 'b' && pixelData[0] + pixelData[1] + pixelData[2] == 0) { // Undeletable highways
                             addNewEmptyImgToCell(x, y, LayerIDs.Main);
                             mainLayer[y][x] = new Road(x, y, 'h', false, mainLayer);
-                            mainLayer[y][x].updateDirections(true);         
-                            mainLayer[y][x].register();                   
+                            mainLayer[y][x].updateDirections(true);
+                            mainLayer[y][x].register();
                         }
                     }
                 }

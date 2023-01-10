@@ -1,5 +1,6 @@
 :root {
     --pageBackgroundColor: rgb(15, 15, 15);
+    --opaqueBGColor: rgba(0, 0, 0, 0.6);
     --grid-cols: 1;
     --grid-rows: 1;
     --grid-gap: 0.3vh;
@@ -38,7 +39,7 @@ body {
 h1{    
     position: fixed;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: var(--opaqueBGColor);
 
     color: white;
     font-size: 30pt;

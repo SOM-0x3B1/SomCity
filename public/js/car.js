@@ -12,7 +12,7 @@ class Car {
         this.color = '#' + rnd(16777215).toString(16);
         this.carIcon = document.createElement('div');
         this.carIcon.className = 'car';
-        this.carIcon.id = `car(${this.x},${this.x})`;
+        this.carIcon.id = `car(${this.id})`;
         this.carIcon.style.backgroundColor = this.color;
 
         this.route = [];
@@ -39,17 +39,18 @@ class Car {
     move() {
         if (!this.waiting) {
             if (this.route.length > 0) {
-                if (this.cRoutePoint < this.route.length - 1) {                    
+                if (this.cRoutePoint < this.route.length - 1) {
                     let cWayPoint = this.route[this.cRoutePoint];
-                    this.lastWayPoint = this.route[this.cRoutePoint - 1];                    
+                    this.lastWayPoint = this.route[this.cRoutePoint - 1];
                     roads[coordsToKey(cWayPoint.x, cWayPoint.y)].queues[coordsToKey(this.lastWayPoint.x, this.lastWayPoint.y)].push(this);
                     //console.log(roads[coordsToKey(cWayPoint.x, cWayPoint.y)].queues[coordsToKey(lastWayPoint.x, lastWayPoint.y)]);
                     this.waiting = true;
                     /*this.x = cRoute.x;
-                    this.y = cRoute.y;*/                    
+                    this.y = cRoute.y;*/
                 }
                 else {
                     delete movingCars[this.id];
+                    roads[coordsToKey(this.x, this.y)].cars--;
                     this.enterTargetBuilding();
                 }
             }
@@ -68,7 +69,12 @@ class Car {
     }
 
     drawOverlay() {
+        /*this.carIcon.style.left = '-50%';
+        let lastPos = this.route[this.lastRoutePoint];
+        if (lastPos)
+            this.carIcon.style.transitionDelay = [].indexOf.call(getCell(lastPos.x, lastPos.y, LayerIDs.Main).getElementsByClassName('car'), this.carIcon) * 2 + 'ms';*/
         getCell(this.x, this.y, LayerIDs.Main).appendChild(this.carIcon);
+        //this.carIcon.style.left = '50%';
     }
 
     clearOverlay() {
@@ -113,7 +119,7 @@ class Car {
                     let nextNodeKey = simplRoads[smallestKey].adjRoads[i];
                     //calculate new distance to neighboring node
                     let gscore = scores[smallestKey] + simplRoads[nextNodeKey].DijkstraWeight /*+ this.heuristic(simplRoads[nextNodeKey], finish)*/;
-                    console.log(gscore);
+                    //console.log(gscore);
 
                     if (gscore < scores[nextNodeKey]) {
                         //updating new smallest distance to neighbor

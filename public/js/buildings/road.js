@@ -20,16 +20,16 @@ class Road extends Building {
         switch (this.type) {
             case 'h':
                 this.DijkstraWeight = 0.6;
-                this.capacity = 40;
+                this.capacity = 16;
 
                 break;
             case 'm':
                 this.DijkstraWeight = 0.8;
-                this.capacity = 20;
+                this.capacity = 8;
                 break;
             case 's':
                 this.DijkstraWeight = 1;
-                this.capacity = 12;
+                this.capacity = 4;
                 break;
         }
         this.speedPerQueue = this.capacity / 4;
@@ -238,6 +238,10 @@ class Road extends Building {
                 mainLayer[y][x].register();
             }
         }
+    }
+
+    fillCellInfo(){
+        cellInfo.innerText = `Speed: ${this.speedPerQueue} cars/min/entry \n Cars: ${this.cars}`;
     }
 }
 

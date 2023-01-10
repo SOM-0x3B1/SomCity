@@ -24,6 +24,13 @@ class RZone extends Zone {
         return this.households.length < this.capacity;
     }
 
+    get people() {
+        let count = 0;
+        for (let i = 0; i < this.households.length; i++) 
+            count += this.households[i].members.length;
+        return count;
+    }
+
     register() {
         freeRZones.push(this);
         this.updateAdjBuildingsAndRoads();
@@ -58,6 +65,10 @@ class RZone extends Zone {
         clearInterval(this.constructionInterval);
         this.buildingImg.src = `assets/zoneTextures/rz-${this.level}-${this.buildingTexture}.png`;
         rotateStaticImg(this.buildingImg, this.facing);
+    }
+
+    fillCellInfo(){
+        cellInfo.innerText = `Households: ${this.households.length} \n People: ${this.people}`;
     }
 
     removeRZone(){

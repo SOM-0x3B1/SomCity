@@ -14,7 +14,7 @@
 
     color: rgb(202, 202, 202);
     font-size: 16pt;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: var(--opaqueBGColor);
 }
 
 .category{
@@ -36,7 +36,7 @@
     transform: translate(-50%, 0);
 
     list-style: none;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: var(--opaqueBGColor);
     padding: 2ex;
 }
 .category:hover ul{
