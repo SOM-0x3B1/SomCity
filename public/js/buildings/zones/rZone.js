@@ -1,7 +1,7 @@
 let freeRZones = [];
 let maxPopulation = 0;
 
-let rZoneLevels = [100, 10, 50, 100, 1000];
+let rZoneLevels = [2, 10, 50, 100, 200];
 
 class RZone extends Zone {
     constructor(x, y, layer) {

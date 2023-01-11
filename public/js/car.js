@@ -8,6 +8,7 @@ class Car {
         this.x = startingCell.x;
         this.y = startingCell.y;
         this.target;
+        this.housingBuilding;
 
         this.color = '#' + rnd(16777215).toString(16);
         this.carIcon = document.createElement('div');
@@ -24,6 +25,9 @@ class Car {
     }
 
     calcRoute(target) {
+        if(this.housingBuilding)
+            this.exitBuilding();
+
         movingCars[this.id] = this;
         this.cRoutePoint = 1;
         this.target = target;
@@ -48,11 +52,8 @@ class Car {
                     /*this.x = cRoute.x;
                     this.y = cRoute.y;*/
                 }
-                else {
-                    delete movingCars[this.id];
-                    roads[coordsToKey(this.x, this.y)].cars--;
+                else
                     this.enterTargetBuilding();
-                }
             }
             else
                 this.calcRoute(this.target);
@@ -60,12 +61,24 @@ class Car {
     }
 
     enterTargetBuilding() {
+        delete movingCars[this.id];
+        roads[coordsToKey(this.x, this.y)].cars--;
+
         //console.log(this.target);
         this.x = this.target.x;
         this.y = this.target.y;
         this.clearOverlay();
         if (!this.target.started)
             this.target.startConstruction();
+        this.waiting = false;
+
+        this.housingBuilding = this.target;
+    }
+
+    exitBuilding(){
+        this.x = this.housingBuilding.entrance.x;
+        this.y = this.housingBuilding.entrance.y;
+        this.housingBuilding = undefined;
     }
 
     drawOverlay() {

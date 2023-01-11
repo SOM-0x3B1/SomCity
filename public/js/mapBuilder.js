@@ -47,15 +47,17 @@ function buildGrid(rows, cols) {
                                     Road.setRoadEnd(x, y);
                             }
                             else if (buildingUnderBuilding instanceof Zone) {
-                                if (buildingUnderBuilding instanceof RZone) {
-                                    let newRZone = new RZone(x, y, mainLayer);
-                                    if (newRZone.place(x, y))
-                                        newRZone.register();
-                                }
+                                let newZone;
+
+                                if (buildingUnderBuilding instanceof RZone)
+                                    newZone = new RZone(x, y, mainLayer);
                                 else if (buildingUnderBuilding instanceof CZone)
-                                    new CZone(x, y, mainLayer).place(x, y);
+                                    newZone = new CZone(x, y, mainLayer);
                                 else if (buildingUnderBuilding instanceof IZone)
-                                    new IZone(x, y, mainLayer).place(x, y);
+                                    newZone = new IZone(x, y, mainLayer);
+
+                                if(newZone.place(x, y))
+                                    newZone.register();
                             }
                         }
                         else if (!bulldozing && mainLayer[y][x] instanceof Building) {
