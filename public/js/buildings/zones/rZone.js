@@ -1,21 +1,13 @@
 let freeRZones = [];
 let maxPopulation = 0;
 
-let rZoneLevels = [2, 10, 50, 100, 1000];
+let rZoneLevels = [100, 10, 50, 100, 1000];
 
 class RZone extends Zone {
     constructor(x, y, layer) {
         super(x, y, 'assets/zones/r.png', layer);
-
-        this.level = 0;
-        this.capacity = rZoneLevels[this.level];
-
-        this.buildingImg = new Image();
-        this.buildingTexture = rnd(5);
-        this.constructionPhase = 0;
-        this.constructionInterval;
-
-        this.started = false;
+        
+        this.capacity = rZoneLevels[this.level];        
 
         this.households = [];
     }
@@ -65,6 +57,12 @@ class RZone extends Zone {
         clearInterval(this.constructionInterval);
         this.buildingImg.src = `assets/zoneTextures/rz-${this.level}-${this.buildingTexture}.png`;
         rotateStaticImg(this.buildingImg, this.facing);
+
+        for (let i = 0; i < this.households.length; i++) {
+            const household = this.households[i];
+            for (let j = 0; j < household.members.length; j++)
+                household.members[j].lookForJob();
+        }
     }
 
     fillCellInfo(){
