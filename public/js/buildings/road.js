@@ -13,6 +13,7 @@ class Road extends Building {
 
         this.cars = 0;
         this.queues = {};
+        this.queueKeys = [];
 
         this.type = type;
         this.capacity;
@@ -95,11 +96,13 @@ class Road extends Building {
         let neighboursAreRoads = [topIsRoad, leftIsRoad, downIsRoad, rightIsRoad];
 
         this.adjRoads = [];
+        this.queues = [];
         for (let i = 0; i < 4; i++) {
             let neighbor = neighbours[i];
             if (neighbor && neighboursAreRoads[i]) {
                 this.adjRoads.push(neighbor);
                 this.queues[coordsToKey(neighbor.x, neighbor.y)] = new Array();
+                this.queueKeys.push(coordsToKey(neighbor.x, neighbor.y));
             }
             else if (neighbor && neighbor instanceof Building) {
                 neighbor.updateAdjBuildingsAndRoads();
@@ -162,8 +165,9 @@ class Road extends Building {
 
 
     moveCars() {
-        for (const key in this.queues) {
-            let queue = this.queues[key];
+        shuffle(this.queueKeys);
+        for (let j = 0; j < this.queueKeys.length; j++) {
+            let queue = this.queues[this.queueKeys[j]];
             for (let i = 0; i < this.speedPerQueue && queue.length > 0 && !this.full; i++) {
                 let car = queue.shift();
                 car.x = this.x;
