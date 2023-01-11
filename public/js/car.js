@@ -118,7 +118,7 @@ class Car {
                     //find neighboring node
                     let nextNodeKey = simplRoads[smallestKey].adjRoads[i];
                     //calculate new distance to neighboring node
-                    let gscore = scores[smallestKey] + simplRoads[nextNodeKey].DijkstraWeight /*+ this.heuristic(simplRoads[nextNodeKey], finish)*/;
+                    let gscore = scores[smallestKey] + simplRoads[nextNodeKey].DijkstraWeight + (roads[nextNodeKey].full ? 6 : 0) /*+ this.heuristic(simplRoads[nextNodeKey], finish)*/;
                     //console.log(gscore);
 
                     if (gscore < scores[nextNodeKey]) {
