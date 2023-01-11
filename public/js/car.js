@@ -43,12 +43,22 @@ class Car {
     move() {
         if (!this.waiting) {
             if (this.route.length > 0) {
-                if (this.cRoutePoint < this.route.length - 1) {
+                if (this.cRoutePoint < this.route.length - 1) {                    
                     let cWayPoint = this.route[this.cRoutePoint];
                     this.lastWayPoint = this.route[this.cRoutePoint - 1];
-                    roads[coordsToKey(cWayPoint.x, cWayPoint.y)].queues[coordsToKey(this.lastWayPoint.x, this.lastWayPoint.y)].push(this);
+
+                    let nextRoad = roads[coordsToKey(cWayPoint.x, cWayPoint.y)];
+                    let cRoad = roads[coordsToKey(this.x, this.y)];
+                    
+                    if(nextRoad.full && cRoad.adjRoads.length > 2){
+                        this.calcRoute(this.target);
+                    }
+                    else{                        
+                        nextRoad.queues[coordsToKey(this.lastWayPoint.x, this.lastWayPoint.y)].push(this);       
+                        this.waiting = true;                 
+                    }
                     //console.log(roads[coordsToKey(cWayPoint.x, cWayPoint.y)].queues[coordsToKey(lastWayPoint.x, lastWayPoint.y)]);
-                    this.waiting = true;
+                    
                     /*this.x = cRoute.x;
                     this.y = cRoute.y;*/
                 }
@@ -131,7 +141,7 @@ class Car {
                     //find neighboring node
                     let nextNodeKey = simplRoads[smallestKey].adjRoads[i];
                     //calculate new distance to neighboring node
-                    let gscore = scores[smallestKey] + simplRoads[nextNodeKey].DijkstraWeight + (roads[nextNodeKey].full ? 6 : 0) /*+ this.heuristic(simplRoads[nextNodeKey], finish)*/;
+                    let gscore = scores[smallestKey] + simplRoads[nextNodeKey].DijkstraWeight + (roads[nextNodeKey].full ? 10 : 0) /*+ this.heuristic(simplRoads[nextNodeKey], finish)*/;
                     //console.log(gscore);
 
                     if (gscore < scores[nextNodeKey]) {
