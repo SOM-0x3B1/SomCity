@@ -1,13 +1,15 @@
 let freeRZones = [];
 let maxPopulation = 0;
 
-let rZoneLevels = [2, 10, 50, 100, 200];
+let rZoneLevels = [50, 10, 50, 100, 200];
 
 class RZone extends Zone {
     constructor(x, y, layer) {
         super(x, y, 'assets/zones/r.png', layer);
         
-        this.capacity = rZoneLevels[this.level];        
+        this.capacity = rZoneLevels[this.level];       
+
+        this.buildingTexture = rnd(5); 
 
         this.households = [];
     }
@@ -37,21 +39,6 @@ class RZone extends Zone {
             freeRZones.splice(freeRZones[freeRZones.indexOf(this)], 1);
     }
 
-    startConstruction(){
-        this.started = true;
-        this.buildingImg.src = `assets/construction/construction${this.constructionPhase}.png`;
-        getCell(this.x, this.y, LayerIDs.Main).appendChild(this.buildingImg);
-        resizeStaticImg(this.buildingImg, 2, 2);        
-
-        this.constructionInterval = setInterval(() => {
-            this.constructionPhase++;
-            if (this.constructionPhase > 4)
-                this.finishConstruction();
-            else{
-                this.buildingImg.src = `assets/construction/construction${this.constructionPhase}.png`;
-            }
-        }, 3000);
-    }
 
     finishConstruction() {
         clearInterval(this.constructionInterval);
