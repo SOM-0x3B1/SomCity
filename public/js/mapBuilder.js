@@ -64,6 +64,7 @@ function buildGrid(rows, cols) {
                             cell.appendChild(cellInfo);
                             cellInfo.style.display = 'inline-block';
                             mainLayer[y][x].fillCellInfo();
+                            objectOfCellInfo = mainLayer[y][x];
                         }
                     }
                     cell.onmouseenter = () => {
@@ -91,6 +92,7 @@ function buildGrid(rows, cols) {
                         }
                         else if (cellInfo.style.display != 'none') {
                             cellInfo.style.display = 'none';
+                            objectOfCellInfo = undefined;
                         }
                     }
                     cell.onmousedown = () => {

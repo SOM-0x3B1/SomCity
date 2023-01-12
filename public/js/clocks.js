@@ -3,6 +3,9 @@ let tickCars = setInterval(() => {
         movingCars[car].move();
     for (const key in roads)
         roads[key].moveCars();
+
+    if(objectOfCellInfo)
+        objectOfCellInfo.fillCellInfo();
 }, 100);
 
 let lookForJob = setInterval(() => {

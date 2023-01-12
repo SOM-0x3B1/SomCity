@@ -11,7 +11,7 @@ class Road extends Building {
 
         this.directions; // eg. 3j-u, v, h, etc.
 
-        this.cars = 0;
+        this.cars = {};
         this.queues = {};
         this.queueKeys = [];
 
@@ -22,7 +22,6 @@ class Road extends Building {
             case 'h':
                 this.DijkstraWeight = 0.6;
                 this.capacity = 16;
-
                 break;
             case 'm':
                 this.DijkstraWeight = 0.8;
@@ -36,8 +35,22 @@ class Road extends Building {
         this.speedPerQueue = this.capacity / 4;
     }
 
-    get full() {
-        return this.capacity <= this.cars;
+    isFull(key) {
+        return this.capacity <= this.cars[key];
+    }
+
+    get isJammed() {
+        for (const key in this.cars)
+            if (this.isFull(key))
+                return true;
+        return false;
+    }
+
+    get countOfCars() {
+        let result = 0;
+        for (const key in this.cars)
+            result += this.cars[key];
+        return result;
     }
 
     register() {
@@ -101,8 +114,13 @@ class Road extends Building {
             let neighbor = neighbours[i];
             if (neighbor && neighboursAreRoads[i]) {
                 this.adjRoads.push(neighbor);
-                this.queues[coordsToKey(neighbor.x, neighbor.y)] = new Array();
+
+                if(!this.queues[coordsToKey(neighbor.x, neighbor.y)])
+                    this.queues[coordsToKey(neighbor.x, neighbor.y)] = new Array();
                 this.queueKeys.push(coordsToKey(neighbor.x, neighbor.y));
+
+                if(!this.cars[coordsToKey(neighbor.x, neighbor.y)])
+                    this.cars[coordsToKey(neighbor.x, neighbor.y)] = 0;
             }
             else if (neighbor && neighbor instanceof Building) {
                 neighbor.updateAdjBuildingsAndRoads();
@@ -168,15 +186,24 @@ class Road extends Building {
         shuffle(this.queueKeys);
         for (let j = 0; j < this.queueKeys.length; j++) {
             let queue = this.queues[this.queueKeys[j]];
-            for (let i = 0; i < this.speedPerQueue && queue.length > 0 && !this.full; i++) {
+            for (let i = 0; i < this.speedPerQueue && queue.length > 0 && !this.isFull(this.queueKeys[j]); i++) {
                 let car = queue.shift();
                 car.x = this.x;
                 car.y = this.y;
-                car.cRoutePoint++;
+
                 car.waiting = false;
                 car.drawOverlay();
-                this.cars++;
-                roads[coordsToKey(car.lastWayPoint.x, car.lastWayPoint.y)].cars--;
+                if (car.cRoutePoint > 1) {
+                    let lastRoad = roads[coordsToKey(car.lastWayPoint.x, car.lastWayPoint.y)];
+
+                    if (car.cRoutePoint > 2)
+                        roads[coordsToKey(lastRoad.x, lastRoad.y)].cars[coordsToKey(car.secLastWayPoint.x, car.secLastWayPoint.y)]--;
+
+                    this.cars[coordsToKey(lastRoad.x, lastRoad.y)]++;
+                    /*console.log(coordsToKey(this.x, this.y))
+                    console.log(this.cars);*/
+                }
+                car.cRoutePoint++;
             }
         }
     }
@@ -244,8 +271,8 @@ class Road extends Building {
         }
     }
 
-    fillCellInfo(){
-        cellInfo.innerText = `Speed: ${this.speedPerQueue} cars/min/entry \n Cars: ${this.cars}`;
+    fillCellInfo() {
+        cellInfo.innerText = `Speed: ${this.speedPerQueue} cars/min/direction \n Cars: ${this.countOfCars}`;
     }
 }
 

@@ -1,4 +1,5 @@
 let cellInfo = document.getElementById('cellInfo');
+let objectOfCellInfo;
 
 class Building {
     constructor(x, y, width, height, texture, deletable, layer) {
