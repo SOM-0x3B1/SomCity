@@ -1,7 +1,7 @@
 # SomCity
 
 Somcity is a simplified city building simulator designed to run on browsers. <br>
-The projects is based on *simple* city simulation elements and convenient HTML features.
+The projects is based on "simple" city simulation practices and convenient HTML features.
 
 ### Primary objectives
 - building ✅
@@ -16,10 +16,12 @@ The projects is based on *simple* city simulation elements and convenient HTML f
 - public services (police, fire department, power, water, sewage, etc)
 - crime simulation (influenced by education, unemployment, etc)
 - education
-- multiplayer 🚫
 - area development
 - transportation
 - finances
-- unlockable building
+- unlockable buildings
 - global export (+export product tiers)
 
+### Out of scope ideas
+- multiplayer
+- modular buildings
