@@ -109,22 +109,26 @@ class Road extends Building {
         let neighboursAreRoads = [topIsRoad, leftIsRoad, downIsRoad, rightIsRoad];
 
         this.adjRoads = [];
-        this.queues = [];
+        this.queueKeys = [];
         for (let i = 0; i < 4; i++) {
             let neighbor = neighbours[i];
             if (neighbor && neighboursAreRoads[i]) {
                 this.adjRoads.push(neighbor);
 
-                if(!this.queues[coordsToKey(neighbor.x, neighbor.y)])
-                    this.queues[coordsToKey(neighbor.x, neighbor.y)] = new Array();
-                this.queueKeys.push(coordsToKey(neighbor.x, neighbor.y));
-
-                if(!this.cars[coordsToKey(neighbor.x, neighbor.y)])
-                    this.cars[coordsToKey(neighbor.x, neighbor.y)] = 0;
+                this.updateQueuesAndCars(neighbor);
             }
             else if (neighbor && neighbor instanceof Building) {
                 neighbor.updateAdjBuildingsAndRoads();
                 this.adjBuildings.push(neighbor);
+
+                this.updateQueuesAndCars(neighbor);
+                if(neighbor instanceof RZone){
+                    for (let i = 0; i < neighbor.households.length; i++) {
+                        const household = neighbor.households[i];
+                        for (let j = 0; j < household.members.length; j++)
+                            household.members[j].car.changeRouteNextTimeToTarget = neighbor;
+                    }
+                }
             }
         }
 
@@ -181,29 +185,40 @@ class Road extends Building {
                 this.adjRoads[i].updateDirections(false);
     }
 
+    updateQueuesAndCars(neighbor) {
+        if (!this.queues[coordsToKey(neighbor.x, neighbor.y)])
+            this.queues[coordsToKey(neighbor.x, neighbor.y)] = new Array();
+        this.queueKeys.push(coordsToKey(neighbor.x, neighbor.y));        
+
+        if (!this.cars[coordsToKey(neighbor.x, neighbor.y)])
+            this.cars[coordsToKey(neighbor.x, neighbor.y)] = 0;
+    }
 
     moveCars() {
-        shuffle(this.queueKeys);
+        shuffle(this.queueKeys);        
         for (let j = 0; j < this.queueKeys.length; j++) {
             let queue = this.queues[this.queueKeys[j]];
             for (let i = 0; i < this.speedPerQueue && queue.length > 0 && !this.isFull(this.queueKeys[j]); i++) {
-                let car = queue.shift();
+                let car = queue.shift();                
+
+                let cRoadKey = coordsToKey(this.x, this.y);                
+
+                let lastRoadKey = coordsToKey(car.x, car.y);
+                if (roads[lastRoadKey]) {
+                    if(roads[lastRoadKey].cars[car.lastRoadKey])
+                        roads[lastRoadKey].cars[car.lastRoadKey]--;
+                    car.lastRoadKey = lastRoadKey;
+                }
+                roads[cRoadKey].cars[lastRoadKey]++;
+
                 car.x = this.x;
                 car.y = this.y;
+                car.cRoad = this;                
+                car.firstTimeInJammedJunction = false;
+
+                car.drawOverlay();
 
                 car.waiting = false;
-                car.drawOverlay();
-                if (car.cRoutePoint > 1) {
-                    let lastRoad = roads[coordsToKey(car.lastWayPoint.x, car.lastWayPoint.y)];
-
-                    if (car.cRoutePoint > 2)
-                        roads[coordsToKey(lastRoad.x, lastRoad.y)].cars[coordsToKey(car.secLastWayPoint.x, car.secLastWayPoint.y)]--;
-
-                    this.cars[coordsToKey(lastRoad.x, lastRoad.y)]++;
-                    /*console.log(coordsToKey(this.x, this.y))
-                    console.log(this.cars);*/
-                }
-                car.cRoutePoint++;
             }
         }
     }

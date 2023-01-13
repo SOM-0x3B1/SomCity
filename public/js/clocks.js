@@ -1,6 +1,6 @@
 let tickCars = setInterval(() => {
     for (const car in movingCars)
-        movingCars[car].move();
+        movingCars[car].initiateMove();
     for (const key in roads)
         roads[key].moveCars();
 

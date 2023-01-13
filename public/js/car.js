@@ -17,66 +17,70 @@ class Car {
         this.carIcon.style.backgroundColor = this.color;
 
         this.route = [];
-        this.cRoutePoint = 1;
-        this.lastWayPoint;
-        this.secLastWayPoint;
-
+        this.nextRouteIndex = 0;
+        this.lastRoadKey;
+        this.cRoadKey;
         this.waiting = false;
+
+        this.firstTimeInJammedJunction = true;
         this.changeRouteNextTimeToTarget = undefined;
 
         this.drawOverlay();
     }
 
     calcRoute(target) {
-        if (!this.waiting) {
-            if (this.housingBuilding)
-                this.exitBuilding();
+        if (this.housingBuilding)
+            this.exitBuilding();
 
-            /*if (this.route.length > 0) {
-                let cWayPoint = this.route[this.cRoutePoint];
-                this.lastWayPoint = this.route[this.cRoutePoint - 1];
-                let nextRoad = roads[coordsToKey(cWayPoint.x, cWayPoint.y)];
-                let queue = nextRoad.queues[coordsToKey(this.lastWayPoint.x, this.lastWayPoint.y)];
-                queue.slice(queue.indexOf(this), 1);
-            }*/
+        /*if (this.route.length > 0) {
+            let cWayPoint = this.route[this.cRoutePoint];
+            this.lastWayPoint = this.route[this.cRoutePoint - 1];
+            let nextRoad = roads[coordsToKey(cWayPoint.x, cWayPoint.y)];
+            let queue = nextRoad.queues[coordsToKey(this.lastWayPoint.x, this.lastWayPoint.y)];
+            queue.slice(queue.indexOf(this), 1);
+        }*/
 
-            movingCars[this.id] = this;
-            this.cRoutePoint = 1;
-            this.waiting = false;
+        movingCars[this.id] = this;
+        this.nextRouteIndex = 0;
 
-            this.target = target;
-            let targetEntrance = target.entrance;
-            if (targetEntrance)
-                this.route = this.Dijkstra(coordsToKey(this.x, this.y), coordsToKey(targetEntrance.x, targetEntrance.y));
-            //console.log(this.route);
-            /*this.route.forEach(i => {
-                console.log(i);
-            });*/
-        }
+        this.target = target;
+        let targetEntrance = target.entrance;
+        if (targetEntrance)
+            this.route = this.Dijkstra(coordsToKey(this.x, this.y), coordsToKey(targetEntrance.x, targetEntrance.y));
         else
             this.changeRouteNextTimeToTarget = target;
+
+        if(!this.changeRouteNextTimeToTarget)
+            this.initiateMove();
     }
 
 
+    addToNextQueue() {
+        let route = this.route;
+        let nextWayPoint = route[this.nextRouteIndex];
+        let nextRoad = roads[coordsToKey(nextWayPoint.x, nextWayPoint.y)];
+        nextRoad.queues[coordsToKey(this.x, this.y)].push(this);
+        this.waiting = true;
+    }
 
-    move() {
+    initiateMove() {
         if (!this.waiting) {
-            if (this.route.length > 0 && !this.changeRouteNextTimeToTarget) {
-                if (this.cRoutePoint < this.route.length - 1) {
-                    let cWayPoint = this.route[this.cRoutePoint];
-                    this.lastWayPoint = this.route[this.cRoutePoint - 1];
-                    if(this.cRoutePoint > 1)
-                        this.secLastWayPoint = this.route[this.cRoutePoint - 2];
+            let route = this.route;
 
-                    let nextRoad = roads[coordsToKey(cWayPoint.x, cWayPoint.y)];
-                    let cRoad = roads[coordsToKey(this.x, this.y)];
+            this.nextRouteIndex++;
+        /*let nextWayPoint = route[this.nextRouteIndex];
+        let nextRoad = roads[coordsToKey(nextWayPoint.x, nextWayPoint.y)];*/;
 
-                    /*if (nextRoad.full && cRoad.adjRoads.length > 2) {
+            if (route.length > 0 && !this.changeRouteNextTimeToTarget) {
+                if (this.nextRouteIndex < route.length) {
+                    let nextWayPoint = route[this.nextRouteIndex];
+                    let nextRoad = roads[coordsToKey(nextWayPoint.x, nextWayPoint.y)];
+                    if (nextRoad.isJammed && roads[coordsToKey(this.x, this.y)].adjRoads.length > 2){
                         this.changeRouteNextTimeToTarget = this.target;
+                        this.firstTimeInJammedJunction = true;
                     }
-                    else {*/
-                    nextRoad.queues[coordsToKey(this.lastWayPoint.x, this.lastWayPoint.y)].push(this);
-                    this.waiting = true;
+                    else
+                        this.addToNextQueue();
                 }
                 else
                     this.enterTargetBuilding();
@@ -84,14 +88,14 @@ class Car {
             else if (this.changeRouteNextTimeToTarget) {
                 this.calcRoute(this.changeRouteNextTimeToTarget);
                 this.changeRouteNextTimeToTarget = undefined;
-                console.log(this.route);
             }
         }
     }
 
     enterTargetBuilding() {
         delete movingCars[this.id];
-        roads[coordsToKey(this.x, this.y)].cars[coordsToKey(this.lastWayPoint.x, this.lastWayPoint.y)]--;
+        //roads[coordsToKey(this.x, this.y)].cars[coordsToKey(this.lastWayPoint.x, this.lastWayPoint.y)]--;
+        roads[coordsToKey(this.x, this.y)].cars[this.lastRoadKey]--;
 
         //console.log(this.target);
         this.x = this.target.x;
@@ -106,8 +110,9 @@ class Car {
     }
 
     exitBuilding() {
-        this.x = this.housingBuilding.entrance.x;
-        this.y = this.housingBuilding.entrance.y;
+        let entrance = this.housingBuilding.entrance;
+        this.x = entrance.x;
+        this.y = entrance.y;
         this.housingBuilding = undefined;
     }
 
@@ -261,7 +266,7 @@ class Car {
                     }
                     else {
                         // Already seen the node, but since it has been rescored we need to reorder it in the heap
-                        console.log(getCell(neighbor.x, neighbor.y, LayerIDs.Main));
+                        //console.log(getCell(neighbor.x, neighbor.y, LayerIDs.Main));
                         openHeap.heapify(openHeap._heap.indexOf(neighbor));                        
                     }
                 }
