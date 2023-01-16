@@ -13,7 +13,19 @@ let mainTick = setInterval(() => {
         timeVaule.innerText += ':0';
     else
         timeVaule.innerText += ':';
-    timeVaule.innerText += minutes % 60;    
+    timeVaule.innerText += minutes % 60;
+
+
+    let cSchedules = globalSchedule[time];
+    if (cSchedules) {
+        for (let i = 0; i < cSchedules.length; i++) {
+            let car = cSchedules[i].person.car;
+            if (!car.waiting)
+                car.calcRoute(cSchedules[i].target);
+            else
+                car.changeRouteNextTimeToTarget = cSchedules[i].target;
+        }
+    }
 }, 50);
 
 

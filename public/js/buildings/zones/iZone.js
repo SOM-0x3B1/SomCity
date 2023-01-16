@@ -3,7 +3,20 @@ class IZone extends Zone {
         super(x, y, 'assets/zones/i.png', layer);
 
         this.workers = [];
-        this.capacity = 50 + rnd(100);  
+        this.capacity = 50 + rnd(100);
+        this.hasNightShift = rnd(1) == 0;
+        this.opens1;
+        this.opens2;
+        this.closes1;
+        this.closes2;
+
+        this.opens1 = ((7 + rnd(2)) * 60);
+        this.closes1 = this.opens1 + ((6 + rnd(3)) * 60)
+
+        if (this.hasNightShift) {
+            this.opens2 = this.closes1 - 60;
+            this.closes2 = this.opens2 + ((5 + rnd(3)) * 60);            
+        }
 
         this.buildingTexture = rnd(2);
     }
@@ -17,14 +30,14 @@ class IZone extends Zone {
         this.updateAdjBuildingsAndRoads();
     }
 
-    addWorker(worker){
+    addWorker(worker) {
         this.workers.push(worker);
 
-        if(this.workers.length >= this.capacity)
+        if (this.workers.length >= this.capacity)
             freeWorkplaces.splice(freeWorkplaces.indexOf(this), 1);
 
         worker.job = this;
-        worker.car.calcRoute(worker.job);
+        //worker.car.calcRoute(worker.job);
     }
 
     finishConstruction() {
@@ -33,7 +46,7 @@ class IZone extends Zone {
         rotateStaticImg(this.buildingImg, this.facing);
     }
 
-    fillCellInfo(){
+    fillCellInfo() {
         cellInfo.innerText = `Workers: ${this.workers.length} \n Max workers: ${this.capacity}`;
     }
 }

@@ -4,7 +4,7 @@ class Household {
         this.countOfMembers = 1 + rnd(2);       
 
         for (let i = 0; i < this.countOfMembers; i++)
-            this.members.push(new Person());
+            this.members.push(new Person(this));
 
         this.homeZone;
     }
