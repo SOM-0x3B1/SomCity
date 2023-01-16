@@ -20,6 +20,7 @@ class Car {
         this.nextRouteIndex = 0;
         this.lastRoadKey;
         this.cRoadKey;
+        this.cQueue;
         this.waiting = false;
 
         this.firstTimeInJammedJunction = true;
@@ -60,6 +61,7 @@ class Car {
         let nextWayPoint = route[this.nextRouteIndex];
         let nextRoad = roads[coordsToKey(nextWayPoint.x, nextWayPoint.y)];
         nextRoad.queues[coordsToKey(this.x, this.y)].push(this);
+        this.cQueue = nextRoad.queues[coordsToKey(this.x, this.y)];
         this.waiting = true;
     }
 

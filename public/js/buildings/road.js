@@ -122,7 +122,7 @@ class Road extends Building {
                 this.adjBuildings.push(neighbor);
 
                 this.updateQueuesAndCars(neighbor);
-                if(neighbor instanceof RZone){
+                if (neighbor instanceof RZone) {
                     for (let i = 0; i < neighbor.households.length; i++) {
                         const household = neighbor.households[i];
                         for (let j = 0; j < household.members.length; j++)
@@ -188,24 +188,27 @@ class Road extends Building {
     updateQueuesAndCars(neighbor) {
         if (!this.queues[coordsToKey(neighbor.x, neighbor.y)])
             this.queues[coordsToKey(neighbor.x, neighbor.y)] = new Array();
-        this.queueKeys.push(coordsToKey(neighbor.x, neighbor.y));        
+        this.queueKeys.push(coordsToKey(neighbor.x, neighbor.y));
 
         if (!this.cars[coordsToKey(neighbor.x, neighbor.y)])
             this.cars[coordsToKey(neighbor.x, neighbor.y)] = 0;
+
+        for (let i = 0; i < this.queues[coordsToKey(neighbor.x, neighbor.y)].length; i++)
+            this.queues[coordsToKey(neighbor.x, neighbor.y)][i].changeRouteNextTimeToTarget = this.queues[coordsToKey(neighbor.x, neighbor.y)][i].target;
     }
 
     moveCars() {
-        shuffle(this.queueKeys);        
+        shuffle(this.queueKeys);
         for (let j = 0; j < this.queueKeys.length; j++) {
             let queue = this.queues[this.queueKeys[j]];
             for (let i = 0; i < this.speedPerQueue && queue.length > 0 && !this.isFull(this.queueKeys[j]); i++) {
-                let car = queue.shift();                
+                let car = queue.shift();
 
-                let cRoadKey = coordsToKey(this.x, this.y);                
+                let cRoadKey = coordsToKey(this.x, this.y);
 
                 let lastRoadKey = coordsToKey(car.x, car.y);
                 if (roads[lastRoadKey]) {
-                    if(roads[lastRoadKey].cars[car.lastRoadKey])
+                    if (roads[lastRoadKey].cars[car.lastRoadKey])
                         roads[lastRoadKey].cars[car.lastRoadKey]--;
                     car.lastRoadKey = lastRoadKey;
                 }
@@ -213,7 +216,7 @@ class Road extends Building {
 
                 car.x = this.x;
                 car.y = this.y;
-                car.cRoad = this;                
+                car.cRoad = this;
                 car.firstTimeInJammedJunction = false;
 
                 car.drawOverlay();
