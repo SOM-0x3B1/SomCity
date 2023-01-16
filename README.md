@@ -9,7 +9,7 @@ The projects is based on "simple" city simulation practices and convenient HTML 
 - zone allocation ✅
 - dynamic population growth
 - supply & demand simulation
-- individual schedule simulation
+- individual schedule simulation ✅
 - household simulation (ages, reproduction)
 
 ### Secondary objectives
