@@ -36,7 +36,7 @@ body {
     background-color: var(--pageBackgroundColor);
 }
 
-h1{    
+h2{    
     position: fixed;
     width: 100%;
     background-color: var(--opaqueBGColor);
@@ -86,4 +86,24 @@ nav img:hover{
 
     color: white;
     font-size: 24pt;    
+}
+
+#game{
+    display: none;
+}
+
+.backStrip{
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 0;
+    background-color: rgba(255, 255, 255, 0.295);
+    height: 100%;
+
+    transition: width 0.2s;
+}
+
+ul li:hover .backStrip{
+    width: 100%;
 }

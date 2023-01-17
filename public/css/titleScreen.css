@@ -1,0 +1,65 @@
+#titleScreen{
+    color: white;
+}
+
+#mainMenu {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);    
+}
+
+#titleScreen h1{
+    font-size: 72pt;
+    letter-spacing: 6pt;
+    font-weight: normal;
+    margin-bottom: 1ex;
+    cursor: default;
+}
+
+#mainMenuOptions{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    list-style: none;
+}
+
+#mainMenuOptions .mainMenuOption{
+    position: relative;
+    width: 6em;
+    font-size: 22pt;
+    margin-top: 6pt;
+    cursor: pointer;
+    padding: 0.5ex;
+}
+
+#mainMenuOptions .mainMenuOption:hover{
+    font-size: 22pt;
+    margin-top: 6pt;
+    cursor: pointer;
+}
+
+#mainMenuOptions .mainMenuOption:hover .backStrip{
+    width: 100%;
+}
+
+#mainMenuInfo{
+    position: fixed;
+    bottom: 2em;
+    left: 2em;
+    font-size: 20pt;
+}
+
+#mainMenuInfo div{
+    margin: 1ex;
+}
+
+#titleScreenBG{
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+}

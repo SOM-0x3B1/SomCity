@@ -52,21 +52,6 @@
     cursor: pointer;
 }
 
-.category ul li .backStrip{
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    width: 0;
-    background-color: rgba(255, 255, 255, 0.295);
-    height: 100%;
-
-    transition: width 0.2s;
-}
-
-.category ul li:hover .backStrip{
-    width: 100%;
-}
 
 .noList{
     cursor: pointer;

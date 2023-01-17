@@ -8,6 +8,7 @@
     <title>SomCity</title>
 
     <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/titleScreen.css">
     <link rel="stylesheet" href="css/cityGrid.css">
     <link rel="stylesheet" href="css/controls.css">
     <link rel="stylesheet" href="css/buildMenu.css">
@@ -24,91 +25,119 @@
 </head>
 
 <body>
-    <header>
-        <h1>SomCity</h1>
-        <nav>
-            <img src="assets/icons/icon-save.png" alt="">
-            <img src="assets/icons/icon-settings.png" alt="">
-        </nav>
-    </header>
-
-    <main id="mainDisplay">
-        <div id="myCity" class="city">
-            <div id="mainGrid" class="gameGrid"></div>
-            <div id="planGrid" class="gameGrid"></div>
-        </div>
-    </main>
-
-    <aside id="mainStats">
-        <div id="mainStat-time" class="mainStatRow"><span>Time: </span><span
-            id="mainStat-time-value">0</span></div>
-        <div id="mainStat-population" class="mainStatRow"><span>Population: </span><span
-                id="mainStat-population-value">0</span></div>
-        <div id="mainStat-demands" class="mainStatRow">
-            <div id="mainStat-demands-bars">
-                <div class="barContainer">
-                    <div id="mainStat-demands-bar-r" class="mainStatDemandBar"></div>
+    <div id="titleScreen">
+        <div id="mainMenu">
+            <h1>SomCity</h1>
+            <div id="mainMenuOptions">
+                <div class="mainMenuOption">
+                    <div class="backStrip" id="BS-r-mainRoad"></div>Start New
                 </div>
-                <div class="barContainer">
-                    <div id="mainStat-demands-bar-c" class="mainStatDemandBar"></div>
+                <div class="mainMenuOption">
+                    <div class="backStrip" id="BS-r-mainRoad"></div>Load Game
                 </div>
-                <div class="barContainer">
-                    <div id="mainStat-demands-bar-i" class="mainStatDemandBar"></div>
+                <div class="mainMenuOption">
+                    <div class="backStrip" id="BS-r-mainRoad"></div>Options
+                </div>
+                <div class="mainMenuOption">
+                    <div class="backStrip" id="BS-r-mainRoad"></div>About
                 </div>
             </div>
-            <div id="mainStat-demands-centerline"></div>
         </div>
-        <div id="mainStat-money" class="mainStatRow"><span>Money: </span><span id="mainStat-monay-value">$2000</span>
-        </div>
-    </aside>
 
-    <div class="sideAreas ySideAreas" id="topSideArea"></div>
-    <div class="sideAreas xSideAreas" id="rightSideArea"></div>
-    <div class="sideAreas ySideAreas" id="downSideArea"></div>
-    <div class="sideAreas xSideAreas" id="leftSideArea"></div>
+        <div id="mainMenuInfo">
+            <div>by Onekilobit Studios</div>
+            <div>PRE-ALPHA BUILD</div>
+        </div>
 
-
-    <div id="buildMenu">
-        <div class="category">
-            <img src="assets/icons/icon-roads.png" alt="">
-            <ul id="r">
-                <li onclick="startBuilding('r-highway')">
-                    <div class="backStrip" id="BS-r-highway"></div>Highway (III)
-                </li>
-                <li onclick="startBuilding('r-mainRoad')">
-                    <div class="backStrip" id="BS-r-mainRoad"></div>Main road (II)
-                </li>
-                <li onclick="startBuilding('r-street')">
-                    <div class="backStrip" id="BS-r-street"></div>Street (I)
-                </li>
-            </ul>
-        </div>
-        <div class="category">
-            <img src="assets/icons/icon-zones.png" alt="">
-            <ul id="z">
-                <li onclick="startBuilding('z-residential')">
-                    <div class="backStrip" id="BS-z-residential"></div>Residential (R)
-                </li>
-                <li onclick="startBuilding('z-commercial')">
-                    <div class="backStrip" id="BS-z-commercial"></div>Commercial (C)
-                </li>
-                <li onclick="startBuilding('z-industrial')">
-                    <div class="backStrip" id="BS-z-industrial"></div>Industrial (I)
-                </li>
-            </ul>
-        </div>
-        <div class="category noList" id="bulldoze" onclick="startBulldoze()">
-            <img src="assets/icons/icon-bulldoze.png" alt="">
-        </div>
-        <div class="category noList" id="cancel" onclick="stopModification()">
-            <img src="assets/icons/icon-cancel.png" alt="">
-        </div>
+        <video id="titleScreenBG" src=""></video>
     </div>
 
-    <div id="cellInfo"></div>
+    <div id="game">
+        <header>
+            <h2>SomCity</h2>
+            <nav>
+                <img src="assets/icons/icon-save.png" alt="">
+                <img src="assets/icons/icon-settings.png" alt="">
+            </nav>
+        </header>
 
+        <main id="mainDisplay">
+            <div id="myCity" class="city">
+                <div id="mainGrid" class="gameGrid"></div>
+                <div id="planGrid" class="gameGrid"></div>
+            </div>
+        </main>
 
-    <span id="versionWarn">PRE-ALPHA BUILD<br>Do not share</span>
+        <aside id="mainStats">
+            <div id="mainStat-time" class="mainStatRow"><span>Time: </span><span id="mainStat-time-value">0</span>
+            </div>
+            <div id="mainStat-population" class="mainStatRow"><span>Population: </span><span
+                    id="mainStat-population-value">0</span></div>
+            <div id="mainStat-demands" class="mainStatRow">
+                <div id="mainStat-demands-bars">
+                    <div class="barContainer">
+                        <div id="mainStat-demands-bar-r" class="mainStatDemandBar"></div>
+                    </div>
+                    <div class="barContainer">
+                        <div id="mainStat-demands-bar-c" class="mainStatDemandBar"></div>
+                    </div>
+                    <div class="barContainer">
+                        <div id="mainStat-demands-bar-i" class="mainStatDemandBar"></div>
+                    </div>
+                </div>
+                <div id="mainStat-demands-centerline"></div>
+            </div>
+            <div id="mainStat-money" class="mainStatRow"><span>Money: </span><span
+                    id="mainStat-monay-value">$2000</span>
+            </div>
+        </aside>
+
+        <div class="sideAreas ySideAreas" id="topSideArea"></div>
+        <div class="sideAreas xSideAreas" id="rightSideArea"></div>
+        <div class="sideAreas ySideAreas" id="downSideArea"></div>
+        <div class="sideAreas xSideAreas" id="leftSideArea"></div>
+
+        <div id="buildMenu">
+            <div class="category">
+                <img src="assets/icons/icon-roads.png" alt="">
+                <ul id="r">
+                    <li onclick="startBuilding('r-highway')">
+                        <div class="backStrip" id="BS-r-highway"></div>Highway (III)
+                    </li>
+                    <li onclick="startBuilding('r-mainRoad')">
+                        <div class="backStrip" id="BS-r-mainRoad"></div>Main road (II)
+                    </li>
+                    <li onclick="startBuilding('r-street')">
+                        <div class="backStrip" id="BS-r-street"></div>Street (I)
+                    </li>
+                </ul>
+            </div>
+            <div class="category">
+                <img src="assets/icons/icon-zones.png" alt="">
+                <ul id="z">
+                    <li onclick="startBuilding('z-residential')">
+                        <div class="backStrip" id="BS-z-residential"></div>Residential (R)
+                    </li>
+                    <li onclick="startBuilding('z-commercial')">
+                        <div class="backStrip" id="BS-z-commercial"></div>Commercial (C)
+                    </li>
+                    <li onclick="startBuilding('z-industrial')">
+                        <div class="backStrip" id="BS-z-industrial"></div>Industrial (I)
+                    </li>
+                </ul>
+            </div>
+            <div class="category noList" id="bulldoze" onclick="startBulldoze()">
+                <img src="assets/icons/icon-bulldoze.png" alt="">
+            </div>
+            <div class="category noList" id="cancel" onclick="stopModification()">
+                <img src="assets/icons/icon-cancel.png" alt="">
+            </div>
+        </div>
+
+        <div id="cellInfo"></div>
+
+        <span id="versionWarn">PRE-ALPHA BUILD<br>Do not share</span>
+    </div>
 
 
     <script src="js/utility.js"></script>
