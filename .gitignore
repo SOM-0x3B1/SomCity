@@ -1,6 +1,7 @@
 /res/
 /trailer/
-/assets/sfx/
-/assets/music/
+public/assets/sfx/
+public/assets/music/
+public/assets/video/
 public/icon/
 /node_modules/

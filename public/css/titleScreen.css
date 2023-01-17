@@ -5,7 +5,7 @@
 #mainMenu {
     position: fixed;
     top: 50%;
-    left: 50%;
+    left: 40%;
     transform: translate(-50%, -50%);    
 }
 
@@ -46,7 +46,7 @@
 
 #mainMenuInfo{
     position: fixed;
-    bottom: 2em;
+    bottom: 1em;
     left: 2em;
     font-size: 20pt;
 }
@@ -62,4 +62,8 @@
     min-width: 100%;
     min-height: 100%;
     z-index: -1;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);  
 }
