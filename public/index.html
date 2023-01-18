@@ -27,29 +27,39 @@
 <body>
     <div id="titleScreen">
         <div id="mainMenu">
-            <h1>SomCity</h1>
+            <div id="title"><span id="h1Shadow">SomCity</span>
+                <h1>SomCity</h1>
+            </div>
             <div id="mainMenuOptions">
                 <div class="mainMenuOption">
-                    <div class="backStrip" id="BS-r-mainRoad"></div>Start New
+                    <div class="backStrip"></div>Start New
                 </div>
                 <div class="mainMenuOption">
-                    <div class="backStrip" id="BS-r-mainRoad"></div>Load Game
+                    <div class="backStrip"></div>Load Game
                 </div>
                 <div class="mainMenuOption">
-                    <div class="backStrip" id="BS-r-mainRoad"></div>Options
+                    <div class="backStrip"></div>Options
                 </div>
                 <div class="mainMenuOption">
-                    <div class="backStrip" id="BS-r-mainRoad"></div>About
+                    <div class="backStrip"></div>About
                 </div>
             </div>
         </div>
 
-        <div id="mainMenuInfo">
-            <div>by Onekilobit Studios</div>
-            <div>PRE-ALPHA BUILD</div>
+        <div id="maker" class="mainMenuInfo">Onekilobit Studios</div>
+        <div id="version" class="mainMenuInfo">PRE-ALPHA BUILD</div>
+
+        <div id="mainMenuAccountButtons">
+            <div class="mainMenuAccountButton">
+                <div class="backStrip"></div>log in
+            </div>
+            <div class="mainMenuAccountButton">
+                <div class="backStrip"></div>sign up
+            </div>
         </div>
 
-        <video id="titleScreenBG" src="assets/video/lamp.mp4" autoplay loop></video>
+        <video id="titleScreenBG" src="assets/video/lamp2.mp4" autoplay loop preload="auto"
+            poster="assets/video/poster.jpg"></video>
     </div>
 
     <div id="game">

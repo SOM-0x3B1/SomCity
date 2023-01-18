@@ -5,16 +5,29 @@
 #mainMenu {
     position: fixed;
     top: 50%;
-    left: 40%;
+    left: 50%;
     transform: translate(-50%, -50%);    
 }
 
 #titleScreen h1{
-    font-size: 72pt;
+    position: relative;
+    font-size: 120pt;
     letter-spacing: 6pt;
     font-weight: normal;
     margin-bottom: 1ex;
     cursor: default;
+}
+
+#h1Shadow{
+    position: absolute;    
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, 0); 
+    z-index: -1;
+
+    font-size: 119pt;
+    color: rgba(46, 46, 46, 0.8);
+    filter: blur(5pt);
 }
 
 #mainMenuOptions{
@@ -28,15 +41,13 @@
 #mainMenuOptions .mainMenuOption{
     position: relative;
     width: 6em;
-    font-size: 22pt;
+    font-size: 26pt;
     margin-top: 6pt;
     cursor: pointer;
     padding: 0.5ex;
 }
 
 #mainMenuOptions .mainMenuOption:hover{
-    font-size: 22pt;
-    margin-top: 6pt;
     cursor: pointer;
 }
 
@@ -44,15 +55,47 @@
     width: 100%;
 }
 
-#mainMenuInfo{
+.mainMenuInfo{
     position: fixed;
-    bottom: 1em;
-    left: 2em;
+    bottom: 1em;    
     font-size: 20pt;
+    color: rgba(255, 255, 255, 0.3);
+    text-shadow: 0 2pt 10pt;
 }
 
-#mainMenuInfo div{
+.mainMenuInfo div{
     margin: 1ex;
+}
+
+#maker{
+    left: 2em;
+}
+#version{
+    right: 2em;
+}
+
+#mainMenuAccountButtons{
+    position: fixed;
+    top: calc(1em - 0.5ex);
+    left: calc(2em - 0.5ex);
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1em;
+
+    font-size: 20pt;
+    color: rgb(255, 255, 255);
+}
+
+#mainMenuAccountButtons .mainMenuAccountButton{
+    position: relative;
+    cursor: pointer;
+    padding: 0.5ex;
+}
+
+#mainMenuAccountButtons .mainMenuAccountButton:hover .backStrip{
+    width: 100%;
 }
 
 #titleScreenBG{
