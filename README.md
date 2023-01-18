@@ -26,8 +26,13 @@ The projects is based on "simple" city simulation practices and convenient HTML 
 - unlockable buildings
 - global export (+export product tiers)
 
-### Out of scope ideas
+### Out of reach ideas
 - multiplayer
 - modular buildings
 
 ## How to play
+1. Build out roads from your pregenerated highways 🛣️
+2. Allocate residential zones to let workers move to your city 🏘️
+3. Allocate industrial zones to give jobs to your citizens 🏭
+4. Allocate commercial zones to let shops be built, that will supply your people and purchase the products produced by your industry 🏪
+5. Use the bulldozer to delete unwanted buildings 🚧
