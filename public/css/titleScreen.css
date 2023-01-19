@@ -11,7 +11,7 @@
 
 #titleScreen h1{
     position: relative;
-    font-size: 120pt;
+    font-size: 72pt;
     letter-spacing: 6pt;
     font-weight: normal;
     margin-bottom: 1ex;
@@ -25,7 +25,7 @@
     transform: translate(-50%, 0); 
     z-index: -1;
 
-    font-size: 119pt;
+    font-size: 71.8pt;
     color: rgba(46, 46, 46, 0.8);
     filter: blur(5pt);
 }
@@ -41,7 +41,7 @@
 #mainMenuOptions .mainMenuOption{
     position: relative;
     width: 6em;
-    font-size: 26pt;
+    font-size: 22pt;
     margin-top: 6pt;
     cursor: pointer;
     padding: 0.5ex;

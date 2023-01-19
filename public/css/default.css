@@ -90,6 +90,9 @@ nav img:hover{
 
 #game{
     display: none;
+    opacity: 0;
+    transition: opacity 2s;
+    background-color: var(--pageBackgroundColor);
 }
 
 .backStrip{

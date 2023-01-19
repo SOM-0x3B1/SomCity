@@ -167,5 +167,3 @@ function buildNewBaseMap() {
         }
     }
 }
-
-buildNewBaseMap();

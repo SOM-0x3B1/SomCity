@@ -35,6 +35,9 @@ function shuffle(array) {
 }
 
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 /*addEventListener('fullscreenchange', (e) => {
     let slider = document.getElementById('fullscreen');
