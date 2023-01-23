@@ -28,6 +28,13 @@ let mainTick = setInterval(() => {
     }
 }, 50);
 
+let tickIndustry = setInterval(() => {
+    for (let i = 0; i < IZones.length; i++) {
+        IZones[i].storage += IZones[i].production;
+        if (IZones[i].storage > IZones[i].storageCapacity)
+            IZones[i].storage = IZones[i].storageCapacity
+    }
+}, 500);
 
 let tickRoads = setInterval(() => {
     for (const car in movingCars)

@@ -109,12 +109,23 @@ class Car {
 
         this.housingBuilding = this.target;
         this.route = [];
+
+        if(this.housingBuilding instanceof IZone){
+            this.housingBuilding.workersPresent++;
+            this.housingBuilding.updateEfficiency();
+        }
     }
 
     exitBuilding() {
         let entrance = this.housingBuilding.entrance;
         this.x = entrance.x;
         this.y = entrance.y;
+
+        if(this.housingBuilding instanceof IZone){
+            this.housingBuilding.workersPresent--;
+            this.housingBuilding.updateEfficiency();
+        }
+
         this.housingBuilding = undefined;
     }
 
