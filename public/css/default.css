@@ -34,9 +34,14 @@ body {
 
     overflow: hidden;
     background-color: var(--pageBackgroundColor);
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-h2{    
+h2 {
     position: fixed;
     width: 100%;
     background-color: var(--opaqueBGColor);
@@ -51,7 +56,7 @@ h2{
     z-index: 5000;
 }
 
-nav{
+nav {
     display: flex;
     justify-content: flex-end;
 
@@ -65,7 +70,7 @@ nav{
     font-size: 30pt;
 }
 
-nav img{
+nav img {
     height: 0.9em;
     image-rendering: pixelated;
     margin-left: 0.5em;
@@ -74,28 +79,28 @@ nav img{
     cursor: pointer;
 }
 
-nav img:hover{
+nav img:hover {
     filter: invert(0);
 }
 
 
-#versionWarn{
+#versionWarn {
     position: fixed;
     bottom: 6vh;
     margin: 1ex;
 
     color: white;
-    font-size: 24pt;    
+    font-size: 24pt;
 }
 
-#game{
+#game {
     display: none;
     opacity: 0;
     transition: opacity 2s;
     background-color: var(--pageBackgroundColor);
 }
 
-.backStrip{
+.backStrip {
     position: absolute;
     top: 0;
     left: 0;
@@ -107,6 +112,6 @@ nav img:hover{
     transition: width 0.2s;
 }
 
-ul li:hover .backStrip{
+ul li:hover .backStrip {
     width: 100%;
 }
