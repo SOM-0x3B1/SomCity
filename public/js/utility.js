@@ -34,6 +34,20 @@ function shuffle(array) {
     return array;
 }
 
+function formatTime(aTime) {
+    let hours = Math.floor(aTime / 60);
+    let res = hours;
+    let minutes = aTime - hours * 60;
+
+    if (minutes.toString().length < 2)
+        res += ':0';
+    else
+        res += ':';
+    res += minutes % 60;
+
+    return res;
+}
+
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));

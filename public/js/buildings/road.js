@@ -46,6 +46,13 @@ class Road extends Building {
         return false;
     }
 
+    get inQueue() {
+        let res = 0;
+        for (const key in this.queues)
+            res += this.queues[key].length;
+        return res;
+    }
+
     get countOfCars() {
         let result = 0;
         for (const key in this.cars)
@@ -290,7 +297,7 @@ class Road extends Building {
     }
 
     fillCellInfo() {
-        cellInfo.innerText = `Speed: ${this.speedPerQueue} cars/min/direction \n Cars: ${this.countOfCars}`;
+        cellInfo.innerText = `Speed: ${this.speedPerQueue} cars/min/direction \n Cars: ${this.countOfCars} \n Traffic jam: ${this.isJammed} \n In queue: ${this.inQueue}`;
     }
 }
 

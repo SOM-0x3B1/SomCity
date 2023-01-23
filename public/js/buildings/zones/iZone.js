@@ -9,13 +9,18 @@ class IZone extends Zone {
         this.opens2;
         this.closes1;
         this.closes2;
+        this.efficiency = 1;
 
-        this.opens1 = ((7 + rnd(2)) * 60);
-        this.closes1 = this.opens1 + ((6 + rnd(3)) * 60)
+        this.opens1 = ((6 + rnd(3)) * 60);
+        this.closes1 = this.opens1 + ((10 + rnd(2)) * 60)
+        if (this.closes1 > 1439)
+            this.closes1 -= 1439;
 
         if (this.hasNightShift) {
-            this.opens2 = this.closes1 - 60;
-            this.closes2 = this.opens2 + ((5 + rnd(3)) * 60);            
+            this.opens2 = this.closes1 - 30;
+            this.closes2 = this.opens2 + ((10 + rnd(2)) * 60);      
+            if (this.closes2 > 1439)
+                this.closes2 -= 1439;      
         }
 
         this.buildingTexture = rnd(2);
@@ -47,6 +52,8 @@ class IZone extends Zone {
     }
 
     fillCellInfo() {
-        cellInfo.innerText = `Workers: ${this.workers.length} \n Max workers: ${this.capacity}`;
+        cellInfo.innerText = `Workers: ${10}/${this.workers.length}/${this.capacity} (present/employed/max) \n Efficiency: ${Math.round(this.efficiency * 100)}% \n Has nightshift: ${this.hasNightShift} \n Opens: ${formatTime(this.opens1)} \n Closes: ${formatTime(this.closes1)}`;
+        if(this.hasNightShift)
+            cellInfo.innerText += `\n Opens (night): ${formatTime(this.opens2)} \n Closes (night): ${formatTime(this.closes2)}`;
     }
 }
