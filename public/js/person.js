@@ -20,7 +20,7 @@ class Person {
         if (freeWorkplaces.length > 0) {
             let workplace = freeWorkplaces[rnd(freeWorkplaces.length - 1)];
 
-            let nightShifter = workplace.hasNightShift && rnd(4) == 0;
+            let nightShifter = workplace.hasNightShift && rnd(3) == 0;
 
             workplace.addWorker(this, nightShifter);
             unemployed.splice(unemployed.indexOf(this), 1);

@@ -1,3 +1,14 @@
+function assignSounds() {
+    let menuOptions = document.getElementsByClassName('mainMenuOption');
+
+    for (let i = 0; i < menuOptions.length; i++) {
+        console.log(menuOptions[i]);
+        menuOptions[i].onclick = () => { aClicks.playNext(); };
+    }
+}
+assignSounds();
+
+
 function startNew() {
     showGame();
 }
