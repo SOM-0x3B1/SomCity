@@ -55,6 +55,14 @@
     width: 100%;
 }
 
+#loadCity{
+    opacity: 0.3;
+}
+
+#loadCity .backStrip{
+    display: none;
+}
+
 .mainMenuInfo{
     position: fixed;
     bottom: 1em;    
