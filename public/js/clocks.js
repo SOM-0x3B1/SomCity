@@ -25,7 +25,7 @@ let mainTick = setInterval(() => {
             else
                 car.changeRouteNextTimeToTarget = cSchedules[i].target;
         }
-    }
+    }    
 }, 50);
 
 let tickIndustry = setInterval(() => {

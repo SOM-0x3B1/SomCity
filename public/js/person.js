@@ -1,6 +1,8 @@
 let people = [];
+let statPopulation = document.getElementById('mainStat-population-value');
 let targetedPeople = [];
 let unemployed = [];
+let statUnemployed = document.getElementById('mainStat-unemployed-value');
 //let lookForJob = [];
 let globalSchedule = {};
 
@@ -13,7 +15,8 @@ class Person {
         people.push(this);
         unemployed.push(this);
 
-        document.getElementById('mainStat-population-value').innerText = people.length;
+        statPopulation.innerText = people.length;
+        statUnemployed.innerText = unemployed.length;
     }
 
     lookForJob() {
@@ -38,6 +41,8 @@ class Person {
 
             Schedule.addNewEvent(this, starttime, workplace);
             Schedule.addNewEvent(this, endTime, this.household.homeZone);
+
+            statUnemployed.innerText = unemployed.length;
         }
     }
 
