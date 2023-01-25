@@ -194,7 +194,7 @@ class Road extends Building {
 
     updateQueuesAndCars(neighbor) {
         if (!this.queues[coordsToKey(neighbor.x, neighbor.y)])
-            this.queues[coordsToKey(neighbor.x, neighbor.y)] = new Array();
+            this.queues[coordsToKey(neighbor.x, neighbor.y)] = [];
         this.queueKeys.push(coordsToKey(neighbor.x, neighbor.y));
 
         if (!this.cars[coordsToKey(neighbor.x, neighbor.y)])

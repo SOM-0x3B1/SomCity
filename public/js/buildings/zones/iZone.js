@@ -30,7 +30,7 @@ class IZone extends Zone {
             this.opens2 = this.closes1 - 30;
             this.closes2 = this.opens2 + ((10 + rnd(2)) * 60);      
             if (this.closes2 > 1439)
-                this.closes2 -= 1439;      
+                this.closes2 -= 1440;      
         }
 
         this.buildingTexture = rnd(2);
