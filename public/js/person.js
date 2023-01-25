@@ -48,7 +48,9 @@ class Person {
 
     remove() {
         people.splice(people.indexOf(this), 1);
+        unemployed.splice(unemployed.indexOf(this), 1);
         document.getElementById('mainStat-population-value').innerText = people.length;
+        document.getElementById('mainStat-unemployed-value').innerText = people.length;
         this.household = undefined;
         this.car.remove();
     }
