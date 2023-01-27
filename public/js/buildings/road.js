@@ -40,8 +40,8 @@ class Road extends Building {
     }
 
     get isJammed() {
-        for (const key in this.cars)
-            if (this.isFull(key))
+        for (const key in this.queues)
+            if (this.queues[key].length > this.speedPerQueue)
                 return true;
         return false;
     }
