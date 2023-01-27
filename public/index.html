@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="css/controls.css">
     <link rel="stylesheet" href="css/buildMenu.css">
     <link rel="stylesheet" href="css/mainStats.css">
+    <link rel="stylesheet" href="css/overlayPanel.css">
     <link rel="stylesheet" href="css/overlays.css">
 
     <link rel="apple-touch-icon" sizes="76x76" href="icon/apple-touch-icon.png">
@@ -58,7 +59,8 @@
             </div>
         </div>
 
-        <video id="titleScreenBG" src="assets/video/lamp5.mp4" autoplay="autoplay" loop="true" preload="auto" muted></video>
+        <video id="titleScreenBG" src="assets/video/lamp5.mp4" autoplay="autoplay" loop="true" preload="auto"
+            muted></video>
     </div>
 
     <div id="game">
@@ -76,6 +78,11 @@
                 <div id="planGrid" class="gameGrid"></div>
             </div>
         </main>
+
+        <div class="sideAreas ySideAreas" id="topSideArea"></div>
+        <div class="sideAreas xSideAreas" id="rightSideArea"></div>
+        <div class="sideAreas ySideAreas" id="downSideArea"></div>
+        <div class="sideAreas xSideAreas" id="leftSideArea"></div>
 
         <aside id="mainStats">
             <div id="mainStat-time" class="mainStatRow"><span>Time: </span><span id="mainStat-time-value">0</span>
@@ -103,10 +110,35 @@
             </div>
         </aside>
 
-        <div class="sideAreas ySideAreas" id="topSideArea"></div>
-        <div class="sideAreas xSideAreas" id="rightSideArea"></div>
-        <div class="sideAreas ySideAreas" id="downSideArea"></div>
-        <div class="sideAreas xSideAreas" id="leftSideArea"></div>
+        <aside id="overlayPanel">
+            <h3>Overlays</h3>
+            <div id="overlayList">
+                <div class="overlayButton">
+                    <div class="backStrip" id="BS-ol-traffic"></div>traffic
+                </div>
+                <div class="overlayButton">
+                    <div class="backStrip" id="BS-ol-workers"></div>workers
+                </div>
+                <div class="overlayButton">
+                    <div class="backStrip" id="BS-ol-development"></div>development
+                </div>
+                <div class="overlayButton">
+                    <div class="backStrip" id="BS-ol-power"></div>power
+                </div>
+                <div class="overlayButton">
+                    <div class="backStrip" id="BS-ol-water"></div>water
+                </div>
+                <div class="overlayButton">
+                    <div class="backStrip" id="BS-ol-police"></div>police
+                </div>
+                <div class="overlayButton">
+                    <div class="backStrip" id="BS-ol-education"></div>education
+                </div>
+                <div class="overlayButton">
+                    <div class="backStrip" id="BS-ol-qualification"></div>qualification
+                </div>
+            </div>
+        </aside>
 
         <div id="buildMenu">
             <div class="category">

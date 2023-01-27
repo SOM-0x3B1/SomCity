@@ -1,0 +1,38 @@
+#overlayPanel{    
+    position: fixed;
+    left: 0;
+    top: 30%;
+    
+    width: 7em;
+    padding: 1em;
+
+    color: white;
+    font-size: 16pt;
+
+    background-color: var(--opaqueBGColor);
+    /*border-radius: 1ex 0 0 1ex;*/
+}
+
+#overlayPanel h3{    
+    font-weight: normal;
+    padding-bottom: 2ex;
+}
+
+#overlayList{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+#overlayPanel .overlayButton{
+    position: relative;
+    padding: 0.5ex;
+}
+
+#overlayPanel .overlayButton:hover{
+    cursor: pointer;
+}
+
+#overlayPanel .overlayButton:hover .backStrip{
+    width: 100%;
+}
