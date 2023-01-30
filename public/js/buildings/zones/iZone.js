@@ -2,14 +2,11 @@ let IZones = [];
 
 class IZone extends WorkZone {
     constructor(x, y, layer) {
-        super(x, y, 'assets/zones/i.png', layer);       
+        super(x, y, 'assets/zones/i.png', Math.round(this.maxWorkers / 10), layer);       
 
         this.buildingTexture = rnd(2);
     }
 
-    get free() {
-        return workers.length < this.maxWorkers;
-    }
 
     register() {
         freeWorkplaces.push(this);

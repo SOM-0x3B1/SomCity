@@ -1,14 +1,14 @@
 class WorkZone extends Zone {
     constructor(x, y, texture, layer) {
-        super(x, y, texture, layer);
+        super(x, y, texture, maxWorkers, productionCap, storageCap, layer);
 
         this.workers = [];
         this.workersPresent = 0;
-        this.maxWorkers = 50 + rnd(100);
+        this.maxWorkers = maxWorkers;
         this.production = 0;
-        this.productionCapacity = Math.round(this.maxWorkers / 10);
+        this.productionCapacity = productionCap;
         this.storage = 0;
-        this.storageCapacity = 1000;
+        this.storageCapacity = storageCap;
 
         this.hasNightShift = rnd(1) == 0;
         this.opens1;
