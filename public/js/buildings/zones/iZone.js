@@ -1,37 +1,8 @@
 let IZones = [];
 
-class IZone extends Zone {
+class IZone extends WorkZone {
     constructor(x, y, layer) {
-        super(x, y, 'assets/zones/i.png', layer);
-
-        this.workers = [];
-        this.workersPresent = 0;
-        this.maxWorkers = 50 + rnd(100);
-        this.production = 0;
-        this.productionCapacity = Math.round(this.maxWorkers / 10);
-        this.storage = 0;
-        this.storageCapacity = 1000;
-
-        this.hasNightShift = rnd(1) == 0;
-        this.opens1;
-        this.opens2;
-        this.closes1;
-        this.closes2;
-
-        this.efficiency = 0;
-        this.maxEfficiency = 0;
-
-        this.opens1 = ((6 + rnd(3)) * 60);
-        this.closes1 = this.opens1 + ((10 + rnd(2)) * 60)
-        if (this.closes1 > 1439)
-            this.closes1 -= 1440;
-
-        if (this.hasNightShift) {
-            this.opens2 = this.closes1 - 30;
-            this.closes2 = this.opens2 + ((10 + rnd(2)) * 60);      
-            if (this.closes2 > 1439)
-                this.closes2 -= 1440;      
-        }
+        super(x, y, 'assets/zones/i.png', layer);       
 
         this.buildingTexture = rnd(2);
     }
@@ -44,24 +15,6 @@ class IZone extends Zone {
         freeWorkplaces.push(this);
         IZones.push(this);
         this.updateAdjBuildingsAndRoads();
-    }
-
-    addWorker(worker) {
-        this.workers.push(worker);
-
-        if (this.workers.length >= this.maxWorkers)
-            freeWorkplaces.splice(freeWorkplaces.indexOf(this), 1);
-
-        worker.job = this;
-
-        this.updateEfficiency();
-        //worker.car.calcRoute(worker.job);
-    }
-
-    updateEfficiency(){
-        this.efficiency = this.workersPresent / this.maxWorkers;
-        this.maxEfficiency = this.workers.length / this.maxWorkers;
-        this.production = Math.round(this.productionCapacity * this.efficiency);
     }
 
     finishConstruction() {
