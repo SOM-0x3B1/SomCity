@@ -29,6 +29,16 @@ class CZone extends WorkZone {
         freeWorkplaces.push(this);
         cZones.push(this);
         this.updateAdjBuildingsAndRoads();
+    }    
+
+    finishConstruction() {
+        clearInterval(this.constructionInterval);
+        let type = "";
+        for (const i of this.products)
+            type += i + 1;
+
+        this.buildingImg.src = `assets/zoneTextures/cz-${type}.png`;
+        rotateStaticImg(this.buildingImg, this.facing);
     }
 
     requestProducts(){
@@ -40,12 +50,6 @@ class CZone extends WorkZone {
                 }
             }
         }
-    }
-
-    finishConstruction() {
-        clearInterval(this.constructionInterval);
-        this.buildingImg.src = `assets/zoneTextures/cz-${this.level}-${this.buildingTexture}.png`;
-        rotateStaticImg(this.buildingImg, this.facing);
     }
 
     fillCellInfo() {
