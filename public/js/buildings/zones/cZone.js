@@ -7,15 +7,16 @@ let cZones = [];
     Tech: 3
 }*/
 
-const products = ['food', 'household', 'furniture', 'tech', 'entertainment'];
+const products = ['food', 'household items', 'furniture', 'tech', 'entertainment'];
 
 class CZone extends WorkZone {
     constructor(x, y, layer) {
-        super(x, y, 'assets/zones/c.png', 5 + rnd(10), Math.round(this.maxWorkers / 2), 1000, layer);
+        let maxWorkers = 5 + rnd(10);
+        super(x, y, 'assets/zones/c.png', maxWorkers, Math.round(maxWorkers / 2), 1000, layer);
 
         this.customerQueue = [];
         this.maxCustomers = 30;
-        this.products = [rnd(products.length)];
+        this.products = [rnd(products.length - 1)];
 
         this.buildingTexture = rnd(2);
     }

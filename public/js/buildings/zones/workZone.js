@@ -1,6 +1,6 @@
 class WorkZone extends Zone {
-    constructor(x, y, texture, layer) {
-        super(x, y, texture, maxWorkers, productionCap, storageCap, layer);
+    constructor(x, y, texture, maxWorkers, productionCap, storageCap, layer) {
+        super(x, y, texture, layer);
 
         this.workers = [];
         this.workersPresent = 0;

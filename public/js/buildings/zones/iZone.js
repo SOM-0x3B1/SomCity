@@ -2,7 +2,8 @@ let IZones = [];
 
 class IZone extends WorkZone {
     constructor(x, y, layer) {
-        super(x, y, 'assets/zones/i.png', Math.round(this.maxWorkers / 10), layer);       
+        let maxWorkers = 50 + Math.round(100);
+        super(x, y, 'assets/zones/i.png', maxWorkers, Math.round(maxWorkers / 10), 500 + rnd(10) * 100, layer);       
 
         this.buildingTexture = rnd(2);
     }
