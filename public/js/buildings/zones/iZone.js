@@ -5,9 +5,14 @@ class IZone extends WorkZone {
         let maxWorkers = 50 + Math.round(100);
         super(x, y, 'assets/zones/i.png', maxWorkers, Math.round(maxWorkers / 10), 500 + rnd(10) * 100, layer);       
 
+        this.activeTrucks = [];
+
         this.buildingTexture = rnd(2);
     }
 
+    get canDeliver(){
+        return this.storage > 0 && this.workersPresent > 0;
+    }
 
     register() {
         freeWorkplaces.push(this);
@@ -19,6 +24,12 @@ class IZone extends WorkZone {
         clearInterval(this.constructionInterval);
         this.buildingImg.src = `assets/zoneTextures/iz-${this.level}-${this.buildingTexture}.png`;
         rotateStaticImg(this.buildingImg, this.facing);
+    }
+
+    sendTruck(target){
+        let newTruck = new Truck();
+        this.activeTrucks.push(newTruck);
+        newTruck.calcRoute(target);
     }
 
     fillCellInfo() {

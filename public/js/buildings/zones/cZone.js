@@ -21,10 +21,25 @@ class CZone extends WorkZone {
         this.buildingTexture = rnd(2);
     }
 
+    get outOfStock(){
+        return this.storage == 0;
+    }
+
     register() {
         freeWorkplaces.push(this);
         cZones.push(this);
         this.updateAdjBuildingsAndRoads();
+    }
+
+    requestProducts(){
+        if(this.storage < this.maxStorage){
+            for (let i = 0; i < IZones.length; i++) {
+                if(IZones[i].canDeliver){
+                    IZones[i].sendTruck(this);
+                    break;
+                }
+            }
+        }
     }
 
     finishConstruction() {
