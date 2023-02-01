@@ -13,11 +13,9 @@ class ComplexSFX {
             this.sounds.push(a);
             sfxs.push(a);
         }
-        console.log(this.sounds);
     }
 
     playNext() {
-        console.log(this);
         if (this.cSoundIndex == this.sounds.length)
             this.cSoundIndex = 0;
 

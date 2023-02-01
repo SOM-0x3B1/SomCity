@@ -14,7 +14,6 @@
         const item = this.elements[this.head];
         delete this.elements[this.head];
         this.head++;
-        console.log(this);
         return item;
     }
 

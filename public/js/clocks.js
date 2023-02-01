@@ -29,6 +29,7 @@ let mainTick = setInterval(() => {
 }, 50);
 
 let tickIndustry = setInterval(() => {
+    shuffle(IZones);
     for (let i = 0; i < IZones.length; i++) {
         IZones[i].storage += IZones[i].production;
         if (IZones[i].storage > IZones[i].storageCapacity)
