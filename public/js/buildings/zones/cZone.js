@@ -11,8 +11,8 @@ const products = ['food', 'household items', 'furniture', 'tech', 'entertainment
 
 class CZone extends WorkZone {
     constructor(x, y, layer) {
-        let maxWorkers = 5 + rnd(10);
-        super(x, y, 'assets/zones/c.png', maxWorkers, Math.round(maxWorkers / 2), 1000, layer);
+        let rndMaxWorkers = 5 + rnd(10);
+        super(x, y, 'assets/zones/c.png', rndMaxWorkers, Math.round(rndMaxWorkers / 2), 1000, layer);
 
         this.customerQueue = [];
         this.maxCustomers = 30;

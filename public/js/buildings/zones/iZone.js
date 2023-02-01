@@ -2,8 +2,8 @@ let IZones = [];
 
 class IZone extends WorkZone {
     constructor(x, y, layer) {
-        let maxWorkers = 50 + Math.round(100);
-        super(x, y, 'assets/zones/i.png', maxWorkers, Math.round(maxWorkers / 10), 500 + rnd(10) * 100, layer);       
+        let rndMaxWorkers = 50 + rnd(100);
+        super(x, y, 'assets/zones/i.png', rndMaxWorkers, Math.round(rndMaxWorkers / 10), 500 + rnd(10) * 100, layer);       
 
         this.activeTrucks = [];
 
