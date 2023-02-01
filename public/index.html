@@ -9,6 +9,7 @@
 
     <link rel="stylesheet" href="css/default.css">
     <link rel="stylesheet" href="css/titleScreen.css">
+    <link rel="stylesheet" href="css/settings.css">
     <link rel="stylesheet" href="css/cityGrid.css">
     <link rel="stylesheet" href="css/controls.css">
     <link rel="stylesheet" href="css/buildMenu.css">
@@ -31,17 +32,17 @@
             <div id="title"><span id="h1Shadow">SomCity</span>
                 <h1>SomCity</h1>
             </div>
-            <div id="mainMenuOptions">
-                <div id="startNew" class="mainMenuOption">
+            <div class="menuOptions">
+                <div id="startNew" class="menuOption">
                     <div class="backStrip" onclick="startNew()"></div>Start New
                 </div>
-                <div id="loadCity" class="mainMenuOption">
+                <div id="loadCity" class="menuOption">
                     <div class="backStrip"></div>Load City
                 </div>
-                <div class="mainMenuOption">
-                    <div class="backStrip"></div>Options
+                <div class="menuOption">
+                    <div class="backStrip" onclick="showSettings()"></div>Options
                 </div>
-                <div class="mainMenuOption">
+                <div class="menuOption">
                     <div class="backStrip"></div>About
                 </div>
             </div>
@@ -179,7 +180,72 @@
 
         <div id="cellInfo"></div>
 
-        <span id="versionWarn">PRE-ALPHA BUILD<br>Do not share</span>
+        <span id="versionWarn">PRE-ALPHA BUILD<br>Do not share</span>      
+    </div>
+
+
+    <div id="settingsWindow" class="window">
+        <h3>Settings</h3>
+
+        <table id="settings" class="settings">
+            <tr>
+                <td colspan="4">
+                    <h4>Audio</h4>
+                </td>
+            </tr>
+            <tr class="setting">
+                <td> <label for="masterVolume">Master: </label> </td>
+                <td colspan="3"> <input type="range" min="0" max="100" value="80" id="masterVolume"
+                        oninput="setMaster(this.value)">
+                </td>
+            </tr>
+            <tr class="setting">
+                <td> <label for="musicVolume">Music: </label> </td>
+                <td colspan="3"> <input type="range" min="0" max="100" value="40" id="musicVolume"
+                        oninput="setMusic(this.value)">
+                </td>
+            </tr>
+            <tr class="setting">
+                <td> <label for="ambientVolume">Ambient: </label> </td>
+                <td colspan="3"> <input type="range" min="0" max="100" value="60" id="ambientVolume"
+                        oninput="setAmbient(this.value)">
+                </td>
+            </tr>
+            <tr class="setting">
+                <td> <label for="sfxVolume">SFX: </label> </td>
+                <td colspan="3"> <input type="range" min="0" max="100" value="80" id="sfxVolume"
+                        oninput="setSFX(this.value)"> </td>
+            </tr>
+            <tr class="setting">
+                <td> <label for="voiceVolume">Voice chat: </label> </td>
+                <td colspan="3"> <input type="range" min="0" max="100" value="40" id="voiceVolume"
+                        oninput="setVoice(this.value)">
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="4">
+                    <h4>Game</h4>
+                </td>
+            </tr>
+            <tr class="setting">
+                <td> <label for="autosave">AutoSave:</label> </td>
+                <td>off</td>
+                <td>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </td>
+                <td>on</td>
+            </tr>
+        </table>
+
+        <div class="close" onclick="closeSettings()">x</div>
+
+        <div class="menuOption">
+            <div class="backStrip" onclick="startNew()"></div>Save
+        </div>
     </div>
 
 

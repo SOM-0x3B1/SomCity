@@ -1,0 +1,234 @@
+.window {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    position: absolute;
+
+    max-height: 90vh;
+    min-width: 60vh;
+    width: min-content;
+    overflow-y: auto;
+
+    color: white;
+
+    border: solid;
+    border-color: white;
+    background-color: rgba(12, 12, 12, 0.95);
+    box-shadow: 0 0 3pt white;
+
+    animation: fadeIn 0.5s ease-out;
+}
+
+.window h3 {
+    font-size: 20pt;
+    margin-top: 2ex;
+    margin-bottom: 3ex;
+}
+
+.settings {
+    font-size: 16pt;
+    max-width: 80%;
+    min-width: 70%;
+    border: none;
+    text-align: right;
+    text-shadow: none;
+}
+
+.settings h4 {
+    display: block;
+    text-align: center;
+    margin-bottom: 1ex;
+    margin-top: 4ex;
+}
+
+.setting {
+    width: 80%;
+    height: 4ex;
+    margin-bottom: 2ex;
+
+    font-size: 20pt;
+}
+.setting td:first-child {
+    width: min-content;
+    white-space: nowrap
+}
+.setting td:nth-child(2) {
+    text-align: center;
+    position: relative;
+}
+
+.window label {
+    padding-right: 0.5em;
+    cursor: url('media/cursor.png') 11 11, auto;
+}
+
+/*#name{
+    width: 100%;
+}*/
+
+#settingsWindow{
+    display: none;
+}
+
+#settingsWindow h3 {
+    margin-bottom: 0;
+}
+
+#settings {
+    margin-bottom: 4ex;
+}
+
+#settings .setting td:nth-child(2) {
+    width: 50%;
+    text-align: right;
+    padding-right: 1em;
+    color: #858585;
+}
+
+#settings .setting td:nth-child(3) {
+    width: 4em;
+    text-align: center;  
+}
+
+#settings .setting td:nth-child(4) {
+    width: 50%;
+    text-align: left;
+    padding-left: 1em;
+    color: #858585;
+}
+
+/*#settings input[type="checkbox"] {
+    margin-right: 50%;
+}*/
+
+.close {
+    position: absolute;
+    right: 0.5ex;
+    font-size: 30pt;
+}
+
+.close:hover {
+    text-shadow: 1pt 1pt 5pt red;
+}
+
+#errors {
+    margin-bottom: 3ex;
+}
+
+.error {
+    display: none;
+}
+
+
+
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 1ex;
+    background: #858585;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+input[type="range"]:hover {
+    opacity: 1;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.5ex;
+    height: 2.5ex;
+    background: white;
+    box-shadow: 0 0 3pt white;
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 1.5ex;
+    height: 2.5ex;
+    background: white;
+}
+
+/*input[type="checkbox"] {
+    height: 1.2em;
+    width: 1.2em;
+    background-color: white;
+}*/
+
+
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 2em;
+    height: 2ex;
+
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.switch:hover {
+    opacity: 1;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(24, 24, 24);
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 1.1ex;
+    width: 1.1ex;
+    left: 1ex;
+    bottom: 0.45ex;
+    background-color: white;
+    box-shadow: 0 0 3pt white;
+    -webkit-transition: .4s;
+    transition: .4s;
+}
+
+.switch input:checked+.slider {
+    background-color: #858585;
+}
+
+.switch input:focus+.slider {
+    box-shadow: 0 0 1px #858585;
+}
+
+.switch input:checked+.slider:before {
+    -webkit-transform: translateX(1.2em);
+    -ms-transform: translateX(1.2em);
+    transform: translateX(1.2em);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}

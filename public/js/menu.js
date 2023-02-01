@@ -1,5 +1,5 @@
 function assignSounds() {
-    let menuOptions = document.getElementsByClassName('mainMenuOption');
+    let menuOptions = document.getElementsByClassName('menuOption');
 
     for (let i = 0; i < menuOptions.length; i++) {
         menuOptions[i].onclick = () => { aClicks.playNext(); };
@@ -21,4 +21,8 @@ async function showGame() {
     await sleep(2000);
 
     document.getElementById('titleScreen').style.display = 'none';
+}
+
+function showSettings(){
+    document.getElementById('settingsWindow').style.display = 'flex';
 }
