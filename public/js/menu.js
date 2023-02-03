@@ -29,3 +29,6 @@ async function showGame() {
 function showSettings() {
     document.getElementById('settingsWindow').style.display = 'flex';
 }
+function closeSettings() {
+    document.getElementById('settingsWindow').style.display = 'none';
+}

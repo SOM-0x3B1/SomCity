@@ -106,6 +106,7 @@
     position: absolute;
     right: 0.5ex;
     font-size: 30pt;
+    cursor: pointer;
 }
 
 .close:hover {
