@@ -36,7 +36,7 @@
                 <div id="startNew" class="menuOption">
                     <div class="backStrip" onclick="startNew()"></div>Start New
                 </div>
-                <div id="loadCity" class="menuOption">
+                <div id="loadCity" class="menuOption unavailableButton">
                     <div class="backStrip"></div>Load City
                 </div>
                 <div class="menuOption">
@@ -69,7 +69,7 @@
             <h2>SomCity</h2>
             <nav>
                 <img src="assets/icons/icon-save.png" alt="">
-                <img src="assets/icons/icon-settings.png" alt="">
+                <img src="assets/icons/icon-settings.png" onclick="showSettings(); aClicks.playNext();" alt="">
             </nav>
         </header>
 
@@ -230,7 +230,7 @@
                 <td>
                     <label class="switch">
                         <input type="checkbox" checked>
-                        <span class="slider"></span>
+                        <span class="slider"  onclick="aClicks.playNext();"></span>
                     </label>
                 </td>
                 <td>on</td>
@@ -240,7 +240,7 @@
         <div id="closeSettings" class="close" onclick="closeSettings()">x</div>
 
         <div class="menuOption">
-            <div class="backStrip" onclick="startNew()"></div>Save
+            <div class="backStrip" onclick="closeSettings()"></div>Save
         </div>
     </div>
 

@@ -1,4 +1,5 @@
 let inMenu = true;
+let inGame = false;
 
 function assignSounds() {
     let menuOptions = document.getElementsByClassName('menuOption');
@@ -16,6 +17,7 @@ function startNew() {
 }
 
 async function showGame() {
+    inGame = true;
     document.getElementById('game').style.display = 'inline-block';
     await sleep(1);
     buildNewBaseMap();
@@ -27,8 +29,11 @@ async function showGame() {
 }
 
 function showSettings() {
+    inMenu = true;
     document.getElementById('settingsWindow').style.display = 'flex';
 }
 function closeSettings() {
+    if(inGame)
+        inMenu = false;
     document.getElementById('settingsWindow').style.display = 'none';
 }

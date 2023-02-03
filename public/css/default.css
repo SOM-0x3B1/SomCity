@@ -27,9 +27,6 @@
 
 
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100vh;
     width: 100vw;
 
@@ -117,4 +114,12 @@ nav img:hover {
 
 ul li:hover .backStrip {
     width: 100%;
+}
+
+.unavailableButton{
+    opacity: 0.3;
+}
+
+.unavailableButton .backStrip{
+    display: none;
 }
