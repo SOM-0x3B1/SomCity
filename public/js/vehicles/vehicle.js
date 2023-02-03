@@ -1,12 +1,11 @@
 let movingCars = {};
 
-class Car {
-    constructor() {
+class Vehicle {
+    constructor(x, y) {
         this.id = guidGenerator();
-        let startingCell = entryPoints[rnd(entryPoints.length - 1)];
 
-        this.x = startingCell.x;
-        this.y = startingCell.y;
+        this.x = x;
+        this.y = y;
         this.target;
         this.housingBuilding;
 
@@ -25,6 +24,9 @@ class Car {
 
         this.firstTimeInJammedJunction = true;
         this.changeRouteNextTimeToTarget = undefined;
+
+        this.enterTargetBuilding; // functions declared in a child class
+        this.leaveTargetBuilding;
 
         this.drawOverlay();
     }
@@ -85,7 +87,7 @@ class Car {
                         this.addToNextQueue();
                 }
                 else
-                    this.enterTargetBuilding();
+                    this.reachTargetBuilding();
             }
             else if (this.changeRouteNextTimeToTarget) {
                 this.calcRoute(this.changeRouteNextTimeToTarget);
@@ -94,7 +96,7 @@ class Car {
         }
     }
 
-    enterTargetBuilding() {
+    reachTargetBuilding() {
         delete movingCars[this.id];
         //roads[coordsToKey(this.x, this.y)].cars[coordsToKey(this.lastWayPoint.x, this.lastWayPoint.y)]--;
         roads[coordsToKey(this.x, this.y)].cars[this.lastRoadKey]--;
@@ -102,29 +104,21 @@ class Car {
         //console.log(this.target);
         this.x = this.target.x;
         this.y = this.target.y;
-        this.clearOverlay();
-        if (!this.target.started)
-            this.target.startConstruction();
+        this.clearOverlay();        
         this.waiting = false;
 
         this.housingBuilding = this.target;
         this.route = [];
 
-        if(this.housingBuilding instanceof IZone){
-            this.housingBuilding.workersPresent++;
-            this.housingBuilding.updateEfficiency();
-        }
-    }
+        this.enterTargetBuilding();
+    }    
 
     exitBuilding() {
+        this.leaveTargetBuilding()
+
         let entrance = this.housingBuilding.entrance;
         this.x = entrance.x;
-        this.y = entrance.y;
-
-        if(this.housingBuilding instanceof IZone){
-            this.housingBuilding.workersPresent--;
-            this.housingBuilding.updateEfficiency();
-        }
+        this.y = entrance.y;        
 
         this.housingBuilding = undefined;
     }

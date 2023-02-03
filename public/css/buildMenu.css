@@ -10,7 +10,7 @@
     transform: translate(-50%, 0);
 
     width: 100%;
-    height: 6vh;    
+    height: 2.7em;    
 
     color: rgb(202, 202, 202);
     font-size: 16pt;
@@ -25,7 +25,12 @@
 
 .category img{
     height: 80%;
+    margin-top: 10%;
     image-rendering: optimizeQuality;
+}
+
+.category:hover img{
+    filter: invert(1);
 }
 
 .category ul{
@@ -57,9 +62,9 @@
     cursor: pointer;
 }
 
-.noList:hover{
+/*.noList:hover{
     filter: invert(1);
-}
+}*/
 
 #cancel{
     opacity: 0.2;

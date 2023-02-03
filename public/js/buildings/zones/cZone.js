@@ -41,11 +41,11 @@ class CZone extends WorkZone {
         rotateStaticImg(this.buildingImg, this.facing);
     }
 
-    requestProducts() {
-        if(this.storage < this.maxStorage){
-            for (let i = 0; i < IZones.length; i++) {
-                if(IZones[i].canDeliver){
-                    IZones[i].sendTruck(this);
+    requestProducts() {        
+        if(this.workersPresent > 0 && this.storage < this.storageCapacity){
+            for (let i = 0; i < iZones.length; i++) {
+                if(iZones[i].canDeliver){                    
+                    iZones[i].sendTruck(this);
                     break;
                 }
             }

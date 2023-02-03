@@ -1,7 +1,7 @@
 /** Contains all the layers. */
 const mainDisplay = document.getElementById("mainDisplay");
 
-var scale = 1,
+var scale = 0.7,
     panning = false,
     pointX = 0,
     pointY = 0,

@@ -29,12 +29,16 @@ let mainTick = setInterval(() => {
 }, 50);
 
 let tickIndustry = setInterval(() => {
-    shuffle(IZones);
-    for (let i = 0; i < IZones.length; i++) {
-        IZones[i].storage += IZones[i].production;
-        if (IZones[i].storage > IZones[i].storageCapacity)
-            IZones[i].storage = IZones[i].storageCapacity
+    shuffle(iZones);
+    for (let i = 0; i < iZones.length; i++) {
+        iZones[i].storage += iZones[i].production;
+        if (iZones[i].storage > iZones[i].storageCapacity)
+            iZones[i].storage = iZones[i].storageCapacity
     }
+
+    for (let i = 0; i < cZones.length; i++)
+        cZones[i].requestProducts();
+
 }, 500);
 
 let tickRoads = setInterval(() => {

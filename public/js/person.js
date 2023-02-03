@@ -9,7 +9,7 @@ let globalSchedule = {};
 class Person {
     constructor(household) {
         this.id = guidGenerator();
-        this.car = new Car();
+        this.car = new PrivateCar();
         this.household = household;
         this.job;
         people.push(this);

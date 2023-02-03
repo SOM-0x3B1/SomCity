@@ -1,4 +1,4 @@
-let IZones = [];
+let iZones = [];
 
 class IZone extends WorkZone {
     constructor(x, y, layer) {
@@ -11,12 +11,12 @@ class IZone extends WorkZone {
     }
 
     get canDeliver(){
-        return this.storage > 0 && this.workersPresent > 0;
+        return this.storage >= 20 && this.workersPresent > 0;
     }
 
     register() {
         freeWorkplaces.push(this);
-        IZones.push(this);
+        iZones.push(this);
         this.updateAdjBuildingsAndRoads();
     }
 
@@ -26,10 +26,11 @@ class IZone extends WorkZone {
         rotateStaticImg(this.buildingImg, this.facing);
     }
 
-    sendTruck(target){
-        let newTruck = new Truck();
+    sendTruck(target){        
+        let newTruck = new Truck(this, 100);
         this.activeTrucks.push(newTruck);
         newTruck.calcRoute(target);
+        this.storage -= 20;
     }
 
     fillCellInfo() {
