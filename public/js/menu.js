@@ -1,3 +1,5 @@
+let inMenu = true;
+
 function assignSounds() {
     let menuOptions = document.getElementsByClassName('menuOption');
 
@@ -9,6 +11,7 @@ assignSounds();
 
 
 function startNew() {
+    inMenu = false;
     showGame();
 }
 
@@ -23,6 +26,6 @@ async function showGame() {
     document.getElementById('titleScreen').style.display = 'none';
 }
 
-function showSettings(){
+function showSettings() {
     document.getElementById('settingsWindow').style.display = 'flex';
 }

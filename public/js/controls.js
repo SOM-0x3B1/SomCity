@@ -25,7 +25,7 @@ function setTransform() {
 }
 
 document.onmousedown = (e) => {
-    if (!placing && !bulldozing) {
+    if (!placing && !bulldozing && !inMenu) {
         e.preventDefault();
         start = { x: e.clientX - pointX, y: e.clientY - pointY };
         panning = true;
@@ -37,9 +37,10 @@ document.onmouseup = (e) => {
 }
 
 document.onmousemove = (e) => {
-    e.preventDefault();
     if (!panning)
         return;
+                
+    e.preventDefault();    
 
     pointX = (e.clientX - start.x);
     pointY = (e.clientY - start.y);
