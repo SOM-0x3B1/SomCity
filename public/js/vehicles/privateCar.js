@@ -1,10 +1,15 @@
 class PrivateCar extends Vehicle {
     constructor(person) {
         let startingCell = entryPoints[rnd(entryPoints.length - 1)];
-
         super(startingCell.x, startingCell.y);
 
-        this.owner = person;        
+        this.owner = person;
+
+        this.carIcon = document.createElement('div'); 
+        this.color = '#' + rnd(16777215).toString(16);
+        this.carIcon.className = 'car';     
+        this.carIcon.style.backgroundColor = this.color;      
+        this.drawOverlay(); 
     }
 
     enterTargetBuilding() {

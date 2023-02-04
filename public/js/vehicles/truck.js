@@ -5,8 +5,11 @@ class Truck extends Vehicle {
 
         this.ownerComplany = ownerComplany;
         this.cargo = 0;
-
         this.onTheRoad = false;
+
+        this.carIcon = document.createElement('div'); 
+        this.carIcon.className = 'truck';        
+        this.drawOverlay(); 
     }
 
     enterTargetBuilding() {

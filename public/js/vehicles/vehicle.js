@@ -7,13 +7,9 @@ class Vehicle {
         this.x = x;
         this.y = y;
         this.target;
-        this.housingBuilding;
-
-        this.color = '#' + rnd(16777215).toString(16);
-        this.carIcon = document.createElement('div');
-        this.carIcon.className = 'car';
-        this.carIcon.id = `car(${this.id})`;
-        this.carIcon.style.backgroundColor = this.color;
+        this.housingBuilding;        
+               
+        //this.carIcon.id = `vehicle(${this.id})`;        
 
         this.route = [];
         this.nextRouteIndex = 0;
@@ -26,9 +22,7 @@ class Vehicle {
         this.changeRouteNextTimeToTarget = undefined;
 
         this.enterTargetBuilding; // functions declared in a child class
-        this.leaveTargetBuilding;
-
-        this.drawOverlay();
+        this.leaveTargetBuilding;        
     }
 
     calcRoute(target) {
