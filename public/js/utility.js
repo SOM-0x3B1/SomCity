@@ -1,5 +1,5 @@
 function rnd(num) {
-    return Math.round(Math.random() * num);
+    return Math.floor(Math.random() * (num + 1));
 }
 
 /** Creates a string key from two numbers ('x,y') */
