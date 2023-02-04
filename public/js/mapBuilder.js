@@ -49,6 +49,8 @@ function buildGrid(rows, cols) {
                             else if (buildingUnderBuilding instanceof Zone) {
                                 let newZone;
 
+                                aAllocate.playRandom();
+
                                 if (buildingUnderBuilding instanceof RZone)
                                     newZone = new RZone(x, y, mainLayer);
                                 else if (buildingUnderBuilding instanceof CZone)

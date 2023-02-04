@@ -28,6 +28,8 @@ function startBuilding(selectedBuilding) {
     if (bulldozing)
         stopBulldoze();
 
+    aSelectBuilding.playRandom();
+
     placing = true;
     document.getElementById('cancel').style.opacity = 1;
 

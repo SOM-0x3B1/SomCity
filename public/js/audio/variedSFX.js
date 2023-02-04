@@ -1,4 +1,4 @@
-class ComplexSFX {
+class VariedSFX {
     constructor(path, count) {
         this.sounds = [];
         this.cSoundIndex = 0;
@@ -11,12 +11,13 @@ class ComplexSFX {
         for (let i = 0; i < this.count; i++) {
             let a = new Audio('assets/sfx/' + this.path + (i + 1) + '.mp3');
             this.sounds.push(a);
+            this.queue.push(i);
             sfxs.push(a);
         }
     }
 
     playNext() {
-        if (this.cSoundIndex == this.sounds.length)
+        if (this.cSoundIndex >= this.sounds.length)
             this.cSoundIndex = 0;
 
         this.sounds[this.cSoundIndex].currentTime = 0;
@@ -25,7 +26,7 @@ class ComplexSFX {
     }
 
     playRandom() {
-        if (this.cSoundIndex == this.sounds.length) {
+        if (this.cSoundIndex >= this.sounds.length) {
             this.shuffle();
             this.cSoundIndex = 0;
         }
@@ -35,7 +36,7 @@ class ComplexSFX {
     }
 
     shuffle() {
-        let currentIndex = this.queue.length, randomIndex;
+        let currentIndex = this.sounds.length, randomIndex;
 
         while (currentIndex != 0) {
             // Pick a remaining element.

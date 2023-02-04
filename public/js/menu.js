@@ -1,14 +1,21 @@
 let inMenu = true;
 let inGame = false;
 
-/*function assignSounds() {
-    let menuOptions = document.getElementsByClassName('menuOption');
-
+function assignSounds() {
+    /*let menuOptions = document.getElementsByClassName('menuOption');
     for (let i = 0; i < menuOptions.length; i++) {
         menuOptions[i].onclick = () => { aClicks.playNext(); };
-    }
+    }*/
+
+    let backStrips = document.getElementsByClassName('backStrip');
+    for (let i = 0; i < backStrips.length; i++)
+        backStrips[i].parentElement.onmouseover = () => { aHover.playRandom(); };
+
+    let buildCategories = document.getElementsByClassName('buildCategory');
+    for (let i = 0; i < buildCategories.length; i++)
+        buildCategories[i].getElementsByTagName('img')[0].onmouseover = () => { aHoverButton.playRandom(); };
 }
-assignSounds();*/
+assignSounds();
 
 
 function startNew() {

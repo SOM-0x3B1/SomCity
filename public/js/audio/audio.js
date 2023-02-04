@@ -9,13 +9,30 @@ const aMenuAmbience = new Audio('assest/menuAmbience.mp3');
 aMenuMusic.loop = true;
 aMenuAmbience.loop = true;*/
 
-
 const musics = [];
 const ambients = [];
 let sfxs = [];
 
-const aClicks = new ComplexSFX('clicks/click', 24);
+
+const aClicks = new VariedSFX('menuClicks/click', 24);
 aClicks.load();
+
+const aSelectBuilding = new VariedSFX('planning/select', 3);
+aSelectBuilding.load(); 
+
+const aAllocate = new VariedSFX('planning/allocate', 5);
+aAllocate.load();
+
+const aHover = new VariedSFX('hover', 5);
+aHover.load();
+
+const aHoverButton = new VariedSFX('planning/hoverButton', 3);
+aHoverButton.load();
+
+/*const aRoadPlanning = new SemiLoopedSFX('planning/road/attack', 3, 'planning/road/sustain');
+aRoadPlanning.attack.load();*/
+
+
 
 function setMaster(value) {
     masterVolume = value / 100;
@@ -46,5 +63,5 @@ function setSFX(value) {
 
 setMusic(40);
 setAmbient(60);
-setSFX(80);
+setSFX(50);
 setMaster(80);

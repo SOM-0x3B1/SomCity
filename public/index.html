@@ -37,7 +37,7 @@
                     <div class="backStrip" onclick="startNew()"></div>Start New
                 </div>
                 <div id="loadCity" class="menuOption unavailableButton">
-                    <div class="backStrip"></div>Load City
+                    <!--<div class="backStrip"></div>-->Load City
                 </div>
                 <div class="menuOption">
                     <div class="backStrip" onclick="showSettings()"></div>Options
@@ -142,7 +142,7 @@
         </aside>
 
         <div id="buildMenu">
-            <div class="category">
+            <div class="buildCategory">
                 <img src="assets/icons/icon-roads.png" alt="">
                 <ul id="r">
                     <li onclick="startBuilding('r-highway')">
@@ -156,7 +156,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="category">
+            <div class="buildCategory">
                 <img src="assets/icons/icon-zones.png" alt="">
                 <ul id="z">
                     <li onclick="startBuilding('z-residential')">
@@ -170,10 +170,10 @@
                     </li>
                 </ul>
             </div>
-            <div class="category noList" id="bulldoze" onclick="startBulldoze()">
+            <div class="buildCategory noList" id="bulldoze" onclick="startBulldoze()">
                 <img src="assets/icons/icon-bulldoze.png" alt="">
             </div>
-            <div class="category noList" id="cancel" onclick="stopModification()">
+            <div class="buildCategory noList" id="cancel" onclick="stopModification()">
                 <img src="assets/icons/icon-cancel.png" alt="">
             </div>
         </div>
@@ -215,7 +215,7 @@
             <tr class="setting">
                 <td> <label for="sfxVolume">SFX: </label> </td>
                 <td colspan="3">
-                    <input type="range" min="0" max="100" value="80" id="sfxVolume" oninput="setSFX(this.value)">
+                    <input type="range" min="0" max="100" value="50" id="sfxVolume" oninput="setSFX(this.value)">
                 </td>
             </tr>
 
@@ -249,8 +249,9 @@
     <script src="js/queue.js"></script>
     <script src="js/priorityQueue.js"></script>
 
-    <script src="js/complexSFX.js"></script>
-    <script src="js/audio.js"></script>
+    <script src="js/audio/variedSFX.js"></script>
+    <script src="js/audio/semiLoopedSFX.js"></script>
+    <script src="js/audio/audio.js"></script>
 
     <script src="js/drawing.js"></script>
     <script src="js/menu.js"></script>

@@ -17,23 +17,23 @@
     background-color: var(--opaqueBGColor);
 }
 
-.category{
+.buildCategory{
     position: relative;
     margin-left: 1.5em;
     margin-right: 1.5em;
 }
 
-.category img{
+.buildCategory img{
     height: 80%;
     margin-top: 10%;
     image-rendering: optimizeQuality;
 }
 
-.category:hover img{
+.buildCategory:hover img{
     filter: invert(1);
 }
 
-.category ul{
+.buildCategory ul{
     display: none;
     position: absolute;
     bottom: 100%;
@@ -44,11 +44,11 @@
     background-color: var(--opaqueBGColor);
     padding: 2ex;
 }
-.category:hover ul{
+.buildCategory:hover ul{
     display: inline-block;
 }
 
-.category ul li{        
+.buildCategory ul li{        
     position: relative;
     width: 100%;
     min-width: max-content;
