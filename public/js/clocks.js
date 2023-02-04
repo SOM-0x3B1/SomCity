@@ -36,6 +36,7 @@ let tickIndustry = setInterval(() => {
             iZones[i].storage = iZones[i].storageCapacity
     }
 
+    shuffle(cZones);
     for (let i = 0; i < cZones.length; i++)
         cZones[i].requestProducts();
 
