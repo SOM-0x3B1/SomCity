@@ -18,19 +18,19 @@
     border: solid;
     border-color: white;
     background-color: rgba(12, 12, 12, 0.95);
-    box-shadow: 0 0 3pt white;
 
     animation: fadeIn 0.5s ease-out;
 }
 
 .window h3 {
-    font-size: 20pt;
+    font-weight: normal;
+    font-size: 26pt;
     margin-top: 2ex;
     margin-bottom: 3ex;
 }
 
 .settings {
-    font-size: 16pt;
+    font-size: 18pt;
     max-width: 80%;
     min-width: 70%;
     border: none;
@@ -38,19 +38,20 @@
     text-shadow: none;
 }
 
-.settings h4 {
+.settings h4 {    
     display: block;
     text-align: center;
     margin-bottom: 1ex;
     margin-top: 4ex;
+
+    font-weight: normal;
+    font-size: 20pt;
 }
 
 .setting {
     width: 80%;
     height: 4ex;
     margin-bottom: 2ex;
-
-    font-size: 20pt;
 }
 .setting td:first-child {
     width: min-content;
@@ -63,7 +64,6 @@
 
 .window label {
     padding-right: 0.5em;
-    cursor: url('media/cursor.png') 11 11, auto;
 }
 
 /*#name{
@@ -104,6 +104,10 @@
 /*#settings input[type="checkbox"] {
     margin-right: 50%;
 }*/
+
+#saveSettings{
+    margin-bottom: 1ex;
+}
 
 .close {
     position: absolute;
@@ -148,7 +152,6 @@ input[type="range"]::-webkit-slider-thumb {
     width: 1.5ex;
     height: 2.5ex;
     background: white;
-    box-shadow: 0 0 3pt white;
 }
 
 input[type="range"]::-moz-range-thumb {
@@ -209,17 +212,12 @@ input[type="range"]::-moz-range-thumb {
     left: 1ex;
     bottom: 0.45ex;
     background-color: white;
-    box-shadow: 0 0 3pt white;
     -webkit-transition: .4s;
     transition: .4s;
 }
 
 .switch input:checked+.slider {
     background-color: #858585;
-}
-
-.switch input:focus+.slider {
-    box-shadow: 0 0 1px #858585;
 }
 
 .switch input:checked+.slider:before {
