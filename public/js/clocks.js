@@ -25,7 +25,7 @@ let mainTick = setInterval(() => {
             else
                 car.changeRouteNextTimeToTarget = cSchedules[i].target;
         }
-    }    
+    }
 }, 50);
 
 let tickIndustry = setInterval(() => {
@@ -47,7 +47,6 @@ let tickRoads = setInterval(() => {
         movingCars[car].initiateMove();
     for (const key in roads)
         roads[key].moveCars();
-
     if (objectOfCellInfo)
         objectOfCellInfo.fillCellInfo();
 }, 50);
@@ -58,3 +57,10 @@ let tickJobs = setInterval(() => {
     for (let i = 0; i < unemployed.length; i++)
         unemployed[i].lookForJob();
 }, 5000);
+
+let tickOverlays = setInterval(() => {
+    if (showTrafficOverlay) {
+        for (const key in roads)
+            roads[key].drawOverlay();
+    }
+}, 500);

@@ -233,6 +233,11 @@ class Road extends Building {
         }
     }
 
+    drawOverlay(){
+        //console.log(this.countOfCars / this.capacity);
+        setCellOverlayColor(this.x, this.y, (this.countOfCars / this.capacity));
+    }
+
 
     /** Places the first cell of the road onto the plan layer. */
     static setRoadStart(x, y) {

@@ -60,7 +60,7 @@ function ereaseCell(x, y, layerID) {
     let cell = getCell(x, y, layerID);
     let images = cell.getElementsByTagName('img');
     for (let i = 0; i < images.length; i++)
-        images[0].remove();        
+        images[0].remove();
 }
 
 /**
@@ -88,6 +88,18 @@ function resizeStaticImg(img, width, height) {
     img.style.height = `calc(${height} * 100% + ${height} * var(--grid-gap))`;
 }
 
-function rotateStaticImg(img, angle){
+function rotateStaticImg(img, angle) {
     img.style.transform = `translate(calc(-0.5 * var(--grid-gap)), calc(-0.5 * var(--grid-gap))) rotate(${angle}deg)`;
+}
+
+
+function getIndicationColor(value) {
+    //value from 0 to 1
+    var hue = ((1 - value) * 120).toString(10);
+    return ["hsl(", hue, ",100%,50%)"].join("");
+}
+
+function setCellOverlayColor(x, y, value){
+    //console.log(value);
+    document.getElementById(`cellBorder-${LayerIDs.Main}(${x};${y})`).style.backgroundColor = getIndicationColor(value);
 }

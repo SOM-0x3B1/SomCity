@@ -36,7 +36,10 @@ function buildGrid(rows, cols) {
                 cell.id = `${container.id}(${x};${y})`; // Adressing each cell
 
                 if (container.id == LayerIDs.Main) {
-                    cell.appendChild(document.createElement('div')).className = 'cellBorder'; // The squares that show the borders of each cell
+                    let cellBoder = document.createElement('div');
+                    cellBoder.className = 'cellBorder';
+                    cellBoder.id = `cellBorder-${container.id}(${x};${y})`
+                    cell.appendChild(cellBoder); // The squares that show the borders of each cell
 
                     cell.onclick = () => {
                         if (placing) {
