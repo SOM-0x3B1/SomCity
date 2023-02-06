@@ -8,6 +8,8 @@
 
     width: 40%;
     height: 40%;
+
+    pointer-events: none;
 }
 
 .truck{
@@ -22,6 +24,8 @@
     height: 60%;
 
     background-color: rgb(255, 196, 0);
+
+    pointer-events: none;
 }
 
 #cellInfo{

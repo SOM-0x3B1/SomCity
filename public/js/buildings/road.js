@@ -213,13 +213,13 @@ class Road extends Building {
 
                 let cRoadKey = coordsToKey(this.x, this.y);
 
-                let lastRoadKey = coordsToKey(car.x, car.y);
-                if (roads[lastRoadKey]) {
-                    if (roads[lastRoadKey].cars[car.lastRoadKey])
-                        roads[lastRoadKey].cars[car.lastRoadKey]--;
-                    car.lastRoadKey = lastRoadKey;
+                let newLastRoadKey = coordsToKey(car.x, car.y);
+                if (roads[newLastRoadKey]) {
+                    if (car.lastRoadKey && roads[newLastRoadKey].cars[car.lastRoadKey])
+                        roads[newLastRoadKey].cars[car.lastRoadKey]--;
+                    car.lastRoadKey = newLastRoadKey;                    
                 }
-                roads[cRoadKey].cars[lastRoadKey]++;
+                roads[cRoadKey].cars[newLastRoadKey]++;
 
                 car.x = this.x;
                 car.y = this.y;

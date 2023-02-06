@@ -80,7 +80,7 @@ class Vehicle {
                     else
                         this.addToNextQueue();
                 }
-                else
+                else if (route.length > 0)
                     this.reachTargetBuilding();
             }
             else if (this.changeRouteNextTimeToTarget) {
@@ -93,13 +93,15 @@ class Vehicle {
     reachTargetBuilding() {
         delete movingCars[this.id];
         //roads[coordsToKey(this.x, this.y)].cars[coordsToKey(this.lastWayPoint.x, this.lastWayPoint.y)]--;
-        roads[coordsToKey(this.x, this.y)].cars[this.lastRoadKey]--;
+        if(this.lastRoadKey)
+            roads[coordsToKey(this.x, this.y)].cars[this.lastRoadKey]--;
 
         //console.log(this.target);
         this.x = this.target.x;
         this.y = this.target.y;
         this.clearOverlay();        
         this.waiting = false;
+        this.lastRoadKey = undefined;
 
         this.housingBuilding = this.target;
         this.route = [];
