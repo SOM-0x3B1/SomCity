@@ -39,8 +39,8 @@ document.onmouseup = (e) => {
 document.onmousemove = (e) => {
     if (!panning)
         return;
-                
-    e.preventDefault();    
+
+    e.preventDefault();
 
     pointX = (e.clientX - start.x);
     pointY = (e.clientY - start.y);
@@ -109,3 +109,11 @@ for (let i = 0; i < sideAreas.length; i++) {
         clearInterval(sideAreaInterval);
     });
 }
+
+document.addEventListener('wheel', (e) => {
+        if (e.ctrlKey) {
+            e.preventDefault();
+        }
+    },
+    { passive: false }
+);
