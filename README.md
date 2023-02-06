@@ -10,11 +10,11 @@ The projects is based on "simple" city simulation practices and convenient HTML 
 - traffic system ✅
 - zone allocation ✅
 - dynamic population growth
-- supply & demand simulation
+- supply & demand simulation 
 - individual schedule simulation ✅
 - household simulation (ages, reproduction)
 - cloud saving
-- UI (settings, title screen and overlays)
+- UI (settings, title screen and overlays) ✅
 - Immersive sound design
 
 ### Secondary objectives
