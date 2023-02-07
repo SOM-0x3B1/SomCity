@@ -7,8 +7,8 @@ class Vehicle {
         this.x = x;
         this.y = y;
         this.target;
-        this.housingBuilding;        
-               
+        this.housingBuilding;
+
         //this.carIcon.id = `vehicle(${this.id})`;        
 
         this.route = [];
@@ -20,9 +20,10 @@ class Vehicle {
 
         this.firstTimeInJammedJunction = true;
         this.changeRouteNextTimeToTarget = undefined;
+        this.targetShopTypes = [];
 
         this.enterTargetBuilding; // functions declared in a child class
-        this.leaveTargetBuilding;        
+        this.leaveTargetBuilding;
     }
 
     calcRoute(target) {
@@ -40,6 +41,8 @@ class Vehicle {
         movingCars[this.id] = this;
         this.nextRouteIndex = 0;
 
+        this.changeRouteNextTimeToTarget = undefined;
+
         this.target = target;
         let targetEntrance = target.entrance;
         if (targetEntrance)
@@ -47,7 +50,7 @@ class Vehicle {
         else
             this.changeRouteNextTimeToTarget = target;
 
-        if(!this.changeRouteNextTimeToTarget)
+        if (!this.changeRouteNextTimeToTarget)
             this.initiateMove();
     }
 
@@ -73,33 +76,39 @@ class Vehicle {
                 if (this.nextRouteIndex < route.length) {
                     let nextWayPoint = route[this.nextRouteIndex];
                     let nextRoad = roads[coordsToKey(nextWayPoint.x, nextWayPoint.y)];
-                    if (nextRoad.isJammed && roads[coordsToKey(this.x, this.y)].adjRoads.length > 2){
-                        this.changeRouteNextTimeToTarget = this.target;
-                        this.firstTimeInJammedJunction = true;
+                    if (roads[coordsToKey(this.x, this.y)].adjRoads.length > 2) {
+                        if (this.targetShopTypes.length > 0) {
+                            let reachableTarget = this.findNearShops();
+                            if (reachableTarget)
+                                this.changeRouteNextTimeToTarget = reachableTarget;
+                        }
+
+                        if (nextRoad.isJammed) {
+                            this.changeRouteNextTimeToTarget = this.target;
+                            this.firstTimeInJammedJunction = true;
+                        }                        
                     }
-                    else
-                        this.addToNextQueue();
+                    
+                    this.addToNextQueue();
                 }
                 else if (route.length > 0)
                     this.reachTargetBuilding();
             }
-            else if (this.changeRouteNextTimeToTarget) {
+            else if (this.changeRouteNextTimeToTarget)
                 this.calcRoute(this.changeRouteNextTimeToTarget);
-                this.changeRouteNextTimeToTarget = undefined;
-            }
         }
     }
 
     reachTargetBuilding() {
         delete movingCars[this.id];
         //roads[coordsToKey(this.x, this.y)].cars[coordsToKey(this.lastWayPoint.x, this.lastWayPoint.y)]--;
-        if(this.lastRoadKey)
+        if (this.lastRoadKey)
             roads[coordsToKey(this.x, this.y)].cars[this.lastRoadKey]--;
 
         //console.log(this.target);
         this.x = this.target.x;
         this.y = this.target.y;
-        this.clearOverlay();        
+        this.clearOverlay();
         this.waiting = false;
         this.lastRoadKey = undefined;
 
@@ -107,14 +116,14 @@ class Vehicle {
         this.route = [];
 
         this.enterTargetBuilding();
-    }    
+    }
 
     exitBuilding() {
         this.leaveTargetBuilding()
 
         let entrance = this.housingBuilding.entrance;
         this.x = entrance.x;
-        this.y = entrance.y;        
+        this.y = entrance.y;
 
         this.housingBuilding = undefined;
     }
@@ -189,10 +198,46 @@ class Vehicle {
         return (Math.abs(finish.x - node.x) + Math.abs(finish.y - node.y)) / 10;
     }
 
+    findNearShops() {
+        const root = roads[coordsToKey(this.x, this.y)];
+        let queue = [new BFSRoad(root, 0)];
+        let visited = {};
+        let current;
+
+        while (queue.length > 0 && (!current || current.depth < 6)) {
+            current = queue.shift();
+            visited[coordsToKey(current.road.x, current.road.y)] = true;
+            let adjBuildings = current.road.adjBuildings;
+            for (const b of adjBuildings) {
+                if (b instanceof CZone) {
+                    for (const product of b.products) {
+                        if (this.targetShopTypes.includes(product))
+                            return b;
+                    }
+                }
+            }
+
+            let adjRoads = current.road.adjRoads;
+            for (let i = 0; i < adjRoads.length; i++) {
+                let cKey = coordsToKey(adjRoads[i].x, adjRoads[i].y);
+                if (!visited[cKey])
+                    queue.push(new BFSRoad(adjRoads[i], current.depth + 1));
+            }
+        }
+
+        return null;
+    }
 
     remove() {
         this.clearOverlay();
         //movingCars.splice(movingCars.indexOf(this), 1);
+    }
+}
+
+class BFSRoad {
+    constructor(road, depth) {
+        this.road = road;
+        this.depth = depth;
     }
 }
 

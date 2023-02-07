@@ -104,6 +104,12 @@ class Building {
             else if (this.entrance.x > this.x + this.width - 1)
                 this.facing = 270;
         }
+
+        if (!(this instanceof Road)) {
+            for (let i = 0; i < this.adjRoads.length; i++)
+                if (!this.adjRoads[i].adjBuildings.includes(this))
+                    this.adjRoads[i].adjBuildings.push(this);
+        }
     }
 
     /** Deletes this road. */

@@ -64,3 +64,8 @@ let tickOverlays = setInterval(() => {
             roads[key].drawOverlay();
     }
 }, 500);
+
+let tickNeeds = setInterval(() => {
+    for (let i = 0; i < households.length; i++)
+        households[i].addNeeds();
+}, 3000);
