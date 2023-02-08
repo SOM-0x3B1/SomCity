@@ -10,7 +10,8 @@ The projects is based on "simple" city simulation practices and convenient HTML 
 - traffic system ✅
 - zone allocation ✅
 - dynamic population growth
-- supply & demand simulation 
+- zone supply & demand simulation 
+- product supply & demand simulation
 - individual schedule simulation ✅
 - household simulation (ages, reproduction)
 - cloud saving
