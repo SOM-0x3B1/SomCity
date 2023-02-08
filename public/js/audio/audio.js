@@ -3,16 +3,17 @@ let musicVolume = 0;
 let ambientVolume = 0;
 let sfxVolume = 0;
 
-/*const aMenuMusic = new Audio('assets/menuMusic.mp3');
-const aMenuAmbience = new Audio('assest/menuAmbience.mp3');
+const aMenuMusic = new Audio('assets/music/SomCity2.mp3');
+//const aMenuAmbience = new Audio('assest/menuAmbience.mp3');
 
 aMenuMusic.loop = true;
-aMenuAmbience.loop = true;*/
+//aMenuAmbience.loop = true;
 
-const musics = [];
+const musics = [aMenuMusic];
 const ambients = [];
 let sfxs = [];
 
+aMenuMusic.play();
 
 const aClicks = new VariedSFX('menuClicks/click', 24);
 aClicks.load();

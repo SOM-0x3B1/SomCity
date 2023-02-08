@@ -12,6 +12,7 @@
     max-height: 90vh;
     min-width: 60vh;
     width: min-content;
+    max-width: 70vh;
     overflow-y: auto;
 
     color: white;
