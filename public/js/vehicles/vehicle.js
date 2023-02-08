@@ -19,8 +19,12 @@ class Vehicle {
         this.waiting = false;
 
         this.firstTimeInJammedJunction = true;
+
         this.changeRouteNextTimeToTarget = undefined;
-        this.targetShopTypes = [];
+
+        this.shopping = false;
+        this.originalTarget;
+        this.targetShopTypes = {};
 
         this.enterTargetBuilding; // functions declared in a child class
         this.leaveTargetBuilding;
@@ -77,18 +81,21 @@ class Vehicle {
                     let nextWayPoint = route[this.nextRouteIndex];
                     let nextRoad = roads[coordsToKey(nextWayPoint.x, nextWayPoint.y)];
                     if (roads[coordsToKey(this.x, this.y)].adjRoads.length > 2) {
-                        if (this.targetShopTypes.length > 0) {
+                        if (!this.shopping && Object.keys(this.targetShopTypes).length > 0) {
                             let reachableTarget = this.findNearShops();
-                            if (reachableTarget)
+                            if (reachableTarget) {
                                 this.changeRouteNextTimeToTarget = reachableTarget;
+                                this.originalTarget = this.target;
+                                this.shopping = true;
+                            }
                         }
-
-                        if (nextRoad.isJammed) {
+                        
+                        if (!this.shopping && nextRoad.isJammed) {
                             this.changeRouteNextTimeToTarget = this.target;
                             this.firstTimeInJammedJunction = true;
-                        }                        
+                        }
                     }
-                    
+
                     this.addToNextQueue();
                 }
                 else if (route.length > 0)
@@ -209,9 +216,9 @@ class Vehicle {
             visited[coordsToKey(current.road.x, current.road.y)] = true;
             let adjBuildings = current.road.adjBuildings;
             for (const b of adjBuildings) {
-                if (b instanceof CZone) {
+                if (b instanceof CZone && b.storage > 0 && b.customerQueue.length < b.maxCustomers && b.production > 0) {
                     for (const product of b.products) {
-                        if (this.targetShopTypes.includes(product))
+                        if (this.targetShopTypes[product])
                             return b;
                     }
                 }

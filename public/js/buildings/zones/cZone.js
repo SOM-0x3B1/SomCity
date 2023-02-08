@@ -21,7 +21,7 @@ class CZone extends WorkZone {
         this.buildingTexture = rnd(2);
     }
 
-    get outOfStock(){
+    get outOfStock() {
         return this.storage == 0;
     }
 
@@ -29,7 +29,7 @@ class CZone extends WorkZone {
         freeWorkplaces.push(this);
         cZones.push(this);
         this.updateAdjBuildingsAndRoads();
-    }    
+    }
 
     finishConstruction() {
         clearInterval(this.constructionInterval);
@@ -41,10 +41,10 @@ class CZone extends WorkZone {
         rotateStaticImg(this.buildingImg, this.facing);
     }
 
-    requestProducts() {        
-        if(this.workersPresent > 0 && this.storage < this.storageCapacity){
+    requestProducts() {
+        if (this.workersPresent > 0 && this.storage < this.storageCapacity) {
             for (let i = 0; i < iZones.length; i++) {
-                if(iZones[i].canDeliver){                    
+                if (iZones[i].canDeliver) {
                     iZones[i].sendTruck(this);
                     break;
                 }
@@ -52,9 +52,27 @@ class CZone extends WorkZone {
         }
     }
 
+    serveCustomers() {
+        for (let i = 0; this.customerQueue.length > 0 && i < this.production; i++) {
+            let cCustomer = this.customerQueue.shift();
+            if (this.storage > 0 && this.production > 0) {
+                for (const product of this.products) {
+                    while (this.storage > 0 && cCustomer.targetShopTypes[product] > 0) {
+                        cCustomer.targetShopTypes[product]--;
+                        this.storage -= 5;
+                    }
+                    if (cCustomer.targetShopTypes[product] == 0)
+                        delete cCustomer.targetShopTypes[product];
+                }
+            }
+            cCustomer.shopping = false;
+            cCustomer.calcRoute(cCustomer.originalTarget);            
+        }
+    }
+
     fillCellInfo() {
-        cellInfo.innerText = `Workers: ${this.workersPresent}/${this.workers.length}/${this.maxWorkers} (present/employed/max) \n Efficiency: ${Math.round(this.efficiency * 100)}%/${Math.round(this.maxEfficiency * 100)}% (current/max) \n Selling: ${products[this.products]} \n Customer queue: ${this.customerQueue.length} \n Rate of service: ${this.production}/${this.productionCapacity} (customer/minute) \n Storage: ${this.storage}/${this.storageCapacity} \n Opens: ${formatTime(this.opens1)} \n Closes: ${formatTime(this.closes1)}`;
-        if(this.hasNightShift)
+        cellInfo.innerText = `Workers: ${this.workersPresent}/${this.workers.length}/${this.maxWorkers} (present/employed/max) \n Efficiency: ${Math.round(this.efficiency * 100)}%/${Math.round(this.maxEfficiency * 100)}% (current/max) \n Selling: ${products[this.products]} \n Customers in queue: ${this.customerQueue.length}/${this.maxCustomers} \n Rate of service: ${this.production}/${this.productionCapacity} (customer/minute) \n Storage: ${this.storage}/${this.storageCapacity} \n Opens: ${formatTime(this.opens1)} \n Closes: ${formatTime(this.closes1)}`;
+        if (this.hasNightShift)
             cellInfo.innerText += `\n Opens (night): ${formatTime(this.opens2)} \n Closes (night): ${formatTime(this.closes2)}`;
     }
 }
