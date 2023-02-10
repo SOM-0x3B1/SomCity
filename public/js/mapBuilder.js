@@ -44,15 +44,17 @@ function buildGrid(rows, cols) {
                     cell.onclick = () => {
                         if (placing) {
                             if (buildingUnderBuilding instanceof Road) {
-                                if (firstOfTwoPoints)
+                                if (firstOfTwoPoints){
                                     firstOfTwoPoints = false;
-                                else
+                                    aRoadPlanning.play();
+                                }
+                                else{
                                     Road.setRoadEnd(x, y);
+                                    aRoadPlanning.stop();
+                                }
                             }
                             else if (buildingUnderBuilding instanceof Zone) {
-                                let newZone;
-
-                                aAllocate.playRandom();
+                                let newZone;                                
 
                                 if (buildingUnderBuilding instanceof RZone)
                                     newZone = new RZone(x, y, mainLayer);
@@ -61,8 +63,10 @@ function buildGrid(rows, cols) {
                                 else if (buildingUnderBuilding instanceof IZone)
                                     newZone = new IZone(x, y, mainLayer);
 
-                                if(newZone.place(x, y))
+                                if(newZone.place(x, y)){
                                     newZone.register();
+                                    aAllocate.playRandom();
+                                }
                             }
                         }
                         else if (!bulldozing && mainLayer[y][x] instanceof Building) {

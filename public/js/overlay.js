@@ -11,4 +11,6 @@ function toggleTrafficOL(backStrip) {
     }
     else
         backStrip.style.width = '100%';
+
+    aToggleOverlay.playNext();
 }

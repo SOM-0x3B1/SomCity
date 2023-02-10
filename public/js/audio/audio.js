@@ -15,13 +15,15 @@ let sfxs = [];
 
 aMenuMusic.play();
 
+
+
 const aClicks = new VariedSFX('menuClicks/click', 24);
 aClicks.load();
 
 const aSelectBuilding = new VariedSFX('planning/select', 3);
 aSelectBuilding.load(); 
 
-const aAllocate = new VariedSFX('planning/allocate', 5);
+const aAllocate = new VariedSFX('planning/allocate', 4);
 aAllocate.load();
 
 const aHover = new VariedSFX('hover', 5);
@@ -30,9 +32,11 @@ aHover.load();
 const aHoverButton = new VariedSFX('planning/hoverButton', 3);
 aHoverButton.load();
 
-/*const aRoadPlanning = new SemiLoopedSFX('planning/road/attack', 3, 'planning/road/sustain');
-aRoadPlanning.attack.load();*/
+const aToggleOverlay = new VariedSFX('toggleOverlay', 3);
+aToggleOverlay.load();
 
+const aRoadPlanning = new SemiLoopedSFX('planning/expandStart', 'planning/expanding', 'planning/expandStop');
+aRoadPlanning.load();
 
 
 function setMaster(value) {
@@ -62,7 +66,7 @@ function setSFX(value) {
         sfxs[i].volume = sfxVolume * masterVolume;
 }
 
-setMusic(40);
+setMusic(0);
 setAmbient(60);
 setSFX(50);
 setMaster(80);

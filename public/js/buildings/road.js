@@ -226,6 +226,7 @@ class Road extends Building {
                 car.cRoad = this;
                 car.firstTimeInJammedJunction = false;
 
+                //car.carIcon.style.transitionDelay = i * 5 + 'ms';
                 car.drawOverlay();
 
                 car.waiting = false;

@@ -64,7 +64,7 @@ function startBuilding(selectedBuilding) {
                 case 'street':
                     buildingUnderBuilding = new Road(null, null, 's', true, planLayer);
                     break;
-            }
+            }            
             break;
         case 'z':
             switch (name) {

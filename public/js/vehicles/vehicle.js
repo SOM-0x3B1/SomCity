@@ -89,7 +89,7 @@ class Vehicle {
                                 this.shopping = true;
                             }
                         }
-                        
+
                         if (!this.shopping && nextRoad.isJammed) {
                             this.changeRouteNextTimeToTarget = this.target;
                             this.firstTimeInJammedJunction = true;
@@ -136,12 +136,18 @@ class Vehicle {
     }
 
     drawOverlay() {
-        /*this.carIcon.style.left = '-50%';
-        let lastPos = this.route[this.lastRoutePoint];
-        if (lastPos)
+        /*if (this.lastRoadKey) {            
+            let lastPos = this.route[this.lastRoadKey];*/
+        /*if (lastPos)
             this.carIcon.style.transitionDelay = [].indexOf.call(getCell(lastPos.x, lastPos.y, LayerIDs.Main).getElementsByClassName('car'), this.carIcon) * 2 + 'ms';*/
         getCell(this.x, this.y, LayerIDs.Main).appendChild(this.carIcon);
-        //this.carIcon.style.left = '50%';
+        /*this.carIcon.style.transitionDuration = '0';
+        this.carIcon.style.left = '-50%';            
+        window.getComputedStyle(this.carIcon).opacity;
+        window.getComputedStyle(this.carIcon).transitionDuration;
+        this.carIcon.style.transitionDuration = '100ms';
+        this.carIcon.style.left = '50%';
+    }*/
     }
 
     clearOverlay() {

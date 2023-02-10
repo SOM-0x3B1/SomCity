@@ -10,6 +10,9 @@
     height: 40%;
 
     pointer-events: none;
+
+    /*transition: left;
+    transition-duration: 0;*/
 }
 
 .truck{
