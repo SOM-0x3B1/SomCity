@@ -29,6 +29,8 @@ class CZone extends WorkZone {
         freeWorkplaces.push(this);
         cZones.push(this);
         this.updateAdjBuildingsAndRoads();
+
+        this.storage = 30;
     }
 
     finishConstruction() {
@@ -59,14 +61,15 @@ class CZone extends WorkZone {
                 for (const product of this.products) {
                     while (this.storage > 0 && cCustomer.targetShopTypes[product] > 0) {
                         cCustomer.targetShopTypes[product]--;
-                        this.storage -= 5;
+                        this.storage -= 1 + rnd(5);
+                        if (this.storage < 0)
+                            this.storage = 0;
                     }
                     if (cCustomer.targetShopTypes[product] == 0)
                         delete cCustomer.targetShopTypes[product];
                 }
             }
-            cCustomer.shopping = false;
-            cCustomer.calcRoute(cCustomer.originalTarget);            
+            cCustomer.calcRoute(cCustomer.originalTarget);
         }
     }
 

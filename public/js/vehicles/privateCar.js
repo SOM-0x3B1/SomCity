@@ -35,5 +35,7 @@ class PrivateCar extends Vehicle {
             this.housingBuilding.workersPresent--;
             this.housingBuilding.updateEfficiency();
         }
+        else if (this.shopping)
+            this.shopping = false;
     }
 }
