@@ -83,7 +83,7 @@ class Vehicle {
 
                     let cRoad = roads[coordsToKey(this.x, this.y)];
                     let adjacentShop = this.nextToAShop(cRoad.adjBuildings);
-                    if(adjacentShop)
+                    if(!this.shopping && adjacentShop && Object.keys(this.targetShopTypes).length > 0)
                     {
                         this.changeRouteNextTimeToTarget = adjacentShop;
                         this.originalTarget = this.target;

@@ -8,6 +8,17 @@ let cZones = [];
 }*/
 
 const products = ['food', 'household items', 'furniture', 'tech', 'entertainment'];
+const productDemands = [0, 0, 0, 0, 0];
+
+
+for (let i = 0; i < products.length; i++) {
+    let bar = document.getElementById('mainStat-demands-bar-c' + (i + 1));
+    let barInfo = document.createElement('div');
+    barInfo.className = 'barInfo';
+    barInfo.innerText = products[i];
+    bar.appendChild(barInfo);
+}
+
 
 class CZone extends WorkZone {
     constructor(x, y, layer) {
@@ -61,15 +72,19 @@ class CZone extends WorkZone {
                 for (const product of this.products) {
                     while (this.storage > 0 && cCustomer.targetShopTypes[product] > 0) {
                         cCustomer.targetShopTypes[product]--;
-                        this.storage -= 1 + rnd(2);
-                        if (this.storage < 0)
-                            this.storage = 0;
+                        productDemands[product]--;
+                        this.storage -= 1;
                     }
                     if (cCustomer.targetShopTypes[product] == 0)
                         delete cCustomer.targetShopTypes[product];
                 }
             }
             cCustomer.calcRoute(cCustomer.originalTarget);
+        }
+
+        if (this.production <= 0) {
+            while (this.customerQueue.length > 0)
+                this.customerQueue.shift().calcRoute(cCustomer.originalTarget);
         }
     }
 

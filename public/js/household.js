@@ -31,6 +31,8 @@ class Household {
         if (random < products.length) {
             let need = random;
             this.needs.push(need);
+            productDemands[need]++;
+            
             let member = rnd(this.members.length - 1);
             if (this.members[member].car.targetShopTypes[need])
                 this.members[member].car.targetShopTypes[need]++;

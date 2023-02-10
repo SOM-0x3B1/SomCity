@@ -1,9 +1,9 @@
-#mainStats{
+#mainStats {
     position: fixed;
     right: 0;
     top: 30%;
 
-    width: 7em;
+    width: 8em;
     padding: 1em;
 
     color: white;
@@ -13,16 +13,16 @@
     /*border-radius: 1ex 0 0 1ex;*/
 }
 
-.mainStatRow{
+.mainStatRow {
     padding-top: 1ex;
     padding-bottom: 1ex;
 }
 
-#mainStat-demands{
+#mainStat-demands {
     position: relative;
 
     height: 6em;
-    width: 100%;    
+    width: 100%;
     padding: 0;
 
     border: solid;
@@ -30,10 +30,10 @@
     border-color: white;
 }
 
-#mainStat-demands-centerline{
+#mainStat-demands-centerline {
     position: absolute;
     left: 0;
-    
+
     height: 1pt;
     width: 100%;
 
@@ -44,11 +44,11 @@
 }
 
 
-#mainStat-demands-bars{
+#mainStat-demands-bars {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    
+
     top: 0;
     left: 0;
 
@@ -56,36 +56,78 @@
     width: 100%;
 }
 
-.barContainer{
+.barContainer {
     position: relative;
-    width: 25%;    
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+
+    width: 25%;
     height: calc(100% - 2 * 2pt);
 }
 
-.mainStatDemandBar{
+.bigContainer{
+    width: 30%;
+}
+
+.subBarContainer{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.mainStatDemandBar {
     position: absolute;
 
     border: solid;
     border-width: 2pt;
     width: 80%;
+
+    opacity: 0.8;
+}
+
+.smallDemandBar {
+    position: absolute;
+    width: calc(100% - 2pt);
 }
 
 #mainStat-demands-bar-r {
-    height: 30%;   
+    height: 30%;
     bottom: calc(50% - 2pt);
     background-color: rgba(0, 255, 0, 0.5);
     border-color: rgba(0, 255, 0, 1);
 }
-#mainStat-demands-bar-c {
-    height: 40%; 
-    bottom: calc(50% - 2pt);
+
+.mainStat-demands-bar-c {
+    height: 0;
+    bottom: calc(50% - 3pt);
     background-color: rgba(0, 109, 252, 0.5);
     border-color: rgba(0, 109, 252, 1);
-
 }
+
 #mainStat-demands-bar-i {
-    height: 23%; 
+    height: 23%;
     top: calc(50% + 2pt);
     background-color: rgb(255, 136, 1, 0.5);
     border-color: rgba(255, 136, 1, 1);
+}
+
+.barInfo{
+    display: none;
+    position: absolute;
+    width: max-content;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, 0);
+    z-index: 1;
+}
+
+.mainStatDemandBar:hover{
+    opacity: 1;
+}
+
+.subBarContainer:hover .barInfo{
+    display: block;
 }
