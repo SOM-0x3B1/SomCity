@@ -11,12 +11,12 @@ The projects is based on "simple" city simulation practices and convenient HTML 
 - zone allocation ✅
 - dynamic population growth
 - zone supply & demand simulation 
-- product supply & demand simulation
+- product supply & demand simulation ✅
 - individual schedule simulation ✅
 - household simulation (ages, reproduction)
 - cloud saving
 - UI (settings, title screen and overlays) ✅
-- Immersive sound design
+- Immersive sound design ✅
 
 ### Secondary objectives
 - public services (police, fire department, power, water, sewage, etc)
