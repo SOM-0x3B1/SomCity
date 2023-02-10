@@ -3,18 +3,21 @@ let musicVolume = 0;
 let ambientVolume = 0;
 let sfxVolume = 0;
 
-const aMenuMusic = new Audio('assets/music/SomCity2.mp3');
-//const aMenuAmbience = new Audio('assest/menuAmbience.mp3');
 
-aMenuMusic.loop = true;
-//aMenuAmbience.loop = true;
-
-const musics = [aMenuMusic];
+const musics = [];
 const ambients = [];
 let sfxs = [];
 
-aMenuMusic.play();
+const aMenuMusic = new Audio('assets/music/SomCity2.mp3');
+aMenuMusic.loop = true;
+musics.push(aMenuMusic);
 
+
+const aaWind = new Ambience('wind');
+aaWind.load();
+
+const aaDay = new Ambience('day');
+aaDay.load();
 
 
 const aClicks = new VariedSFX('menuClicks/click', 24);
@@ -66,7 +69,10 @@ function setSFX(value) {
         sfxs[i].volume = sfxVolume * masterVolume;
 }
 
-setMusic(0);
+setMusic(30);
 setAmbient(60);
 setSFX(50);
 setMaster(80);
+
+
+aMenuMusic.play();

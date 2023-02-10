@@ -61,7 +61,7 @@ class CZone extends WorkZone {
                 for (const product of this.products) {
                     while (this.storage > 0 && cCustomer.targetShopTypes[product] > 0) {
                         cCustomer.targetShopTypes[product]--;
-                        this.storage -= 1 + rnd(5);
+                        this.storage -= 1 + rnd(2);
                         if (this.storage < 0)
                             this.storage = 0;
                     }

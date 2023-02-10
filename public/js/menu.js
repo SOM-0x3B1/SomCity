@@ -20,11 +20,13 @@ assignSounds();
 
 function startNew() {
     aClicks.playNext();
+    aaWind.fadeIn();
+    aaDay.fadeIn();
 
     inMenu = false;
     showGame();
 }
-async function showGame() {  
+async function showGame() {
     inGame = true;
     document.getElementById('game').style.display = 'inline-block';
     await sleep(1);
@@ -45,7 +47,7 @@ function showSettings() {
 function closeSettings() {
     aClicks.playNext();
 
-    if(inGame)
+    if (inGame)
         inMenu = false;
     document.getElementById('settingsWindow').style.display = 'none';
 }
