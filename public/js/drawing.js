@@ -95,6 +95,8 @@ function rotateStaticImg(img, angle) {
 
 function getIndicationColor(value) {
     //value from 0 to 1
+    if(value > 1)
+        value = 1;
     var hue = ((1 - value) * 120).toString(10);
     return ["hsl(", hue, ",100%,50%)"].join("");
 }

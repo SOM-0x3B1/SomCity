@@ -80,7 +80,17 @@ class Vehicle {
                 if (this.nextRouteIndex < route.length) {
                     let nextWayPoint = route[this.nextRouteIndex];
                     let nextRoad = roads[coordsToKey(nextWayPoint.x, nextWayPoint.y)];
-                    if (roads[coordsToKey(this.x, this.y)].adjRoads.length > 2) {
+
+                    let cRoad = roads[coordsToKey(this.x, this.y)];
+                    let adjacentShop = this.nextToAShop(cRoad.adjBuildings);
+                    if(adjacentShop)
+                    {
+                        this.changeRouteNextTimeToTarget = adjacentShop;
+                        this.originalTarget = this.target;
+                        this.shopping = true;
+                    }
+
+                    if (cRoad.adjRoads.length > 2) {
                         if (!this.shopping && Object.keys(this.targetShopTypes).length > 0) {
                             let reachableTarget = this.findNearShops();
                             if (reachableTarget) {
@@ -211,6 +221,18 @@ class Vehicle {
         return (Math.abs(finish.x - node.x) + Math.abs(finish.y - node.y)) / 10;
     }
 
+
+    nextToAShop(adjBuildings) {
+        for (const b of adjBuildings) {
+            if (b instanceof CZone && b.storage > 0 && b.customerQueue.length < b.maxCustomers && b.production > 0) {
+                for (const product of b.products) {
+                    if (this.targetShopTypes[product])
+                        return b;
+                }
+            }
+        }
+    }
+
     findNearShops() {
         const root = roads[coordsToKey(this.x, this.y)];
         let queue = [new BFSRoad(root, 0)];
@@ -240,6 +262,7 @@ class Vehicle {
 
         return null;
     }
+
 
     remove() {
         this.clearOverlay();

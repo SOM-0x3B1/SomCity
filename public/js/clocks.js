@@ -45,7 +45,7 @@ let tickIndustry = setInterval(() => {
 let tickShops = setInterval(() => {
     for (let i = 0; i < cZones.length; i++)
        cZones[i].serveCustomers();
-}, 50);
+}, 200);
 
 let tickRoads = setInterval(() => {
     for (const car in movingCars)
