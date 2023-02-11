@@ -1,10 +1,13 @@
+let countOfAllJobs = 0
+let countOfFreeJobs = 0;
+
 class WorkZone extends Zone {
     constructor(x, y, texture, maxWorkers, productionCap, storageCap, forceNightShift, layer) {
         super(x, y, texture, layer);
 
         this.workers = [];
         this.workersPresent = 0;
-        this.maxWorkers = maxWorkers;
+        this.maxWorkers = maxWorkers;        
         this.production = 0;
         this.productionCapacity = productionCap;
         this.storage = 0;
@@ -38,6 +41,7 @@ class WorkZone extends Zone {
 
     addWorker(worker) {
         this.workers.push(worker);
+        countOfFreeJobs--;
 
         if (this.workers.length >= this.maxWorkers)
             freeWorkplaces.splice(freeWorkplaces.indexOf(this), 1);

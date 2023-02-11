@@ -15,9 +15,11 @@ class Truck extends Vehicle {
     enterTargetBuilding() {
         if (this.housingBuilding != this.ownerComplany) {
             this.housingBuilding.storage += this.cargo;
+            cAllStorage += this.cargo;
             if (this.housingBuilding.storage > this.housingBuilding.storageCapacity) {
                 this.cargo = this.housingBuilding.storage - this.housingBuilding.storageCapacity;
-                this.housingBuilding.storage = this.housingBuilding.storageCapacity
+                cAllStorage -= this.housingBuilding.storage - this.housingBuilding.storageCapacity;
+                this.housingBuilding.storage = this.housingBuilding.storageCapacity;
             }
             else
                 this.cargo = 0;

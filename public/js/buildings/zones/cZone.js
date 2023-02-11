@@ -1,5 +1,8 @@
 let cZones = [];
 
+let cAllStorage = 0;
+let cAllOptimalStorage = 0;
+
 /*const products = {
     Food: 0,
     Household: 1,
@@ -42,6 +45,12 @@ class CZone extends WorkZone {
         this.updateAdjBuildingsAndRoads();
 
         this.storage = 30;
+
+        countOfAllJobs += this.maxWorkers;
+        countOfFreeJobs += this.maxWorkers;
+
+        cAllStorage += this.storage;
+        cAllOptimalStorage += this.storageCapacity;
     }
 
     finishConstruction() {
@@ -74,6 +83,7 @@ class CZone extends WorkZone {
                         cCustomer.targetShopTypes[product]--;
                         productDemands[product]--;
                         this.storage -= 1;
+                        cAllStorage -=1;
                     }
                     if (cCustomer.targetShopTypes[product] == 0)
                         delete cCustomer.targetShopTypes[product];

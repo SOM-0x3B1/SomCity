@@ -1,5 +1,8 @@
 let iZones = [];
 
+let iAllStorage = 0;
+let iAllOptimalStorage = 0;
+
 class IZone extends WorkZone {
     constructor(x, y, layer) {
         let rndMaxWorkers = 50 + rnd(100);
@@ -21,10 +24,16 @@ class IZone extends WorkZone {
         iZones.push(this);
         this.updateAdjBuildingsAndRoads();
 
-        for (let i = 0; i < this.truckCount; i++){
+        for (let i = 0; i < this.truckCount; i++) {
             this.trucks.push(new Truck(this));
             this.trucks[this.trucks.length - 1].calcRoute(this);
         }
+
+        countOfAllJobs += this.maxWorkers;
+        countOfFreeJobs += this.maxWorkers;
+
+        iAllStorage += this.storage;
+        iAllOptimalStorage += this.storageCapacity / 10;
     }
 
     finishConstruction() {
@@ -37,7 +46,9 @@ class IZone extends WorkZone {
         for (let i = 0; i < this.truckCount; i++) {
             if (!this.activeTrucks.includes(this.trucks[i])) {
                 this.activeTrucks.push(this.trucks[i]);
-                this.storage -= (10 - this.trucks[i].cargo);
+                let cargo = (10 - this.trucks[i].cargo);
+                this.storage -= cargo;
+                iAllStorage -= cargo;
                 this.trucks[i].cargo = 10;
                 this.trucks[i].onTheRoad = true;
                 this.trucks[i].calcRoute(target);

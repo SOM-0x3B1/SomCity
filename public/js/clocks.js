@@ -32,8 +32,11 @@ let tickIndustry = setInterval(() => {
     shuffle(iZones);
     for (let i = 0; i < iZones.length; i++) {
         iZones[i].storage += iZones[i].production;
-        if (iZones[i].storage > iZones[i].storageCapacity)
-            iZones[i].storage = iZones[i].storageCapacity
+        iAllStorage += iZones[i].production;
+        if (iZones[i].storage > iZones[i].storageCapacity) {
+            iAllStorage -= iZones[i].storage - iZones[i].storageCapacity;
+            iZones[i].storage = iZones[i].storageCapacity;
+        }
     }
 
     shuffle(cZones);
@@ -45,16 +48,6 @@ let tickIndustry = setInterval(() => {
 let tickShops = setInterval(() => {
     for (let i = 0; i < cZones.length; i++)
         cZones[i].serveCustomers();
-
-    if (people.length > 0) {
-        for (let i = 0; i < productDemands.length; i++) {
-            let bar = document.getElementById('mainStat-demands-bar-c' + (i + 1));
-            let value = (productDemands[i] / people.length / 3 * 100);
-            if(value > 50)
-                value = 50;
-            bar.style.height = value + '%';
-        }
-    }
 }, 200);
 
 let tickRoads = setInterval(() => {
@@ -84,3 +77,64 @@ let tickNeeds = setInterval(() => {
     for (let i = 0; i < households.length; i++)
         households[i].addNeeds();
 }, 3000);
+
+
+let tickBars = setInterval(() => {
+    if (people.length > 0) {
+        let rbar = document.getElementById('mainStat-demands-bar-r');
+        let rvalue
+        if (countOfAllJobs > 0)
+            rvalue = (countOfFreeJobs / countOfAllJobs) * 100 - (unemployed.length / people.length) * 100;
+        else
+            rvalue = -100;
+
+        if (rvalue >= 0) {
+            if (rvalue > 100)
+                rvalue = 100;
+            rbar.style.top = '';
+            rbar.style.bottom = 'calc(50% - 2pt)';
+        }
+        else {
+            if (rvalue < -100)
+                rvalue = -100;
+            rbar.style.bottom = '';
+            rbar.style.top = 'calc(50% + 2pt)';
+        }
+        rbar.style.height = Math.abs(rvalue / 2) + '%';
+
+
+        for (let i = 0; i < productDemands.length; i++) {
+            let cbar = document.getElementById('mainStat-demands-bar-c' + (i + 1));
+            let cvalue = (productDemands[i] / people.length / 3 * 100);
+            if (cvalue > 50)
+                cvalue = 50;
+            cbar.style.height = cvalue + '%';
+        }
+
+
+        let ibar = document.getElementById('mainStat-demands-bar-i');
+        let ivalue;
+        if (countOfAllJobs > 0) {
+            if (iAllOptimalStorage > 0)
+                ivalue = (1 - cAllStorage / cAllOptimalStorage) * 100 - (iAllStorage / iAllOptimalStorage) * 50;
+            else
+                ivalue = (1 - cAllStorage / cAllOptimalStorage) * 100;
+        }
+        else
+            ivalue = -100;
+
+        if (ivalue >= 0) {
+            if (ivalue > 100)
+                ivalue = 100;
+            ibar.style.top = '';
+            ibar.style.bottom = 'calc(50% - 2pt)';
+        }
+        else {
+            if (ivalue < -100)
+                ivalue = -100;
+            ibar.style.bottom = '';
+            ibar.style.top = 'calc(50% + 2pt)';
+        }
+        ibar.style.height = Math.abs(ivalue / 2) + '%';
+    }
+}, 500);
