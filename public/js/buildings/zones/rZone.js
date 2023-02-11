@@ -25,6 +25,13 @@ class RZone extends Zone {
         return count;
     }
 
+    get peopleAtHome(){
+        let count = 0;
+        for (let i = 0; i < this.households.length; i++) 
+            count += this.households[i].membersAtHome.length;
+        return count;
+    }
+
     register() {
         freeRZones.push(this);
         this.updateAdjBuildingsAndRoads();
@@ -53,7 +60,7 @@ class RZone extends Zone {
     }
 
     fillCellInfo(){
-        cellInfo.innerText = `Households: ${this.households.length}/${this.capacity} \n Residents: ${this.people} \n Development: ${this.level + 1}`;
+        cellInfo.innerText = `Households: ${this.households.length}/${this.capacity} \n Residents: ${this.people} \n At home: ${this.peopleAtHome} \n Development: ${this.level + 1}`;
     }
 
     removeRZone(){

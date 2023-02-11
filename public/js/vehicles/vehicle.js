@@ -39,7 +39,7 @@ class Vehicle {
             this.lastWayPoint = this.route[this.cRoutePoint - 1];
             let nextRoad = roads[coordsToKey(cWayPoint.x, cWayPoint.y)];
             let queue = nextRoad.queues[coordsToKey(this.lastWayPoint.x, this.lastWayPoint.y)];
-            queue.slice(queue.indexOf(this), 1);
+            queue.splice(queue.indexOf(this), 1);
         }*/
 
         movingCars[this.id] = this;
@@ -83,8 +83,7 @@ class Vehicle {
 
                     let cRoad = roads[coordsToKey(this.x, this.y)];
                     let adjacentShop = this.nextToAShop(cRoad.adjBuildings);
-                    if(!this.shopping && adjacentShop && Object.keys(this.targetShopTypes).length > 0)
-                    {
+                    if (!this.shopping && adjacentShop && Object.keys(this.targetShopTypes).length > 0) {
                         this.changeRouteNextTimeToTarget = adjacentShop;
                         this.originalTarget = this.target;
                         this.shopping = true;
@@ -92,7 +91,7 @@ class Vehicle {
 
                     if (cRoad.adjRoads.length > 2) {
                         if (!this.shopping && Object.keys(this.targetShopTypes).length > 0) {
-                            let reachableTarget = this.findNearShops();
+                            let reachableTarget = this.findNearShops(6);
                             if (reachableTarget) {
                                 this.changeRouteNextTimeToTarget = reachableTarget;
                                 this.originalTarget = this.target;
@@ -233,13 +232,18 @@ class Vehicle {
         }
     }
 
-    findNearShops() {
-        const root = roads[coordsToKey(this.x, this.y)];
+    findNearShops(depth) {
+        let root;
+        if (this.housingBuilding)
+            root = roads[coordsToKey(this.housingBuilding.entrance.x, this.housingBuilding.entrance.y)];
+        else
+            root = roads[coordsToKey(this.x, this.y)];
+
         let queue = [new BFSRoad(root, 0)];
         let visited = {};
         let current;
 
-        while (queue.length > 0 && (!current || current.depth < 6)) {
+        while (queue.length > 0 && (!current || current.depth < depth)) {
             current = queue.shift();
             visited[coordsToKey(current.road.x, current.road.y)] = true;
             let adjBuildings = current.road.adjBuildings;

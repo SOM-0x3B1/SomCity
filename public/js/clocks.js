@@ -49,7 +49,7 @@ let tickShops = setInterval(() => {
     if (people.length > 0) {
         for (let i = 0; i < productDemands.length; i++) {
             let bar = document.getElementById('mainStat-demands-bar-c' + (i + 1));
-            let value = (productDemands[i] / people.length * 100);
+            let value = (productDemands[i] / people.length / 3 * 100);
             if(value > 50)
                 value = 50;
             bar.style.height = value + '%';

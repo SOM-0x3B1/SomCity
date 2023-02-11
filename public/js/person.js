@@ -1,14 +1,13 @@
 let people = [];
 let statPopulation = document.getElementById('mainStat-population-value');
-let targetedPeople = [];
 let unemployed = [];
 let statUnemployed = document.getElementById('mainStat-unemployed-value');
 //let lookForJob = [];
 let globalSchedule = {};
 
 class Person {
-    constructor(household) {
-        this.id = guidGenerator();
+    constructor(household, id) {
+        this.id = id;
         this.car = new PrivateCar(this);
         this.household = household;
         this.workplace;

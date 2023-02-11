@@ -3,13 +3,12 @@ let households = [];
 class Household {
     constructor() {
         this.members = [];
+        this.membersAtHome = [];
         this.countOfMembers = 1 + rnd(2);
-        this.needs = [];
+        this.homeZone;
 
         for (let i = 0; i < this.countOfMembers; i++)
-            this.members.push(new Person(this));
-
-        this.homeZone;
+            this.members.push(new Person(this, i));
     }
 
     assignZone() {
@@ -19,8 +18,9 @@ class Household {
         for (let i = 0; i < this.countOfMembers; i++) {
             //console.log(this.homeZone.entrance);
             this.members[i].car.calcRoute(this.homeZone);
-            targetedPeople.push(this.members[i]);
             this.members[i].car.drawOverlay();
+
+            this.members[i].car.home = this.homeZone;
         }
 
         households.push(this);
@@ -30,14 +30,25 @@ class Household {
         let random = rnd(21);
         if (random < products.length) {
             let need = random;
-            this.needs.push(need);
             productDemands[need]++;
-            
-            let member = rnd(this.members.length - 1);
-            if (this.members[member].car.targetShopTypes[need])
-                this.members[member].car.targetShopTypes[need]++;
-            else
-                this.members[member].car.targetShopTypes[need] = 1;
+
+            if (this.membersAtHome.length == 0) {
+                let member = rnd(this.members.length - 1);
+                if (this.members[member].car.targetShopTypes[need])
+                    this.members[member].car.targetShopTypes[need]++;
+                else
+                    this.members[member].car.targetShopTypes[need] = 1;
+            }
+            else {
+                let member = rnd(this.membersAtHome.length - 1);
+                if (this.membersAtHome[member].car.targetShopTypes[need])
+                    this.membersAtHome[member].car.targetShopTypes[need]++;
+                else
+                    this.membersAtHome[member].car.targetShopTypes[need] = 1;
+
+                if (this.membersAtHome[member].car.atHome)
+                    this.membersAtHome[member].car.goShopping();
+            }
         }
     }
 

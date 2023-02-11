@@ -1,5 +1,5 @@
 class WorkZone extends Zone {
-    constructor(x, y, texture, maxWorkers, productionCap, storageCap, layer) {
+    constructor(x, y, texture, maxWorkers, productionCap, storageCap, forceNightShift, layer) {
         super(x, y, texture, layer);
 
         this.workers = [];
@@ -10,7 +10,7 @@ class WorkZone extends Zone {
         this.storage = 0;
         this.storageCapacity = storageCap;
 
-        this.hasNightShift = rnd(1) == 0;
+        this.hasNightShift = forceNightShift ? true : rnd(1) == 0;
         this.opens1;
         this.opens2;
         this.closes1;

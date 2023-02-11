@@ -3,7 +3,7 @@ let iZones = [];
 class IZone extends WorkZone {
     constructor(x, y, layer) {
         let rndMaxWorkers = 50 + rnd(100);
-        super(x, y, 'assets/zones/i.png', rndMaxWorkers, Math.ceil(rndMaxWorkers / 15), 500 + rnd(10) * 100, layer);
+        super(x, y, 'assets/zones/i.png', rndMaxWorkers, Math.ceil(rndMaxWorkers / 10), 500 + rnd(10) * 100, false, layer);
 
         this.truckCount = Math.ceil(rndMaxWorkers / 20);
         this.trucks = [];
