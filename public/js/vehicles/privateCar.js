@@ -50,6 +50,7 @@ class PrivateCar extends Vehicle {
             let targetShop = this.findNearShops(20);
             if (targetShop) {
                 this.originalTarget = this.home;
+                this.shopping = true;
                 this.calcRoute(targetShop);
             }
         }
