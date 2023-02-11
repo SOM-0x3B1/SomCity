@@ -23,7 +23,7 @@ for (let i = 0; i < products.length; i++) {
 class CZone extends WorkZone {
     constructor(x, y, layer) {
         let rndMaxWorkers = 5 + rnd(10);
-        super(x, y, 'assets/zones/c.png', rndMaxWorkers, Math.ceil(rndMaxWorkers / 3), 200, layer);
+        super(x, y, 'assets/zones/c.png', rndMaxWorkers, rndMaxWorkers, 200, true, layer);
 
         this.customerQueue = [];
         this.maxCustomers = 30;
@@ -83,8 +83,10 @@ class CZone extends WorkZone {
         }
 
         if (this.production <= 0) {
-            while (this.customerQueue.length > 0)
-                this.customerQueue.shift().calcRoute(cCustomer.originalTarget);
+            while (this.customerQueue.length > 0){
+                let cCustomer = this.customerQueue.shift();
+                cCustomer.calcRoute(cCustomer.originalTarget);
+            }
         }
     }
 
