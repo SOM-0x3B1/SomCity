@@ -28,7 +28,7 @@ class Ambience {
         else if (value > 1)
             value = 1;
         this.dModifier = value;
-        this.a.volume = ambientVolume * masterVolume * this.dModifier;
+        this.a.volume = this.fadeVolume * ambientVolume * masterVolume * this.dModifier;
     }
 
     //TODO: sync with dModifier
@@ -49,7 +49,7 @@ class Ambience {
         let originalVolume = ambientVolume * masterVolume;
         let fadeAudio = setInterval(() => {
             if (this.fadeVolume > 0.0)
-                this.fadeVolume = Math.max(0, fadeVolume - 0.01);
+                this.fadeVolume = Math.max(0, this.fadeVolume - 0.02);
             else {
                 clearInterval(fadeAudio);
                 this.stop();

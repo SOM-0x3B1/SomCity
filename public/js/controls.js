@@ -55,8 +55,8 @@ document.onwheel = (e) => {
     pointX = e.clientX - xs * scale;
     pointY = e.clientY - ys * scale;
 
-    aaDay.changeD(aaDay.calcD());
-    aaWind.changeD(aaWind.calcD());
+    for (let i = 0; i < ambients.length; i++)
+        ambients[i].changeD(ambients[i].calcD());
 
     setTransform();
 }

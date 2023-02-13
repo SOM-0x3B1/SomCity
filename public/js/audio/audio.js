@@ -19,6 +19,9 @@ aaWind.load();
 const aaDay = new Ambience('day', () => { return scale / 2 - 0.3; });
 aaDay.load();
 
+const aaNight = new Ambience('night', () => { return scale / 2 - 0.3; });
+aaNight.load();
+
 
 const aClicks = new VariedSFX('menuClicks/click', 24);
 aClicks.load();

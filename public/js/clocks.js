@@ -1,5 +1,9 @@
-let time = 0;
+let time = 900;
 let timeVaule = document.getElementById('mainStat-time-value');
+let night = false;
+
+let body = document.getElementById('body');
+let game = document.getElementById('game');
 
 let mainTick = setInterval(() => {
     time++;
@@ -15,6 +19,24 @@ let mainTick = setInterval(() => {
         timeVaule.innerText += ':';
     timeVaule.innerText += minutes % 60;
 
+    if (time == 420) {
+        if(night){
+            aaDay.fadeIn();
+            aaNight.fadeOut();
+            body.style.backgroundColor = 'rgb(15, 15, 15)';
+            game.style.backgroundColor = 'rgb(15, 15, 15)';
+        }
+        night = false;
+    }
+    else if (time == 1020) {
+        if(!night){
+            aaDay.fadeOut();
+            aaNight.fadeIn();
+            body.style.backgroundColor = 'rgb(8, 8, 8)';
+            game.style.backgroundColor = 'rgb(8, 8, 8)';
+        }
+        night = true;
+    }
 
     let cSchedules = globalSchedule[time];
     if (cSchedules) {

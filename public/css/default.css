@@ -33,7 +33,7 @@ body {
     font-family: 'VT323', monospace;
 
     overflow: hidden;
-    background-color: var(--pageBackgroundColor);
+    background-color: rgb(15, 15, 15);
 
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -41,6 +41,8 @@ body {
     user-select: none;
 
     touch-action: none;
+
+    transition: background-color 1s;
 }
 
 h2 {
@@ -98,8 +100,8 @@ nav img:hover {
 #game {
     display: none;
     opacity: 0;
-    transition: opacity 2s;
-    background-color: var(--pageBackgroundColor);
+    transition: opacity 2s, background-color 5s;
+    background-color: rgb(15, 15, 15);
 }
 
 .backStrip {
