@@ -5,6 +5,7 @@ class Ambience {
         this.a.loop = true;
         this.dModifier = 1;
         this.calcD = calcD;
+        this.fadeVolume = 0;
     };
 
     load() {
@@ -36,22 +37,24 @@ class Ambience {
         this.play();
 
         let fadeAudio = setInterval(() => {
-            if (this.a.volume < 1.0)
-                this.a.volume = Math.min(1, this.a.volume + 0.01);
+            if (this.fadeVolume < 1.0)
+                this.fadeVolume = Math.min(1, this.fadeVolume + 0.01);
             else
                 clearInterval(fadeAudio);
+            this.a.volume = this.fadeVolume * ambientVolume * masterVolume * this.dModifier;
         }, 200);
     }
 
     fadeOut() {
         let originalVolume = ambientVolume * masterVolume;
         let fadeAudio = setInterval(() => {
-            if (this.a.volume > 0.0)
-                this.a.volume = Math.max(0, this.a.volume - 0.01);
+            if (this.fadeVolume > 0.0)
+                this.fadeVolume = Math.max(0, fadeVolume - 0.01);
             else {
                 clearInterval(fadeAudio);
                 this.stop();
             }
+            this.a.volume = this.fadeVolume * ambientVolume * masterVolume * this.dModifier;
         }, 200);
     }
 }
