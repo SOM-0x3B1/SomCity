@@ -39,7 +39,6 @@ class IZone extends WorkZone {
     finishConstruction() {
         clearInterval(this.constructionInterval);
         this.buildingImg.src = `assets/zoneTextures/iz-${this.level}-${this.buildingTexture}.png`;
-        rotateStaticImg(this.buildingImg, this.facing);
     }
 
     sendTruck(target) {
