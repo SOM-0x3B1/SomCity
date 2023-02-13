@@ -112,14 +112,17 @@ class Building {
         }
     }
 
-    /** Deletes this road. */
     remove() {
         for (let ix = this.x; ix < this.x + this.width; ix++)
             for (let iy = this.y; iy < this.y + this.height; iy++)
                 mainLayer[iy][ix] = undefined;
 
-        if (this instanceof Road)
+        if (this instanceof Road){
             this.updateDirections(true);
+            delete roads[coordsToKey(this.x, this.y)];
+            delete simplRoads[coordsToKey(this.x, this.y)];
+            document.getElementById(`cellBorder-${LayerIDs.Main}(${this.x};${this.y})`).style.backgroundColor = 'transparent';
+        }
 
         ereaseCell(this.x, this.y, LayerIDs.Main);
     }
