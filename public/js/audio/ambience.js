@@ -1,9 +1,16 @@
 class Ambience {
-    constructor(audioPath) {
+    constructor(audioPath, calcD) {
         /*this.attack = new VariedSFX(attackPath, attackCount);*/
         this.a = new Audio('assets/ambience/' + audioPath + '.mp3');
         this.a.loop = true;
+        this.dModifier = 1;
+        this.calcD = calcD;
     };
+
+    load() {
+        ambients.push(this);
+        this.changeD(this.calcD());
+    }
 
     play() {
         this.a.currentTime = 0;
@@ -14,6 +21,16 @@ class Ambience {
         this.a.pause();
     }
 
+    changeD(value) {
+        if (value < 0)
+            value = 0;
+        else if (value > 1)
+            value = 1;
+        this.dModifier = value;
+        this.a.volume = ambientVolume * masterVolume * this.dModifier;
+    }
+
+    //TODO: sync with dModifier
     fadeIn() {
         this.a.volume = 0;
         this.play();
@@ -31,14 +48,10 @@ class Ambience {
         let fadeAudio = setInterval(() => {
             if (this.a.volume > 0.0)
                 this.a.volume = Math.max(0, this.a.volume - 0.01);
-            else{
+            else {
                 clearInterval(fadeAudio);
                 this.stop();
             }
         }, 200);
-    }
-
-    load() {
-        ambients.push(this.a);
     }
 }

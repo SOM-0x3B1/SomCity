@@ -84,6 +84,8 @@ function startBuilding(selectedBuilding) {
 
 /** Cancels the new building placement. */
 function stopBuilding() {
+    aRoadPlanning.stop();
+
     placing = false;
     firstOfTwoPoints = false;
     buildingUnderBuilding = null;

@@ -8,15 +8,15 @@ const musics = [];
 const ambients = [];
 let sfxs = [];
 
-const aMenuMusic = new Audio('assets/music/SomCity2.mp3');
+const aMenuMusic = new Audio('assets/music/SomCity3.mp3');
 aMenuMusic.loop = true;
 musics.push(aMenuMusic);
 
 
-const aaWind = new Ambience('wind');
+const aaWind = new Ambience('wind', () => { return 1 - scale / 6; });
 aaWind.load();
 
-const aaDay = new Ambience('day');
+const aaDay = new Ambience('day', () => { return scale / 2 - 0.3; });
 aaDay.load();
 
 
@@ -24,7 +24,7 @@ const aClicks = new VariedSFX('menuClicks/click', 24);
 aClicks.load();
 
 const aSelectBuilding = new VariedSFX('planning/select', 3);
-aSelectBuilding.load(); 
+aSelectBuilding.load();
 
 const aAllocate = new VariedSFX('planning/allocate', 4);
 aAllocate.load();
@@ -47,7 +47,7 @@ function setMaster(value) {
     for (let i = 0; i < musics.length; i++)
         musics[i].volume = musicVolume * masterVolume;
     for (let i = 0; i < ambients.length; i++)
-        ambients[i].volume = ambientVolume * masterVolume;
+        ambients[i].a.volume = ambientVolume * masterVolume * ambients[i].dModifier;
     for (let i = 0; i < sfxs.length; i++)
         sfxs[i].volume = sfxVolume * masterVolume;
 }
@@ -61,7 +61,7 @@ function setMusic(value) {
 function setAmbient(value) {
     ambientVolume = value / 100;
     for (let i = 0; i < ambients.length; i++)
-        ambients[i].volume = ambientVolume * masterVolume;
+        ambients[i].a.volume = ambientVolume * masterVolume * ambients[i].dModifier;
 }
 function setSFX(value) {
     sfxVolume = value / 100;
@@ -69,10 +69,10 @@ function setSFX(value) {
         sfxs[i].volume = sfxVolume * masterVolume;
 }
 
-setMusic(30);
-setAmbient(60);
-setSFX(50);
 setMaster(80);
+setMusic(20);
+setAmbient(50);
+setSFX(70);
 
 
 aMenuMusic.play();

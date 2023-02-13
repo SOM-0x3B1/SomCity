@@ -1,7 +1,7 @@
 /** Contains all the layers. */
 const mainDisplay = document.getElementById("mainDisplay");
 
-var scale = 0.7,
+let scale = 0.7,
     panning = false,
     pointX = 0,
     pointY = 0,
@@ -54,6 +54,9 @@ document.onwheel = (e) => {
     (delta > 0) ? (scale *= 1.2) : (scale /= 1.2);
     pointX = e.clientX - xs * scale;
     pointY = e.clientY - ys * scale;
+
+    aaDay.changeD(aaDay.calcD());
+    aaWind.changeD(aaWind.calcD());
 
     setTransform();
 }
@@ -111,9 +114,9 @@ for (let i = 0; i < sideAreas.length; i++) {
 }
 
 document.addEventListener('wheel', (e) => {
-        if (e.ctrlKey) {
-            e.preventDefault();
-        }
-    },
+    if (e.ctrlKey) {
+        e.preventDefault();
+    }
+},
     { passive: false }
 );
