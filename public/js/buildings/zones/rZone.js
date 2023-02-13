@@ -50,8 +50,7 @@ class RZone extends Zone {
     finishConstruction() {
         clearInterval(this.constructionInterval);
         this.buildingImg.src = `assets/zoneTextures/rz-${this.level}-${this.buildingTexture}.png`;
-        rotateStaticImg(this.buildingImg, this.facing);
-
+        
         for (let i = 0; i < this.households.length; i++) {
             const household = this.households[i];
             for (let j = 0; j < household.members.length; j++)

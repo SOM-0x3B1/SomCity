@@ -85,8 +85,21 @@ class Building {
                 let neighboursAreRoads = [topIsRoad, leftIsRoad, downIsRoad, rightIsRoad];
 
                 for (let i = 0; i < 4; i++) {
-                    if (neighbours[i] && neighboursAreRoads[i])
+                    if (neighbours[i] && neighboursAreRoads[i]) {
                         this.adjRoads.push(neighbours[i]);
+                        if (!this.entrance){
+                            this.entrance = neighbours[i];
+                            this.facing = this.getFacing(this.entrance, ix, iy);                            
+                        }
+                        else if (this.entrance) {
+                            let newFacing = this.getFacing(neighbours[i], ix, iy);
+                            if((newFacing == 0) || (newFacing == 180 && this.facing != 0) || (newFacing == 90 && this.facing == 270)) 
+                            {
+                                this.entrance = neighbours[i];
+                                this.facing = newFacing;
+                            }
+                        }
+                    }
                     else
                         this.adjBuildings.push(neighbours[i]);
                     //console.log(this.adjRoads);
@@ -94,16 +107,8 @@ class Building {
             }
         }
 
-        this.entrance = this.adjRoads[rnd(this.adjRoads.length - 1)];
-
-        if (this.entrance) {
-            if (this.entrance.x < this.x)
-                this.facing = 90;
-            else if (this.entrance.y < this.y)
-                this.facing = 180;
-            else if (this.entrance.x > this.x + this.width - 1)
-                this.facing = 270;
-        }
+        //this.entrance = this.adjRoads[rnd(this.adjRoads.length - 1)];S
+        rotateStaticImg(this.buildingImg, this.facing);
 
         if (!(this instanceof Road)) {
             for (let i = 0; i < this.adjRoads.length; i++)
@@ -112,14 +117,30 @@ class Building {
         }
     }
 
-    /** Deletes this road. */
+    getFacing(road, x, y) {
+        if (road) {
+            if (road.y > y)
+                return 0;
+            else if (road.y < y)
+                return 180;
+            else if (road.x < x)
+                return 90;
+            else if (road.x > x)
+                return 270;
+        }
+    }
+
     remove() {
         for (let ix = this.x; ix < this.x + this.width; ix++)
             for (let iy = this.y; iy < this.y + this.height; iy++)
                 mainLayer[iy][ix] = undefined;
 
-        if (this instanceof Road)
+        if (this instanceof Road) {
             this.updateDirections(true);
+            delete roads[coordsToKey(this.x, this.y)];
+            delete simplRoads[coordsToKey(this.x, this.y)];
+            document.getElementById(`cellBorder-${LayerIDs.Main}(${this.x};${this.y})`).style.backgroundColor = 'transparent';
+        }
 
         ereaseCell(this.x, this.y, LayerIDs.Main);
     }
