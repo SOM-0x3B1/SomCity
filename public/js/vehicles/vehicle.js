@@ -89,8 +89,8 @@ class Vehicle {
                         this.shopping = true;
                     }
 
-                    if (cRoad.adjRoads.length > 2) {
-                        if (!this.shopping && Object.keys(this.targetShopTypes).length > 0) {
+                    if (cRoad.adjRoads.length > 2 && !this.shopping) {
+                        if (Object.keys(this.targetShopTypes).length > 0) {
                             let reachableTarget = this.findNearShops(6);
                             if (reachableTarget) {
                                 this.changeRouteNextTimeToTarget = reachableTarget;

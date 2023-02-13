@@ -31,7 +31,7 @@ class PrivateCar extends Vehicle {
             this.owner.household.membersAtHome.push(this.owner);
             this.goShopping();
         }
-        else if (this.atWork) {
+        else if (!this.shopping && this.atWork) {
             this.housingBuilding.workersPresent++;
             this.housingBuilding.updateEfficiency();
         }
@@ -61,7 +61,7 @@ class PrivateCar extends Vehicle {
             this.owner.household.membersAtHome.splice(this.owner.household.membersAtHome.indexOf(this.owner), 1);
             //console.log(this.owner.household.membersAtHome);
         }
-        else if (this.atWork) {
+        else if (!this.shopping && this.atWork) {
             this.housingBuilding.workersPresent--;
             this.housingBuilding.updateEfficiency();
         }
