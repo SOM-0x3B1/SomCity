@@ -27,7 +27,7 @@ class Household {
     }
 
     addNeeds() {
-        let random = rnd(21);
+        let random = rnd(126);
         if (random < products.length) {
             let need = random;
             productDemands[need]++;

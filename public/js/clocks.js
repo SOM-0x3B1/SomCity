@@ -76,7 +76,7 @@ let tickOverlays = setInterval(() => {
 let tickNeeds = setInterval(() => {
     for (let i = 0; i < households.length; i++)
         households[i].addNeeds();
-}, 3000);
+}, 500);
 
 
 let tickBars = setInterval(() => {
