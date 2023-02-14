@@ -61,10 +61,12 @@ let tickIndustry = setInterval(() => {
         }
     }
 
-    shuffle(cZones);
+    let cZoneQueue = new PriorityQueue();
+    //shuffle(cZones);
     for (let i = 0; i < cZones.length; i++)
-        cZones[i].requestProducts();
-
+        cZoneQueue.enqueue(cZones[i], cZones[i].storage);
+    while (cZoneQueue.values.length > 0)
+        cZoneQueue.dequeue().val.requestProducts();
 }, 500);
 
 let tickShops = setInterval(() => {
