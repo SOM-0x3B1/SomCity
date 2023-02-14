@@ -1,10 +1,10 @@
 let showTrafficOverlay = false;
 let showWaterOverlay = false;
+let overlayCells = document.getElementsByClassName('cellBorder');
 
 function toggleTrafficOL(backStrip) {
     showTrafficOverlay = !showTrafficOverlay;
     if (!showTrafficOverlay) {
-        let overlayCells = document.getElementsByClassName('cellBorder');
         for (let i = 0; i < overlayCells.length; i++)
             overlayCells[i].style.backgroundColor = 'transparent';
 
@@ -17,8 +17,7 @@ function toggleTrafficOL(backStrip) {
 }
 
 function toggleWaterOL(backStrip) {
-    showWaterOverlay = !showWaterOverlay;
-    let overlayCells = document.getElementsByClassName('cellBorder');
+    showWaterOverlay = !showWaterOverlay;    
     if (!showWaterOverlay) {
         for (let x = 0; x < mapWidth; x++)
             for (let y = 0; y < mapHeight; y++)
