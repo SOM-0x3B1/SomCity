@@ -6,6 +6,7 @@ class Ambience {
         this.dModifier = 1;
         this.calcD = calcD;
         this.fadeVolume = 0;
+        this.playing = false;
     };
 
     load() {
@@ -16,10 +17,12 @@ class Ambience {
     play() {
         this.a.currentTime = 0;
         this.a.play();
+        this.playing = true;
     }
 
     stop() {
         this.a.pause();
+        this.playing = false;
     }
 
     changeD(value) {
@@ -32,24 +35,24 @@ class Ambience {
     }
 
     //TODO: sync with dModifier
-    fadeIn() {
+    fadeIn(steps) {
         this.a.volume = 0;
         this.play();
 
         let fadeAudio = setInterval(() => {
             if (this.fadeVolume < 1.0)
-                this.fadeVolume = Math.min(1, this.fadeVolume + 0.01);
+                this.fadeVolume = Math.min(1, this.fadeVolume + steps);
             else
                 clearInterval(fadeAudio);
             this.a.volume = this.fadeVolume * ambientVolume * masterVolume * this.dModifier;
         }, 200);
     }
 
-    fadeOut() {
+    fadeOut(steps) {
         let originalVolume = ambientVolume * masterVolume;
         let fadeAudio = setInterval(() => {
             if (this.fadeVolume > 0.0)
-                this.fadeVolume = Math.max(0, this.fadeVolume - 0.02);
+                this.fadeVolume = Math.max(0, this.fadeVolume - steps);
             else {
                 clearInterval(fadeAudio);
                 this.stop();

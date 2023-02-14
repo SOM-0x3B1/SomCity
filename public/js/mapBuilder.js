@@ -109,11 +109,12 @@ function buildGrid(rows, cols) {
                             bulldozingFirstPos = new COORD(x, y);
                     }
                     cell.onmouseup = () => {
-                        if (bulldozing && bulldozingFirstPos) {
+                        if (bulldozing && bulldozingFirstPos) {                            
                             for (let ix = bulldozingFirstPos.x; bulldozingFirstPos.x < x ? ix <= x : ix >= x; bulldozingFirstPos.x < x ? ix++ : ix--) {
                                 for (let iy = bulldozingFirstPos.y; bulldozingFirstPos.y < y ? iy <= y : iy >= y; bulldozingFirstPos.y < y ? iy++ : iy--) {
                                     let target = mainLayer[iy][ix];
                                     if (target && target instanceof Building && target.deletable) {
+                                        aBulldoze.playNext();
                                         if (target instanceof Road)
                                             delete simplRoads[coordsToKey(ix, iy)];
                                         else if (target instanceof RZone)
@@ -121,8 +122,9 @@ function buildGrid(rows, cols) {
                                         target.remove();
                                     }
                                     else if (target == 't') {
+                                        aBulldoze.playNext();
                                         target = null;
-                                        ereaseCell(ix, iy, LayerIDs.Main);
+                                        ereaseCell(ix, iy, LayerIDs.Main);                                        
                                     }
                                 }
                             }

@@ -20,18 +20,18 @@ let mainTick = setInterval(() => {
     timeVaule.innerText += minutes % 60;
 
     if (time == 420) {
-        if(night){
-            aaDay.fadeIn();
-            aaNight.fadeOut();
+        if (night) {
+            aaDay.fadeIn(0.01);
+            aaNight.fadeOut(0.02);
             body.style.backgroundColor = 'rgb(15, 15, 15)';
             game.style.backgroundColor = 'rgb(15, 15, 15)';
         }
         night = false;
     }
     else if (time == 1020) {
-        if(!night){
-            aaDay.fadeOut();
-            aaNight.fadeIn();
+        if (!night) {
+            aaDay.fadeOut(0.02);
+            aaNight.fadeIn(0.01);
             body.style.backgroundColor = 'rgb(8, 8, 8)';
             game.style.backgroundColor = 'rgb(8, 8, 8)';
         }
@@ -75,12 +75,22 @@ let tickShops = setInterval(() => {
 }, 200);
 
 let tickRoads = setInterval(() => {
-    for (const car in movingCars)
+    let carCount = 0;
+    for (const car in movingCars){
         movingCars[car].initiateMove();
+        carCount++;
+    }
     for (const key in roads)
         roads[key].moveCars();
     if (objectOfCellInfo)
         objectOfCellInfo.fillCellInfo();
+
+    if (carCount >= 20 && !aaTraffic.playing){
+        aaTraffic.fadeIn(0.02);
+        console.log(aaTraffic);
+    }
+    else if (carCount < 20 && aaTraffic.playing)
+        aaTraffic.fadeOut(0.01);
 }, 50);
 
 

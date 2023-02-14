@@ -20,8 +20,8 @@ assignSounds();
 
 function startNew() {
     aClicks.playNext();
-    aaWind.fadeIn();
-    aaDay.fadeIn();
+    aaWind.fadeIn(0.01);
+    aaDay.fadeIn(0.01);
 
     inMenu = false;
     showGame();
