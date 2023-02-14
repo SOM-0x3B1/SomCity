@@ -163,7 +163,7 @@
         <div id="buildMenu">
             <div class="buildCategory">
                 <img src="assets/icons/icon-roads.png" alt="">
-                <ul id="r">
+                <ul id="r" class="primaryUL">
                     <li onclick="startBuilding('r-highway')">
                         <div class="backStrip" id="BS-r-highway"></div>Highway (III)
                     </li>
@@ -177,12 +177,32 @@
             </div>
             <div class="buildCategory">
                 <img src="assets/icons/icon-zones.png" alt="">
-                <ul id="z">
+                <ul id="z" class="primaryUL">
                     <li onclick="startBuilding('z-residential')">
                         <div class="backStrip" id="BS-z-residential"></div>Residential (R)
                     </li>
                     <li onclick="startBuilding('z-commercial')">
                         <div class="backStrip" id="BS-z-commercial"></div>Commercial (C)
+                        <ul id="subCZ" class="secondaryUL">
+                            <li onclick="startBuilding('z-commercial', 5)">-Auto- <div class="secondaryBackStrip"
+                                    id="BS-z-commercial-5" style="width: 100%;"></div>
+                            </li>
+                            <li onclick="startBuilding('z-commercial', 0 )">Food <div class="secondaryBackStrip"
+                                    id="BS-z-commercial-0"></div>
+                            </li>
+                            <li onclick="startBuilding('z-commercial', 1)">Household items <div
+                                    class="secondaryBackStrip" id="BS-z-commercial-1"></div>
+                            </li>
+                            <li onclick="startBuilding('z-commercial', 2)">Furniture <div class="secondaryBackStrip"
+                                    id="BS-z-commercial-2"></div>
+                            </li>
+                            <li onclick="startBuilding('z-commercial', 3)">Tech <div class="secondaryBackStrip"
+                                    id="BS-z-commercial-3"></div>
+                            </li>
+                            <li onclick="startBuilding('z-commercial', 4)">Entertainment <div class="secondaryBackStrip"
+                                    id="BS-z-commercial-4"></div>
+                            </li>
+                        </ul>
                     </li>
                     <li onclick="startBuilding('z-industrial')">
                         <div class="backStrip" id="BS-z-industrial"></div>Industrial (I)
@@ -296,7 +316,7 @@
     <script src="js/buildings/zones/iZone.js"></script>
 
     <script src="js/mapBuilder.js" defer></script>
-    <script src="js/build.js"></script>    
+    <script src="js/build.js"></script>
 
     <script src="js/clocks.js"></script>
 </body>

@@ -44,26 +44,31 @@ function buildGrid(rows, cols) {
                     cell.onclick = () => {
                         if (placing) {
                             if (buildingUnderBuilding instanceof Road) {
-                                if (firstOfTwoPoints){
+                                if (firstOfTwoPoints) {
                                     firstOfTwoPoints = false;
                                     aRoadPlanning.play();
                                 }
-                                else{
+                                else {
                                     Road.setRoadEnd(x, y);
                                     aRoadPlanning.stop();
                                 }
                             }
                             else if (buildingUnderBuilding instanceof Zone) {
-                                let newZone;                                
+                                let newZone;
 
                                 if (buildingUnderBuilding instanceof RZone)
                                     newZone = new RZone(x, y, mainLayer);
-                                else if (buildingUnderBuilding instanceof CZone)
-                                    newZone = new CZone(x, y, mainLayer);
+                                else if (buildingUnderBuilding instanceof CZone) {
+                                    let p = buildingUnderBuilding.products[0];
+                                    if (p == 5)
+                                        newZone = new CZone(x, y, rnd(products.length - 1), mainLayer);
+                                    else
+                                        newZone = new CZone(x, y, p, mainLayer);
+                                }
                                 else if (buildingUnderBuilding instanceof IZone)
                                     newZone = new IZone(x, y, mainLayer);
 
-                                if(newZone.place(x, y)){
+                                if (newZone.place(x, y)) {
                                     newZone.register();
                                     aAllocate.playRandom();
                                 }
@@ -110,7 +115,7 @@ function buildGrid(rows, cols) {
                             bulldozingFirstPos = new COORD(x, y);
                     }
                     cell.onmouseup = () => {
-                        if (bulldozing && bulldozingFirstPos) {                            
+                        if (bulldozing && bulldozingFirstPos) {
                             for (let ix = bulldozingFirstPos.x; bulldozingFirstPos.x < x ? ix <= x : ix >= x; bulldozingFirstPos.x < x ? ix++ : ix--) {
                                 for (let iy = bulldozingFirstPos.y; bulldozingFirstPos.y < y ? iy <= y : iy >= y; bulldozingFirstPos.y < y ? iy++ : iy--) {
                                     let target = mainLayer[iy][ix];
@@ -125,7 +130,7 @@ function buildGrid(rows, cols) {
                                     else if (target == 't') {
                                         aBulldoze.playNext();
                                         target = null;
-                                        ereaseCell(ix, iy, LayerIDs.Main);                                        
+                                        ereaseCell(ix, iy, LayerIDs.Main);
                                     }
                                 }
                             }

@@ -24,13 +24,13 @@ for (let i = 0; i < products.length; i++) {
 
 
 class CZone extends WorkZone {
-    constructor(x, y, layer) {
+    constructor(x, y, type, layer) {
         let rndMaxWorkers = 5 + rnd(10);
         super(x, y, 'assets/zones/c.png', rndMaxWorkers, rndMaxWorkers, 200, true, layer);
 
         this.customerQueue = [];
         this.maxCustomers = 30;
-        this.products = [rnd(products.length - 1)];
+        this.products = /*[rnd(products.length - 1)]*/ [type];
 
         this.buildingTexture = rnd(2);
     }

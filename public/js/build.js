@@ -10,6 +10,8 @@ let firstOfTwoPoints = false;
 let buildingUnderBuilding;
 let currentCategory;
 let currentBackStrip;
+let currentSecondaryBackstrip = document.getElementById('BS-z-commercial-5');
+let currentSubType = 5;
 
 /** The current cells that temporary contain new buildings on the plan layer */
 let previewCells = [];
@@ -24,7 +26,7 @@ function stopModification() {
 }
 
 /** Starts a new building placement. */
-function startBuilding(selectedBuilding) {
+function startBuilding(selectedBuilding, subType) {
     if (bulldozing)
         stopBulldoze();
 
@@ -44,11 +46,23 @@ function startBuilding(selectedBuilding) {
         currentCategory.style.display = 'inline-block';
     }
 
-    if (currentBackStrip && currentBackStrip.id != 'BS-' + selectedBuilding)
+    let newBackStripID = 'BS-' + selectedBuilding;
+    if (currentBackStrip && currentBackStrip.id != newBackStripID)
         currentBackStrip.style.width = '';
-    if (!currentBackStrip || currentBackStrip.id != 'BS-' + selectedBuilding) {
-        currentBackStrip = document.getElementById('BS-' + selectedBuilding);
+    if (!currentBackStrip || currentBackStrip.id != newBackStripID) {
+        currentBackStrip = document.getElementById(newBackStripID);
         currentBackStrip.style.width = '100%';
+    }
+
+    if (subType != undefined) {
+        let newSecBackStripID = 'BS-' + selectedBuilding + '-' + subType;
+        if (currentSecondaryBackstrip && currentSecondaryBackstrip.id != newSecBackStripID)
+            currentSecondaryBackstrip.style.width = '';
+        if (!currentSecondaryBackstrip || currentSecondaryBackstrip.id != newSecBackStripID) {
+            currentSecondaryBackstrip = document.getElementById(newSecBackStripID);
+            currentSecondaryBackstrip.style.width = '100%';
+        }
+        currentSubType = subType;
     }
 
     switch (category) {
@@ -64,7 +78,7 @@ function startBuilding(selectedBuilding) {
                 case 'street':
                     buildingUnderBuilding = new Road(null, null, 's', true, planLayer);
                     break;
-            }            
+            }
             break;
         case 'z':
             switch (name) {
@@ -72,7 +86,9 @@ function startBuilding(selectedBuilding) {
                     buildingUnderBuilding = new RZone(null, null, planLayer);
                     break;
                 case 'commercial':
-                    buildingUnderBuilding = new CZone(null, null, planLayer);
+                    if (!subType)
+                        subType = currentSubType;
+                    buildingUnderBuilding = new CZone(null, null, subType, planLayer);
                     break;
                 case 'industrial':
                     buildingUnderBuilding = new IZone(null, null, planLayer);
