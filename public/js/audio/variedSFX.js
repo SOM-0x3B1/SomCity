@@ -23,7 +23,6 @@ class VariedSFX {
         this.sounds[this.cSoundIndex].currentTime = 0;
         this.sounds[this.cSoundIndex].play();
         this.cSoundIndex++;
-        console.log('alma');
     }
 
     playRandom() {

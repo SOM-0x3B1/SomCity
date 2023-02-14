@@ -1,4 +1,4 @@
-let time = 900;
+let time = 0;
 let timeVaule = document.getElementById('mainStat-time-value');
 let night = false;
 

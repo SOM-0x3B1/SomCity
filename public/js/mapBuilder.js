@@ -11,6 +11,10 @@ let planLayer = new Array(mapHeight);
 for (let i = 0; i < mapHeight; i++)
     planLayer[i] = new Array(mapWidth);
 
+let waterLayer = new Array(mapHeight);
+for (let i = 0; i < mapHeight; i++)
+    waterLayer[i] = new Array(mapWidth);
+
 
 /** The IDs of each layer. */
 const LayerIDs = {
@@ -151,7 +155,7 @@ buildGrid(mapWidth, mapHeight);
 
 /** Fills the grid with objects  */
 function buildNewBaseMap() {
-    const maps = ['b', 't']; // 'b' as buildings, 't' as terrain
+    const maps = ['b', 't', 'w']; // 'b' as buildings, 't' as terrain, 'w' as water
     let canvas = document.createElement('canvas');
     canvas.width = mapWidth;
     canvas.height = mapHeight;
@@ -177,6 +181,25 @@ function buildNewBaseMap() {
                             mainLayer[y][x] = new Road(x, y, 'h', false, mainLayer);
                             mainLayer[y][x].updateDirections(true);
                             mainLayer[y][x].register();
+                        }
+                        else if (layer == 'w') {
+                            switch (pixelData[2]) {
+                                case 255:
+                                    waterLayer[y][x] = 4;
+                                    break;
+                                case 160:
+                                    waterLayer[y][x] = 3;
+                                    break;
+                                case 111:
+                                    waterLayer[y][x] = 2;
+                                    break;
+                                case 50:
+                                    waterLayer[y][x] = 1;
+                                    break;
+                                case 0:
+                                    waterLayer[y][x] = 0;
+                                    break;
+                            }
                         }
                     }
                 }

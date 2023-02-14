@@ -146,7 +146,7 @@
                     <div class="backStrip" id="BS-ol-power"></div>power
                 </div>
                 <div class="overlayButton">
-                    <div class="backStrip" id="BS-ol-water"></div>water
+                    <div class="backStrip" id="BS-ol-water" onclick="toggleWaterOL(this)"></div>water
                 </div>
                 <div class="overlayButton">
                     <div class="backStrip" id="BS-ol-police"></div>police
@@ -206,6 +206,17 @@
                     </li>
                     <li onclick="startBuilding('z-industrial')">
                         <div class="backStrip" id="BS-z-industrial"></div>Industrial (I)
+                    </li>
+                </ul>
+            </div>
+            <div class="buildCategory">
+                <img src="assets/icons/icon-utility.png" alt="">
+                <ul id="u" class="primaryUL">
+                    <li onclick="startBuilding('u-powerPlant')">
+                        <div class="backStrip" id="BS-u-powerPlant"></div>Power plant
+                    </li>
+                    <li onclick="startBuilding('u-waterTower')">
+                        <div class="backStrip" id="BS-u-waterTower"></div>Water tower
                     </li>
                 </ul>
             </div>
