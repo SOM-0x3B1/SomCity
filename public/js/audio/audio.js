@@ -37,6 +37,9 @@ const aToggleOverlay = new VariedSFX('toggleOverlay', 3);
 aToggleOverlay.load();
 const aBulldoze = new VariedSFX('bulldoze', 3);
 aBulldoze.load();
+const aCellinfo = new VariedSFX('cellinfo', 3);
+aCellinfo.load();
+
 
 const aRoadPlanning = new SemiLoopedSFX('planning/expandStart', 'planning/expanding', 'planning/expandStop');
 aRoadPlanning.load();

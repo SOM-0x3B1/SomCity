@@ -70,6 +70,7 @@ function buildGrid(rows, cols) {
                             }
                         }
                         else if (!bulldozing && mainLayer[y][x] instanceof Building) {
+                            aCellinfo.playNext();
                             cell.appendChild(cellInfo);
                             cellInfo.style.display = 'inline-block';
                             mainLayer[y][x].fillCellInfo();
