@@ -59,7 +59,7 @@ class RZone extends Zone {
     }
 
     fillCellInfo(){
-        cellInfo.innerText = `Households: ${this.households.length}/${this.capacity} \n Residents: ${this.people} \n At home: ${this.peopleAtHome} \n Development: ${this.level + 1}`;
+        cellInfo.innerText = `Households: ${this.households.length}/${this.capacity} \n Residents: ${this.people} \n At home: ${this.peopleAtHome} \n Development: ${this.level + 1} \n Water consumption: ${this.waterConsumption} (l/day)`;
     }
 
     removeRZone(){

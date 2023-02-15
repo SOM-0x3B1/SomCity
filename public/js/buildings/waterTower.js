@@ -10,11 +10,11 @@ class WaterTower extends Building {
 
     register() {
         this.updateAdjBuildingsAndRoads();
-        this.waterSupply = waterLayer[this.y][this.x];
+        this.waterSupply = waterLayer[this.y][this.x] * 115000;
         waterSupply += this.waterSupply;
     }
 
     fillCellInfo(){
-        cellInfo.innerText = `Water supply: ${this.waterSupply}`;
+        cellInfo.innerText = `Water supply: ${this.waterSupply} (l/day)`;
     }
 }

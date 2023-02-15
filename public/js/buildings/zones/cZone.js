@@ -51,6 +51,9 @@ class CZone extends WorkZone {
 
         cAllStorage += this.storage;
         cAllOptimalStorage += this.storageCapacity;
+
+        this.waterConsumption = 3000 + rnd(5000);
+        waterDemand += this.waterConsumption;
     }
 
     finishConstruction() {
@@ -100,7 +103,7 @@ class CZone extends WorkZone {
     }
 
     fillCellInfo() {
-        cellInfo.innerText = `Workers: ${this.workersPresent}/${this.workers.length}/${this.maxWorkers} (present/employed/max) \n Efficiency: ${Math.round(this.efficiency * 100)}%/${Math.round(this.maxEfficiency * 100)}% (current/max) \n Selling: ${products[this.products]} \n Customers in queue: ${this.customerQueue.length}/${this.maxCustomers} \n Speed of service: ${this.production}/${this.productionCapacity} (customer/4 minutes) \n Storage: ${this.storage}/${this.storageCapacity} \n Opens: ${formatTime(this.opens1)} \n Closes: ${formatTime(this.closes1)}`;
+        cellInfo.innerText = `Workers: ${this.workersPresent}/${this.workers.length}/${this.maxWorkers} (present/employed/max) \n Efficiency: ${Math.round(this.efficiency * 100)}%/${Math.round(this.maxEfficiency * 100)}% (current/max) \n Selling: ${products[this.products]} \n Customers in queue: ${this.customerQueue.length}/${this.maxCustomers} \n Speed of service: ${this.production}/${this.productionCapacity} (customer/4 minutes) \n Storage: ${this.storage}/${this.storageCapacity} \n Opens: ${formatTime(this.opens1)} \n Closes: ${formatTime(this.closes1)} \n Water consumption: ${this.waterConsumption} (l/day)`;
         if (this.hasNightShift)
             cellInfo.innerText += `\n Opens (night): ${formatTime(this.opens2)} \n Closes (night): ${formatTime(this.closes2)}`;
     }

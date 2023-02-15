@@ -5,6 +5,7 @@ class Zone extends Building {
         super(x, y, 2, 2, texturePath, true, layer);        
 
         this.level = 0;
+        this.waterConsumption = 0;
 
         this.buildingImg = new Image();        
         this.constructionPhase = 0;

@@ -99,6 +99,7 @@ function startBuilding(selectedBuilding, subType) {
             switch(name){
                 case 'waterTower':
                     buildingUnderBuilding = new WaterTower(null, null, planLayer);
+                    showWaterOL(document.getElementById('BS-ol-water'));
                     break;
             }
             break;
@@ -122,6 +123,9 @@ function stopBuilding() {
     if (currentBackStrip)
         currentBackStrip.style.width = '';
     currentBackStrip = null;
+
+    if(showWaterOverlay)
+        hideWaterOL(document.getElementById('BS-ol-water'));
 
     clearPlanned();
 }

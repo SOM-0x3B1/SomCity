@@ -169,4 +169,7 @@ let tickBars = setInterval(() => {
         }
         ibar.style.height = Math.abs(ivalue / 2) + '%';
     }
+
+    document.getElementById('mainStat-water-supply').innerText = waterSupply;
+    document.getElementById('mainStat-water-demand').innerText = waterDemand;
 }, 500);

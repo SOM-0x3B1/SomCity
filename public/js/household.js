@@ -23,6 +23,9 @@ class Household {
             this.members[i].car.home = this.homeZone;
         }
 
+        this.homeZone.waterConsumption += 142 * this.members.length;
+        waterDemand += 142 * this.members.length;
+
         households.push(this);
     }
 
