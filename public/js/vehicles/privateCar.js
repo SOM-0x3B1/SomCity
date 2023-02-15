@@ -45,7 +45,7 @@ class PrivateCar extends Vehicle {
         }
     }
 
-    goShopping(){
+    goShopping() {
         if (Object.keys(this.targetShopTypes).length > 0) {
             let targetShop = this.findNearShops(20);
             if (targetShop) {
@@ -63,6 +63,8 @@ class PrivateCar extends Vehicle {
         }
         else if (!this.shopping && this.atWork) {
             this.housingBuilding.workersPresent--;
+            if (this.housingBuilding.workersPresent < 0)
+                this.housingBuilding.workersPresent = 0;
             this.housingBuilding.updateEfficiency();
         }
         else if (this.atShop) {
