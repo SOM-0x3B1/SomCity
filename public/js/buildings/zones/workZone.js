@@ -2,8 +2,8 @@ let countOfAllJobs = 0
 let countOfFreeJobs = 0;
 
 class WorkZone extends Zone {
-    constructor(x, y, texture, maxWorkers, productionCap, storageCap, forceNightShift, layer) {
-        super(x, y, texture, layer);
+    constructor(x, y, texturePath, maxWorkers, productionCap, storageCap, forceNightShift, layer) {
+        super(x, y, texturePath, layer);
 
         this.workers = [];
         this.workersPresent = 0;

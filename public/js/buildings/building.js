@@ -2,7 +2,7 @@ let cellInfo = document.getElementById('cellInfo');
 let objectOfCellInfo;
 
 class Building {
-    constructor(x, y, width, height, texture, deletable, layer) {
+    constructor(x, y, width, height, texturePath, deletable, layer) {
         this.x = x;
         this.y = y;
         this.adjBuildings = [];
@@ -11,7 +11,8 @@ class Building {
 
         this.width = width
         this.height = height;
-        this.texture = texture;
+        this.texturePath = texturePath;
+        this.textureIMG;
         this.facing = 0;
 
         this.deletable = deletable;
@@ -44,8 +45,10 @@ class Building {
         }
 
         if (!occupied) {
-            setImgOfCell(x, y, this.texture, this.layer == mainLayer ? LayerIDs.Main : LayerIDs.plan);
+            setImgOfCell(x, y, this.texturePath, this.layer == mainLayer ? LayerIDs.Main : LayerIDs.plan);
             resizeImg(x, y, this.width, this.height, this.layer == mainLayer ? LayerIDs.Main : LayerIDs.plan);
+            if (this.layer == mainLayer && !this.buildingImg)
+                this.textureIMG = getCell(x, y, LayerIDs.Main).getElementsByTagName('img')[0];
         }
         else if (this.layer == planLayer) {
             setImgOfCell(x, y, 'assets/red.png', this.layer == mainLayer ? LayerIDs.Main : LayerIDs.plan);
@@ -87,14 +90,13 @@ class Building {
                 for (let i = 0; i < 4; i++) {
                     if (neighbours[i] && neighboursAreRoads[i]) {
                         this.adjRoads.push(neighbours[i]);
-                        if (!this.entrance){
+                        if (!this.entrance) {
                             this.entrance = neighbours[i];
-                            this.facing = this.getFacing(this.entrance, ix, iy);                            
+                            this.facing = this.getFacing(this.entrance, ix, iy);
                         }
                         else if (this.entrance) {
                             let newFacing = this.getFacing(neighbours[i], ix, iy);
-                            if((newFacing == 0) || (newFacing == 180 && this.facing != 0) || (newFacing == 90 && this.facing == 270)) 
-                            {
+                            if ((newFacing == 0) || (newFacing == 180 && this.facing != 0) || (newFacing == 90 && this.facing == 270)) {
                                 this.entrance = neighbours[i];
                                 this.facing = newFacing;
                             }
@@ -107,8 +109,12 @@ class Building {
             }
         }
 
-        //this.entrance = this.adjRoads[rnd(this.adjRoads.length - 1)];S
-        rotateStaticImg(this.buildingImg, this.facing);
+        //this.entrance = this.adjRoads[rnd(this.adjRoads.length - 1)];
+        if (this.buildingImg)
+            rotateStaticImg(this.buildingImg, this.facing);
+        else
+            rotateStaticImg(this.textureIMG, this.facing);
+
 
         if (!(this instanceof Road)) {
             for (let i = 0; i < this.adjRoads.length; i++)

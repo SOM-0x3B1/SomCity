@@ -1,8 +1,8 @@
 let freeWorkplaces = [];
 
 class Zone extends Building {
-    constructor(x, y, texture, layer) {
-        super(x, y, 2, 2, texture, true, layer);        
+    constructor(x, y, texturePath, layer) {
+        super(x, y, 2, 2, texturePath, true, layer);        
 
         this.level = 0;
 

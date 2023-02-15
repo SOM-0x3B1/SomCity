@@ -9,7 +9,7 @@ class RZone extends Zone {
         
         this.capacity = rZoneLevels[this.level];       
 
-        this.buildingTexture = rnd(5); 
+        this.buildingtexturePath = rnd(5); 
 
         this.households = [];
     }
@@ -49,7 +49,7 @@ class RZone extends Zone {
 
     finishConstruction() {
         clearInterval(this.constructionInterval);
-        this.buildingImg.src = `assets/zoneTextures/rz-${this.level}-${this.buildingTexture}.png`;
+        this.buildingImg.src = `assets/zoneTextures/rz-${this.level}-${this.buildingtexturePath}.png`;
         
         for (let i = 0; i < this.households.length; i++) {
             const household = this.households[i];

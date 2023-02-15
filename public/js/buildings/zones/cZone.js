@@ -32,7 +32,7 @@ class CZone extends WorkZone {
         this.maxCustomers = 30;
         this.products = /*[rnd(products.length - 1)]*/ [type];
 
-        this.buildingTexture = rnd(2);
+        this.buildingtexturePath = rnd(2);
     }
 
     get outOfStock() {

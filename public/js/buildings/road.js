@@ -66,7 +66,7 @@ class Road extends Building {
     }
 
     /**
-     * Updates the adjacent buildings and sets the appropriate texture.
+     * Updates the adjacent buildings and sets the appropriate texturePath.
      * @param {*} firstUpdate - If true, the function will also update the adjacent roads.
      */
     updateDirections(firstUpdate) {

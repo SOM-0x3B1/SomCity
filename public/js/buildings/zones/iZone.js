@@ -12,7 +12,7 @@ class IZone extends WorkZone {
         this.trucks = [];
         this.activeTrucks = [];
 
-        this.buildingTexture = rnd(2);
+        this.buildingtexturePath = rnd(2);
     }
 
     get canDeliver() {
@@ -38,7 +38,7 @@ class IZone extends WorkZone {
 
     finishConstruction() {
         clearInterval(this.constructionInterval);
-        this.buildingImg.src = `assets/zoneTextures/iz-${this.level}-${this.buildingTexture}.png`;
+        this.buildingImg.src = `assets/zoneTextures/iz-${this.level}-${this.buildingtexturePath}.png`;
     }
 
     sendTruck(target) {

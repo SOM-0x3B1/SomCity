@@ -70,12 +70,17 @@ function buildGrid(rows, cols) {
                                         newZone = new CZone(x, y, p, mainLayer);
                                 }
                                 else if (buildingUnderBuilding instanceof IZone)
-                                    newZone = new IZone(x, y, mainLayer);
+                                    newZone = new IZone(x, y, mainLayer);                                    
 
                                 if (newZone.place(x, y)) {
                                     newZone.register();
                                     aAllocate.playRandom();
                                 }
+                            }
+                            else if(buildingUnderBuilding instanceof WaterTower){
+                                let newTower = new WaterTower(x, y, mainLayer);
+                                newTower.place(x, y);
+                                newTower.register();
                             }
                         }
                         else if (!bulldozing && mainLayer[y][x] instanceof Building) {
@@ -95,7 +100,7 @@ function buildGrid(rows, cols) {
                                 else
                                     Road.drawRoadLine(x, y); // Shows the whole preview line of the planned road
                             }
-                            else if (buildingUnderBuilding instanceof Zone)
+                            else if (buildingUnderBuilding instanceof Building)
                                 buildingUnderBuilding.place(x, y);
                         }
                         else if (bulldozing) {

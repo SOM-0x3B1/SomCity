@@ -85,10 +85,8 @@ let tickRoads = setInterval(() => {
     if (objectOfCellInfo)
         objectOfCellInfo.fillCellInfo();
 
-    if (carCount >= 20 && !aaTraffic.playing){
-        aaTraffic.fadeIn(0.02);
-        console.log(aaTraffic);
-    }
+    if (carCount >= 20 && !aaTraffic.playing)
+                aaTraffic.fadeIn(0.02);
     else if (carCount < 20 && aaTraffic.playing)
         aaTraffic.fadeOut(0.01);
 }, 50);

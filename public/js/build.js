@@ -95,6 +95,13 @@ function startBuilding(selectedBuilding, subType) {
                     break;
             }
             break;
+        case 'u':
+            switch(name){
+                case 'waterTower':
+                    buildingUnderBuilding = new WaterTower(null, null, planLayer);
+                    break;
+            }
+            break;
     }
 }
 
