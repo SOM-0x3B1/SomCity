@@ -172,4 +172,6 @@ let tickBars = setInterval(() => {
 
     document.getElementById('mainStat-water-supply').innerText = waterSupply;
     document.getElementById('mainStat-water-demand').innerText = waterDemand;
+    document.getElementById('mainStat-power-supply').innerText = powerSupply;
+    document.getElementById('mainStat-power-demand').innerText = powerDemand;
 }, 500);

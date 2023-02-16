@@ -97,6 +97,9 @@ function startBuilding(selectedBuilding, subType) {
             break;
         case 'u':
             switch(name){
+                case 'powerPlant':
+                    buildingUnderBuilding = new PowerPlant(null, null, planLayer);
+                    break;
                 case 'waterTower':
                     buildingUnderBuilding = new WaterTower(null, null, planLayer);
                     showWaterOL(document.getElementById('BS-ol-water'));

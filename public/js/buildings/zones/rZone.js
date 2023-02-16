@@ -11,6 +11,9 @@ class RZone extends Zone {
 
         this.buildingtexturePath = rnd(5); 
 
+        this.powerConsumption = 0;
+        this.waterConsumption = 0;
+
         this.households = [];
     }
 
@@ -59,7 +62,7 @@ class RZone extends Zone {
     }
 
     fillCellInfo(){
-        cellInfo.innerText = `Households: ${this.households.length}/${this.capacity} \n Residents: ${this.people} \n At home: ${this.peopleAtHome} \n Development: ${this.level + 1} \n Water consumption: ${this.waterConsumption} (l/day)`;
+        cellInfo.innerText = `Households: ${this.households.length}/${this.capacity} \n Residents: ${this.people} \n At home: ${this.peopleAtHome} \n Development: ${this.level + 1} \n Power consumption: ${this.powerConsumption} (kWh/day) \n Water consumption: ${this.waterConsumption} (l/day)`;
     }
 
     removeRZone(){

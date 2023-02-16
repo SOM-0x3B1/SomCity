@@ -1,7 +1,8 @@
 #mainStats {
     position: fixed;
     right: 0;
-    top: 30%;
+    top: 50%;
+    transform: translate(0, -50%);
 
     width: 10em;
     padding: 1em;

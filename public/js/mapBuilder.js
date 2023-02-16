@@ -82,6 +82,11 @@ function buildGrid(rows, cols) {
                                 newTower.place(x, y);
                                 newTower.register();
                             }
+                            else if(buildingUnderBuilding instanceof PowerPlant){
+                                let newPlant = new PowerPlant(x, y, mainLayer);
+                                newPlant.place(x, y);
+                                newPlant.register();
+                            }
                         }
                         else if (!bulldozing && mainLayer[y][x] instanceof Building) {
                             aCellinfo.playNext();

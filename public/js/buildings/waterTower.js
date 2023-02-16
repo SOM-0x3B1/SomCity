@@ -15,6 +15,6 @@ class WaterTower extends Building {
     }
 
     fillCellInfo(){
-        cellInfo.innerText = `Water supply: ${this.waterSupply} (l/day)`;
+        cellInfo.innerText = `Water supply: ${this.waterSupply} (kWh/day)`;
     }
 }
