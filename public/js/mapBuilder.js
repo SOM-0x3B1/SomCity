@@ -85,16 +85,19 @@ function buildGrid(rows, cols) {
                                 let newTower = new WaterTower(x, y, mainLayer);
                                 newTower.place(x, y);
                                 newTower.register();
+                                aWater.playNext();
                             }
                             else if (buildingUnderBuilding instanceof WindTurbine) {
                                 let newTower = new WindTurbine(x, y, mainLayer);
                                 newTower.place(x, y);
                                 newTower.register();
+                                aPower.playNext();
                             }
                             else if (buildingUnderBuilding instanceof PowerPlant) {
                                 let newPlant = new PowerPlant(x, y, mainLayer);
                                 newPlant.place(x, y);
                                 newPlant.register();
+                                aPower.playNext();
                             }
                         }
                         else if (!bulldozing && mainLayer[y][x] instanceof Building) {

@@ -39,6 +39,10 @@ const aBulldoze = new VariedSFX('bulldoze', 3);
 aBulldoze.load();
 const aCellinfo = new VariedSFX('cellinfo', 3);
 aCellinfo.load();
+const aWater = new VariedSFX('water', 1);
+aWater.load();
+const aPower = new VariedSFX('power', 1);
+aPower.load();
 
 
 const aRoadPlanning = new SemiLoopedSFX('planning/expandStart', 'planning/expanding', 'planning/expandStop');
