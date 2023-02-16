@@ -96,9 +96,13 @@ function startBuilding(selectedBuilding, subType) {
             }
             break;
         case 'u':
-            switch(name){
+            switch (name) {
                 case 'powerPlant':
                     buildingUnderBuilding = new PowerPlant(null, null, planLayer);
+                    break;
+                case 'windTurbine':
+                    buildingUnderBuilding = new WindTurbine(null, null, planLayer);
+                    showWindOL(document.getElementById('BS-ol-wind'));
                     break;
                 case 'waterTower':
                     buildingUnderBuilding = new WaterTower(null, null, planLayer);
@@ -127,8 +131,10 @@ function stopBuilding() {
         currentBackStrip.style.width = '';
     currentBackStrip = null;
 
-    if(showWaterOverlay)
+    if (showWaterOverlay)
         hideWaterOL(document.getElementById('BS-ol-water'));
+    if (showWindOverlay)
+        hideWindOL(document.getElementById('BS-ol-wind'));
 
     clearPlanned();
 }

@@ -15,6 +15,10 @@ let waterLayer = new Array(mapHeight);
 for (let i = 0; i < mapHeight; i++)
     waterLayer[i] = new Array(mapWidth);
 
+let windLayer = new Array(mapHeight);
+for (let i = 0; i < mapHeight; i++)
+    windLayer[i] = new Array(mapWidth);
+
 
 /** The IDs of each layer. */
 const LayerIDs = {
@@ -70,19 +74,24 @@ function buildGrid(rows, cols) {
                                         newZone = new CZone(x, y, p, mainLayer);
                                 }
                                 else if (buildingUnderBuilding instanceof IZone)
-                                    newZone = new IZone(x, y, mainLayer);                                    
+                                    newZone = new IZone(x, y, mainLayer);
 
                                 if (newZone.place(x, y)) {
                                     newZone.register();
                                     aAllocate.playRandom();
                                 }
                             }
-                            else if(buildingUnderBuilding instanceof WaterTower){
+                            else if (buildingUnderBuilding instanceof WaterTower) {
                                 let newTower = new WaterTower(x, y, mainLayer);
                                 newTower.place(x, y);
                                 newTower.register();
                             }
-                            else if(buildingUnderBuilding instanceof PowerPlant){
+                            else if (buildingUnderBuilding instanceof WindTurbine) {
+                                let newTower = new WindTurbine(x, y, mainLayer);
+                                newTower.place(x, y);
+                                newTower.register();
+                            }
+                            else if (buildingUnderBuilding instanceof PowerPlant) {
                                 let newPlant = new PowerPlant(x, y, mainLayer);
                                 newPlant.place(x, y);
                                 newPlant.register();
@@ -165,7 +174,7 @@ buildGrid(mapWidth, mapHeight);
 
 /** Fills the grid with objects  */
 function buildNewBaseMap() {
-    const maps = ['b', 't', 'w']; // 'b' as buildings, 't' as terrain, 'w' as water
+    const maps = ['b', 't', 'w', 'wind']; // 'b' as buildings, 't' as terrain, 'w' as water
     let canvas = document.createElement('canvas');
     canvas.width = mapWidth;
     canvas.height = mapHeight;
@@ -208,6 +217,22 @@ function buildNewBaseMap() {
                                     break;
                                 case 0:
                                     waterLayer[y][x] = 0;
+                                    break;
+                            }
+                        }
+                        else if (layer == 'wind') {
+                            switch (pixelData[0] + pixelData[1] + pixelData[2]) {
+                                case 255*3:
+                                    windLayer[y][x] = 3;
+                                    break;
+                                case 140*3:
+                                    windLayer[y][x] = 2;
+                                    break;
+                                case 80*3:
+                                    windLayer[y][x] = 1;
+                                    break;
+                                case 0:
+                                    windLayer[y][x] = 0;
                                     break;
                             }
                         }
