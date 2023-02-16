@@ -35,10 +35,20 @@ class PoliceCar extends Vehicle {
 
         if (aaPolice.playing && movingPoliceCars == 0)
             aaPolice.fadeOut(0.2);
+
+        clearInterval(this.lightInterval);
     }
 
     leaveTargetBuilding() {
         movingPoliceCars++;
+
+        this.lightInterval = setInterval(() => {
+            if (this.carIconIsBlue)
+                this.carIcon.style.boxShadow = '0 0 1em rgb(255, 0, 0)';
+            else
+                this.carIcon.style.boxShadow = '0 0 1em rgb(0, 0, 255)';
+            this.carIconIsBlue = !this.carIconIsBlue;
+        }, 200);
 
         if (!aaPolice.playing)
             aaPolice.fadeIn(0.2);

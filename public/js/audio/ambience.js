@@ -15,7 +15,6 @@ class Ambience {
     }
 
     play() {
-        this.a.currentTime = 0;
         this.a.play();
         this.playing = true;
     }
