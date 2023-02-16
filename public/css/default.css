@@ -87,6 +87,13 @@ nav img:hover {
     filter: invert(0);
 }
 
+#connect{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+}
 
 #versionWarn {
     position: fixed;

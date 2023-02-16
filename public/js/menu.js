@@ -17,11 +17,19 @@ function assignSounds() {
 }
 assignSounds();
 
+function connect(){
+    document.getElementById('titleScreen').style.display = 'inline-block';
+    document.getElementById('connectScreen').style.display = 'none';
+    aClicks.playNext();
+    aMenuMusic.play();
+}
 
 function startNew() {
     aClicks.playNext();
     aaWind.fadeIn(0.01);
     aaDay.fadeIn(0.01);
+
+    loadClocks();
 
     inMenu = false;
     showGame();

@@ -84,6 +84,3 @@ setMaster(80);
 setMusic(30);
 setAmbient(50);
 setSFX(60);
-
-
-aMenuMusic.play();

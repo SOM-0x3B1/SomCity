@@ -1,5 +1,6 @@
 #titleScreen{
     color: white;
+    display: none;
 }
 
 #mainMenu {
