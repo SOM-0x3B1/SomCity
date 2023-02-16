@@ -56,6 +56,8 @@ class CZone extends WorkZone {
         this.waterConsumption = 3000 + rnd(5000);
         powerDemand += this.powerConsumption;
         waterDemand += this.waterConsumption;
+
+        enterableBuildings.push(this);
     }
 
     finishConstruction() {

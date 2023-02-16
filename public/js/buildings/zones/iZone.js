@@ -33,12 +33,14 @@ class IZone extends WorkZone {
         countOfFreeJobs += this.maxWorkers;
 
         iAllStorage += this.storage;
-        iAllOptimalStorage += this.storageCapacity / 10;
+        iAllOptimalStorage += this.storageCapacity;
 
         this.powerConsumption = 2000 + rnd(5000);
         this.waterConsumption = 10000 + rnd(30000);
         powerDemand += this.powerConsumption;
         waterDemand += this.waterConsumption;
+
+        enterableBuildings.push(this);
     }
 
     finishConstruction() {

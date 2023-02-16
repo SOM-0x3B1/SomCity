@@ -21,6 +21,8 @@ const aaNight = new Ambience('night', () => { return scale / 2 - 0.3; });
 aaNight.load();
 const aaTraffic = new Ambience('traffic', () => { return scale / 1.5 - 0.2; });
 aaTraffic.load();
+const aaPolice = new Ambience('policeSiren', () => { return scale / 1.5 - 0.2; });
+aaPolice.load();
 
 
 const aClicks = new VariedSFX('menuClicks/click', 24);
@@ -43,6 +45,8 @@ const aWater = new VariedSFX('water', 1);
 aWater.load();
 const aPower = new VariedSFX('power', 1);
 aPower.load();
+const aPoliceStation = new VariedSFX('policeStation', 1);
+aPoliceStation.load();
 
 
 const aRoadPlanning = new SemiLoopedSFX('planning/expandStart', 'planning/expanding', 'planning/expandStop');

@@ -1,5 +1,6 @@
 let cellInfo = document.getElementById('cellInfo');
 let objectOfCellInfo;
+let enterableBuildings = [];
 
 class Building {
     constructor(x, y, width, height, texturePath, deletable, layer) {

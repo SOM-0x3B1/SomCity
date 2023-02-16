@@ -55,7 +55,8 @@ class Ambience {
                 this.fadeVolume = Math.max(0, this.fadeVolume - steps);
             else {
                 clearInterval(fadeAudio);
-                this.stop();
+                this.a.pause();
+                this.playing = false;
             }
             this.a.volume = this.fadeVolume * ambientVolume * masterVolume * this.dModifier;
         }, 200);

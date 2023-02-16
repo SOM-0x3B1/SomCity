@@ -49,7 +49,7 @@
         </div>
 
         <div id="maker" class="mainMenuInfo">Onekilobit Studios</div>
-        <div id="version" class="mainMenuInfo">PRE-ALPHA BUILD</div>
+        <div id="version" class="mainMenuInfo">ALPHA PREVIEW</div>
 
         <div id="mainMenuAccountButtons">
             <div class="mainMenuAccountButton">
@@ -82,7 +82,7 @@
 
         <div class="sideAreas ySideAreas" id="topSideArea"></div>
         <div class="sideAreas xSideAreas" id="rightSideArea"></div>
-        <!--<div class="sideAreas ySideAreas" id="downSideArea"></div>-->
+        <div class="sideAreas ySideAreas" style="display: none;" id="downSideArea"></div>
         <div class="sideAreas xSideAreas" id="leftSideArea"></div>
 
         <aside id="mainStats">
@@ -126,12 +126,15 @@
                 <div id="mainStat-demands-centerline"></div>
             </div>
             <div id="mainStat-water" class="mainStatRow">
-                <div>Water: </div><span id="mainStat-water-supply">0</span>/<span id="mainStat-water-demand">0</span>
+                <div>Water: </div><span id="mainStat-water-supply">0</span> / <span id="mainStat-water-demand">0</span>
                 l/day
             </div>
             <div id="mainStat-power" class="mainStatRow">
-                <div>Power: </div><span id="mainStat-power-supply">0</span>/<span id="mainStat-power-demand">0</span>
+                <div>Power: </div><span id="mainStat-power-supply">0</span> / <span id="mainStat-power-demand">0</span>
                 kWh/day
+            </div>
+            <div id="mainStat-criminals" class="mainStatRow">
+                <div>Criminals: </div><span id="mainStat-criminals-value">0</span> / <span id="mainStat-potential-criminals-value">0</span>
             </div>
             <!--<div id="mainStat-money" class="mainStatRow"><span>Money: </span><span
                     id="mainStat-monay-value">$2000</span>
@@ -231,6 +234,13 @@
                     </li>
                 </ul>
             </div>
+            <div class="buildCategory">
+                <img src="assets/icons/icon-services.png" alt="">
+                <ul id="s" class="primaryUL">
+                    <li onclick="startBuilding('s-police')">
+                        <div class="backStrip" id="BS-s-police"></div>Police station
+                </ul>
+            </div>
             <div class="buildCategory noList" id="bulldoze" onclick="startBulldoze()">
                 <img src="assets/icons/icon-bulldoze.png" alt="">
             </div>
@@ -241,7 +251,7 @@
 
         <div id="cellInfo"></div>
 
-        <span id="versionWarn">PRE-ALPHA BUILD<br>Do not share</span>
+        <span id="versionWarn">ALPHA PREVIEW<br>Do not distribute</span>
     </div>
 
 
@@ -324,6 +334,7 @@
     <script src="js/vehicles/vehicle.js"></script>
     <script src="js/vehicles/privateCar.js"></script>
     <script src="js/vehicles/truck.js"></script>
+    <script src="js/vehicles/policeCar.js"></script>
 
     <script src="js/person.js"></script>
     <script src="js/household.js"></script>
@@ -333,6 +344,7 @@
 
     <script src="js/buildings/waterTower.js"></script>
     <script src="js/buildings/power.js"></script>
+    <script src="js/buildings/policeStation.js"></script>
 
     <script src="js/buildings/zones/zone.js"></script>
     <script src="js/buildings/zones/rZone.js"></script>

@@ -6,10 +6,10 @@ let rZoneLevels = [20, 20, 50, 100, 200];
 class RZone extends Zone {
     constructor(x, y, layer) {
         super(x, y, 'assets/zones/r.png', layer);
-        
-        this.capacity = rZoneLevels[this.level];       
 
-        this.buildingtexturePath = rnd(5); 
+        this.capacity = rZoneLevels[this.level];
+
+        this.buildingtexturePath = rnd(5);
 
         this.powerConsumption = 0;
         this.waterConsumption = 0;
@@ -23,14 +23,14 @@ class RZone extends Zone {
 
     get people() {
         let count = 0;
-        for (let i = 0; i < this.households.length; i++) 
+        for (let i = 0; i < this.households.length; i++)
             count += this.households[i].members.length;
         return count;
     }
 
-    get peopleAtHome(){
+    get peopleAtHome() {
         let count = 0;
-        for (let i = 0; i < this.households.length; i++) 
+        for (let i = 0; i < this.households.length; i++)
             count += this.households[i].membersAtHome.length;
         return count;
     }
@@ -40,6 +40,8 @@ class RZone extends Zone {
         this.updateAdjBuildingsAndRoads();
         for (let i = 0; i < this.capacity; i++)
             new Household().assignZone();
+
+        enterableBuildings.push(this);
     }
 
     addHouseHold(household) {
@@ -53,7 +55,7 @@ class RZone extends Zone {
     finishConstruction() {
         clearInterval(this.constructionInterval);
         this.buildingImg.src = `assets/zoneTextures/rz-${this.level}-${this.buildingtexturePath}.png`;
-        
+
         for (let i = 0; i < this.households.length; i++) {
             const household = this.households[i];
             for (let j = 0; j < household.members.length; j++)
@@ -61,11 +63,11 @@ class RZone extends Zone {
         }
     }
 
-    fillCellInfo(){
+    fillCellInfo() {
         cellInfo.innerText = `Households: ${this.households.length}/${this.capacity} \n Residents: ${this.people} \n At home: ${this.peopleAtHome} \n Development: ${this.level + 1} \n Power consumption: ${this.powerConsumption} (kWh/day) \n Water consumption: ${this.waterConsumption} (l/day)`;
     }
 
-    removeRZone(){
+    removeRZone() {
         for (let i = 0; i < this.households.length; i++)
             this.households[i].remove();
         this.buildingImg.remove();

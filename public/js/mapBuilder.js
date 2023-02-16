@@ -99,6 +99,12 @@ function buildGrid(rows, cols) {
                                 newPlant.register();
                                 aPower.playNext();
                             }
+                            else if (buildingUnderBuilding instanceof PoliceStation) {
+                                let newPlant = new PoliceStation(x, y, mainLayer);
+                                newPlant.place(x, y);
+                                newPlant.register();
+                                aPoliceStation.playNext();
+                            }
                         }
                         else if (!bulldozing && mainLayer[y][x] instanceof Building) {
                             aCellinfo.playNext();

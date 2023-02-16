@@ -110,6 +110,13 @@ function startBuilding(selectedBuilding, subType) {
                     break;
             }
             break;
+        case 's':
+            switch (name) {
+                case 'police':
+                    buildingUnderBuilding = new PoliceStation(null, null, planLayer);
+                    break;
+            }
+            break;
     }
 }
 

@@ -1,9 +1,9 @@
 class Truck extends Vehicle {
-    constructor(ownerComplany) {
+    constructor(ownerCompany) {
         let startingCell = entryPoints[rnd(entryPoints.length - 1)];
         super(startingCell.x, startingCell.y);
 
-        this.ownerComplany = ownerComplany;
+        this.ownerCompany = ownerCompany;
         this.cargo = 0;
         this.onTheRoad = false;
 
@@ -13,7 +13,7 @@ class Truck extends Vehicle {
     }
 
     enterTargetBuilding() {
-        if (this.housingBuilding != this.ownerComplany) {
+        if (this.housingBuilding != this.ownerCompany) {
             this.housingBuilding.storage += this.cargo;
             cAllStorage += this.cargo;
             if (this.housingBuilding.storage > this.housingBuilding.storageCapacity) {
@@ -24,7 +24,7 @@ class Truck extends Vehicle {
             else
                 this.cargo = 0;
 
-            this.calcRoute(this.ownerComplany);
+            this.calcRoute(this.ownerCompany);
         }
         else if (this.onTheRoad) {
             this.housingBuilding.activeTrucks.splice(this.housingBuilding.activeTrucks.indexOf(this), 1);

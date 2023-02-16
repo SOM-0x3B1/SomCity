@@ -4,6 +4,8 @@ let unemployed = [];
 let statUnemployed = document.getElementById('mainStat-unemployed-value');
 //let lookForJob = [];
 let globalSchedule = {};
+let criminals = [];
+let potentialCriminals = [];
 
 class Person {
     constructor(household, id) {
@@ -11,6 +13,10 @@ class Person {
         this.car = new PrivateCar(this);
         this.household = household;
         this.workplace;
+        this.proneToCrime = rnd(10) == 0;
+        if (this.proneToCrime)
+            potentialCriminals.push(this);
+
         people.push(this);
         unemployed.push(this);
 
@@ -30,10 +36,10 @@ class Person {
             let starttime;
             let endTime
             if (!nightShifter) {
-                starttime = this.workplace.opens1 + rnd(12) * 5;                
-                endTime = this.workplace.closes1 + rnd(12) * 5;    
+                starttime = this.workplace.opens1 + rnd(12) * 5;
+                endTime = this.workplace.closes1 + rnd(12) * 5;
             }
-            else{
+            else {
                 starttime = this.workplace.opens2 + rnd(12) * 5;
                 endTime = this.workplace.closes2 + rnd(12) * 5;
             }

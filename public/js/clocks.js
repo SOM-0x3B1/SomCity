@@ -76,7 +76,7 @@ let tickShops = setInterval(() => {
 
 let tickRoads = setInterval(() => {
     let carCount = 0;
-    for (const car in movingCars){
+    for (const car in movingCars) {
         movingCars[car].initiateMove();
         carCount++;
     }
@@ -86,7 +86,7 @@ let tickRoads = setInterval(() => {
         objectOfCellInfo.fillCellInfo();
 
     if (carCount >= 20 && !aaTraffic.playing)
-                aaTraffic.fadeIn(0.02);
+        aaTraffic.fadeIn(0.02);
     else if (carCount < 20 && aaTraffic.playing)
         aaTraffic.fadeOut(0.01);
 }, 50);
@@ -109,6 +109,23 @@ let tickNeeds = setInterval(() => {
     for (let i = 0; i < households.length; i++)
         households[i].addNeeds();
 }, 500);
+
+let tickCrime = setInterval(() => {
+    for (let i = 0; i < potentialCriminals.length; i++) {
+        if (!potentialCriminals[i].workplace && rnd(100) == 0){
+            criminals.push(potentialCriminals[i]);
+            potentialCriminals.splice(potentialCriminals.indexOf(potentialCriminals[i]), 1);
+        }
+    }
+
+    for (let i = 0; i < criminals.length; i++) {
+        if (rnd(120) == 0) {
+            let targetBuilding = enterableBuildings[rnd(enterableBuildings.length - 1)];
+            //criminals[i].calcRoute();
+            policeCars[rnd(policeCars.length-1)].calcRoute(targetBuilding);
+        }
+    }
+}, 1000);
 
 
 let tickBars = setInterval(() => {
@@ -174,4 +191,6 @@ let tickBars = setInterval(() => {
     document.getElementById('mainStat-water-demand').innerText = waterDemand;
     document.getElementById('mainStat-power-supply').innerText = powerSupply;
     document.getElementById('mainStat-power-demand').innerText = powerDemand;
+    document.getElementById('mainStat-criminals-value').innerText = criminals.length;
+    document.getElementById('mainStat-potential-criminals-value').innerText = potentialCriminals.length;
 }, 500);

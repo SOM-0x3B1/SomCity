@@ -1,4 +1,4 @@
-.car{
+.car {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -15,7 +15,7 @@
     transition-duration: 0;*/
 }
 
-.truck{
+.truck {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -31,7 +31,36 @@
     pointer-events: none;
 }
 
-#cellInfo{
+.policeCar {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    z-index: 2;
+    transform: translate(-50%, -50%);
+
+    width: 50%;
+    height: 50%;
+
+    background-color: blue;
+
+    pointer-events: none;
+
+    box-shadow: 0 0 1em rgb(255, 0, 0);
+    /*animation: policeLight 0.5s linear infinite;*/
+    transition: box-shadow 0.2s;
+}
+
+/*.policeCar::before {
+    content: "";
+    z-index: 3;    
+    position: absolute;
+    width: 100%;
+    height: 100%;    
+    box-shadow: 0 0 1em rgb(4, 0, 255);    
+}*/
+
+#cellInfo {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -44,4 +73,14 @@
     color: white;
     text-align: left;
     background-color: var(--opaqueBGColor);
+}
+
+@keyframes policeLight {
+    from {
+        box-shadow: 0 0 1em rgb(255, 0, 0);
+    }
+
+    to {
+        box-shadow: 0 0 1em rgb(0, 9, 141);
+    }
 }
