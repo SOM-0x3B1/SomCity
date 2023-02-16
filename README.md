@@ -13,14 +13,14 @@ The projects is based on "simple" city simulation practices and convenient HTML 
 - zone supply & demand simulation ✅
 - product supply & demand simulation ✅
 - individual schedule simulation ✅
-- household simulation (ages, reproduction)
+- household simulation (names, ages, reproduction)
 - cloud saving
 - UI (settings, title screen and overlays) ✅
 - Immersive sound design ✅
 
 ### Secondary objectives
-- public services (police, fire department, power, water, sewage, etc)
-- crime simulation (influenced by education, unemployment, etc)
+- public services (police, fire department, power, water, sewage, etc) 🟡
+- crime simulation (influenced by education, unemployment, etc) 🟡
 - education
 - qualification based social roles
 - area development
@@ -35,7 +35,7 @@ The projects is based on "simple" city simulation practices and convenient HTML 
 
 ## How to play
 1. Build out roads from your pre-generated highways 🛣️
-2. Allocate residential zones to let workers move to your city 🏘️
+2. Allocate residential zones to let workers move into your city 🏘️
 3. Allocate industrial zones to give jobs to your citizens 🏭
 4. Allocate commercial zones to let shops be built, that will supply your people and purchase the products produced by your industry 🏪
 5. Use the bulldozer to delete unwanted buildings 🚧
