@@ -182,7 +182,7 @@ buildGrid(mapWidth, mapHeight);
 
 
 /** Fills the grid with objects  */
-function buildNewBaseMap() {
+async function buildNewBaseMap() {
     const maps = ['b', 't', 'w', 'wind']; // 'b' as buildings, 't' as terrain, 'w' as water
     let canvas = document.createElement('canvas');
     canvas.width = mapWidth;
@@ -249,5 +249,6 @@ function buildNewBaseMap() {
                 }
             }
         }
+        await img.decode();
     }
 }
