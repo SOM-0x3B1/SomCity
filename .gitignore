@@ -9,3 +9,6 @@ public/icon/
 public/prev.jpg
 /cert/
 start.bat
+
+*.mp3
+*.mp4
