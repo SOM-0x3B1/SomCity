@@ -195,4 +195,8 @@ function loadClocks() {
         document.getElementById('mainStat-criminals-value').innerText = criminals.length;
         document.getElementById('mainStat-potential-criminals-value').innerText = potentialCriminals.length;
     }, 500);
+
+    let tickGUI = setInterval(() => {
+        setTransform();
+    }, 20);
 }

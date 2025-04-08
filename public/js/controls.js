@@ -24,7 +24,8 @@ let movements = [
 
 /** Updates the transform positions of the mainDisplay. */
 function setTransform() {
-    mainDisplay.style.transform = "translate(" + pointX + "px, " + pointY + "px) scale(" + scale + ")";
+    if(start.x != pointX || start.y != pointY || startScale != scale)
+        mainDisplay.style.transform = "translate(" + pointX + "px, " + pointY + "px) scale(" + scale + ")";
 }
 
 
@@ -47,7 +48,7 @@ document.onmousemove = (e) => {
 
     pointX = (e.clientX - start.x);
     pointY = (e.clientY - start.y);
-    setTransform();
+    //setTransform();
 }
 document.onwheel = (e) => {
     const xs = (e.clientX - pointX) / scale,
@@ -64,7 +65,7 @@ document.onwheel = (e) => {
     for (let i = 0; i < ambients.length; i++)
         ambients[i].changeD(ambients[i].calcD());
 
-    setTransform();
+    //setTransform();
 }
 
 /** Touch control */
@@ -108,7 +109,7 @@ document.ontouchmove = (e) => {
         for (let i = 0; i < ambients.length; i++)
             ambients[i].changeD(ambients[i].calcD());
 
-        setTransform();
+        //setTransform();
 
     } else if (panning) {
         e.preventDefault();
@@ -116,7 +117,7 @@ document.ontouchmove = (e) => {
         pointX = (e.touches[0].clientX - start.x);
         pointY = (e.touches[0].clientY - start.y);
 
-        setTransform();
+        //setTransform();
     }
 }
 
@@ -129,22 +130,22 @@ document.onkeydown = (e) => {
         case 'w':
         case 'ArrowUp':
             pointY += 2 * movementSpeed;
-            setTransform();
+            //setTransform();
             break;
         case 'd':
         case 'ArrowRight':
             pointX -= 2 * movementSpeed;
-            setTransform();
+            //setTransform();
             break;
         case 's':
         case 'ArrowDown':
             pointY -= 2 * movementSpeed;
-            setTransform();
+            //setTransform();
             break;
         case 'a':
         case 'ArrowLeft':
             pointX += 2 * movementSpeed;
-            setTransform();
+            //setTransform();
             break;
         case 'b':
         case 'Delete':
@@ -163,7 +164,7 @@ for (let i = 0; i < sideAreas.length; i++) {
         sideAreaInterval = setInterval(() => {
             if (placing || bulldozing) {
                 movements[i]();
-                setTransform();
+                //setTransform();
             }
         }, 20);
     });
