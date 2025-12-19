@@ -27,7 +27,7 @@ app.get('/', (_, res) => {
 	res.sendFile(join(__dirname, '/public/index.html'));
 });
 
-app.get('*', (req, res) => {
+app.get('/*splat', (req, res) => {
 	let hasExtension = req.path.includes('.');
 	let joinedPath = join(__dirname, '/public/', hasExtension ? req.path : req.path + '.html');
 
