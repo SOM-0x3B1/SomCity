@@ -1,18 +1,18 @@
 let time = 0;
-let timeVaule = document.getElementById('mainStat-time-value');
+const timeVaule = document.getElementById('mainStat-time-value');
 let night = false;
 
-let body = document.getElementById('body');
-let game = document.getElementById('game');
+const body = document.getElementById('body');
+const game = document.getElementById('game');
 
 function loadClocks() {
-    let mainTick = setInterval(() => {
+    const mainTick = setInterval(() => {
         time++;
         if (time > 1439)
             time = 0;
-        let hours = Math.floor(time / 60);
+        const hours = Math.floor(time / 60);
         timeVaule.innerText = hours;
-        let minutes = time - hours * 60;
+        const minutes = time - hours * 60;
 
         if (minutes.toString().length < 2)
             timeVaule.innerText += ':0';
@@ -33,16 +33,16 @@ function loadClocks() {
             if (!night) {
                 aaDay.fadeOut(0.02);
                 aaNight.fadeIn(0.01);
-                body.style.backgroundColor = 'rgb(8, 8, 8)';
-                game.style.backgroundColor = 'rgb(8, 8, 8)';
+                body.style.backgroundColor = 'rgb(4, 4, 4)';
+                game.style.backgroundColor = 'rgb(4, 4, 4)';
             }
             night = true;
         }
 
-        let cSchedules = globalSchedule[time];
+        const cSchedules = globalSchedule[time];
         if (cSchedules) {
             for (let i = 0; i < cSchedules.length; i++) {
-                let car = cSchedules[i].person.car;
+                const car = cSchedules[i].person.car;
                 if (!car.waiting)
                     car.calcRoute(cSchedules[i].target);
                 else
@@ -51,7 +51,7 @@ function loadClocks() {
         }
     }, 50);
 
-    let tickIndustry = setInterval(() => {
+    const tickIndustry = setInterval(() => {
         shuffle(iZones);
         for (let i = 0; i < iZones.length; i++) {
             iZones[i].storage += iZones[i].production;
@@ -70,12 +70,12 @@ function loadClocks() {
             cZoneQueue.dequeue().val.requestProducts();
     }, 500);
 
-    let tickShops = setInterval(() => {
+    const tickShops = setInterval(() => {
         for (let i = 0; i < cZones.length; i++)
             cZones[i].serveCustomers();
     }, 200);
 
-    let tickRoads = setInterval(() => {
+    const tickRoads = setInterval(() => {
         let carCount = 0;
         for (const car in movingCars) {
             movingCars[car].initiateMove();
@@ -93,25 +93,25 @@ function loadClocks() {
     }, 50);
 
 
-    let tickJobs = setInterval(() => {
+    const tickJobs = setInterval(() => {
         shuffle(unemployed);
         for (let i = 0; i < unemployed.length; i++)
             unemployed[i].lookForJob();
     }, 5000);
 
-    let tickOverlays = setInterval(() => {
+    const tickOverlays = setInterval(() => {
         if (showTrafficOverlay) {
             for (const key in roads)
                 roads[key].drawOverlay();
         }
     }, 500);
 
-    let tickNeeds = setInterval(() => {
+    const tickNeeds = setInterval(() => {
         for (let i = 0; i < households.length; i++)
             households[i].addNeeds();
     }, 500);
 
-    let tickCrime = setInterval(() => {
+    const tickCrime = setInterval(() => {
         for (let i = 0; i < potentialCriminals.length; i++) {
             if (!potentialCriminals[i].workplace && rnd(100) == 0) {
                 criminals.push(potentialCriminals[i]);
@@ -121,7 +121,7 @@ function loadClocks() {
 
         for (let i = 0; i < criminals.length; i++) {
             if (rnd(120) == 0) {
-                let targetBuilding = enterableBuildings[rnd(enterableBuildings.length - 1)];
+                const targetBuilding = enterableBuildings[rnd(enterableBuildings.length - 1)];
                 //criminals[i].calcRoute();
                 policeCars[rnd(policeCars.length - 1)].calcRoute(targetBuilding);
             }
@@ -129,9 +129,9 @@ function loadClocks() {
     }, 1000);
 
 
-    let tickBars = setInterval(() => {
+    const tickBars = setInterval(() => {
         if (people.length > 0) {
-            let rbar = document.getElementById('mainStat-demands-bar-r');
+            const rbar = document.getElementById('mainStat-demands-bar-r');
             let rvalue
             if (countOfAllJobs > 0)
                 rvalue = (countOfFreeJobs / countOfAllJobs) * 100 - (unemployed.length / people.length) * 100;
@@ -162,7 +162,7 @@ function loadClocks() {
             }
 
 
-            let ibar = document.getElementById('mainStat-demands-bar-i');
+            const ibar = document.getElementById('mainStat-demands-bar-i');
             let ivalue;
             if (countOfAllJobs > 0) {
                 if (iAllOptimalStorage > 0)
@@ -196,7 +196,7 @@ function loadClocks() {
         document.getElementById('mainStat-potential-criminals-value').innerText = potentialCriminals.length;
     }, 500);
 
-    let tickGUI = setInterval(() => {
+    const tickGUI = setInterval(() => {
         setTransform();
     }, 20);
 }

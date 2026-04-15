@@ -243,8 +243,8 @@ class Road extends Building {
     /** Places the first cell of the road onto the plan layer. */
     static setRoadStart(x, y) {
         previewCells.push(new COORD(x, y));
-        planLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.deletable, planLayer);
-        setImgOfCell(x, y, 'assets/roads/' + buildingUnderBuilding.type + '-h.png', LayerIDs.plan);
+        planLayer[y][x] = new Road(x, y, placedBuilding.type, placedBuilding.deletable, planLayer);
+        setImgOfCell(x, y, 'assets/roads/' + placedBuilding.type + '-h.png', LayerIDs.plan);
 
         startRoadPos = new COORD(x, y);
     }
@@ -286,7 +286,7 @@ class Road extends Building {
     static drawRoadCell(x, y) {
         if (!firstOfTwoPoints) { // The road is still being planned ==> plan layer
             if (!isOccupied(x, y)) {
-                planLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.deletable, planLayer);
+                planLayer[y][x] = new Road(x, y, placedBuilding.type, placedBuilding.deletable, planLayer);
                 planLayer[y][x].updateDirections(true);
             }
             else
@@ -295,7 +295,7 @@ class Road extends Building {
         }
         else { // The road is actually being placed ==> main layer
             if (!isOccupied(x, y)) {
-                mainLayer[y][x] = new Road(x, y, buildingUnderBuilding.type, buildingUnderBuilding.deletable, mainLayer);
+                mainLayer[y][x] = new Road(x, y, placedBuilding.type, placedBuilding.deletable, mainLayer);
                 mainLayer[y][x].updateDirections(true);
                 mainLayer[y][x].register();
             }

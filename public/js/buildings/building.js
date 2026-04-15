@@ -1,4 +1,4 @@
-let cellInfo = document.getElementById('cellInfo');
+const cellInfo = document.getElementById('cellInfo');
 let objectOfCellInfo;
 let enterableBuildings = [];
 
@@ -80,13 +80,13 @@ class Building {
                 if (ix < mapWidth - 1)
                     right = this.layer[iy][ix + 1];
 
-                let topIsRoad = top instanceof Road;
-                let downIsRoad = down instanceof Road;
-                let leftIsRoad = left instanceof Road;
-                let rightIsRoad = right instanceof Road;
+                const topIsRoad = top instanceof Road;
+                const downIsRoad = down instanceof Road;
+                const leftIsRoad = left instanceof Road;
+                const rightIsRoad = right instanceof Road;
 
-                let neighbours = [top, left, down, right];
-                let neighboursAreRoads = [topIsRoad, leftIsRoad, downIsRoad, rightIsRoad];
+                const neighbours = [top, left, down, right];
+                const neighboursAreRoads = [topIsRoad, leftIsRoad, downIsRoad, rightIsRoad];
 
                 for (let i = 0; i < 4; i++) {
                     if (neighbours[i] && neighboursAreRoads[i]) {
@@ -96,7 +96,7 @@ class Building {
                             this.facing = this.getFacing(this.entrance, ix, iy);
                         }
                         else if (this.entrance) {
-                            let newFacing = this.getFacing(neighbours[i], ix, iy);
+                            const newFacing = this.getFacing(neighbours[i], ix, iy);
                             if ((newFacing == 0) || (newFacing == 180 && this.facing != 0) || (newFacing == 90 && this.facing == 270)) {
                                 this.entrance = neighbours[i];
                                 this.facing = newFacing;

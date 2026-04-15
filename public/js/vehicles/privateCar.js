@@ -1,6 +1,6 @@
 class PrivateCar extends Vehicle {
     constructor(person) {
-        let startingCell = entryPoints[rnd(entryPoints.length - 1)];
+        const startingCell = entryPoints[rnd(entryPoints.length - 1)];
         super(startingCell.x, startingCell.y);
 
         this.owner = person;
@@ -47,7 +47,7 @@ class PrivateCar extends Vehicle {
 
     goShopping() {
         if (Object.keys(this.targetShopTypes).length > 0) {
-            let targetShop = this.findNearShops(20);
+            const targetShop = this.findNearShops(20);
             if (targetShop) {
                 this.originalTarget = this.home;
                 this.shopping = true;
@@ -70,7 +70,7 @@ class PrivateCar extends Vehicle {
         else if (this.atShop) {
             this.shopping = false;
             if (this.originalTarget == this.home && Object.keys(this.targetShopTypes).length > 0) {
-                let targetShop = this.findNearShops(10);
+                const targetShop = this.findNearShops(10);
                 if (targetShop)
                     this.changeRouteNextTimeToTarget = targetShop;
             }

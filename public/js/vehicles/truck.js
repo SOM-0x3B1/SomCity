@@ -1,6 +1,6 @@
 class Truck extends Vehicle {
     constructor(ownerCompany) {
-        let startingCell = entryPoints[rnd(entryPoints.length - 1)];
+        const startingCell = entryPoints[rnd(entryPoints.length - 1)];
         super(startingCell.x, startingCell.y);
 
         this.ownerCompany = ownerCompany;

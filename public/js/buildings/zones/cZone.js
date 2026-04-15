@@ -15,8 +15,8 @@ const productDemands = [0, 0, 0, 0, 0];
 
 
 for (let i = 0; i < products.length; i++) {
-    let bar = document.getElementById('mainStat-demands-bar-c' + (i + 1));
-    let barInfo = document.createElement('div');
+    const bar = document.getElementById('mainStat-demands-bar-c' + (i + 1));
+    const barInfo = document.createElement('div');
     barInfo.className = 'barInfo';
     barInfo.innerText = products[i];
     bar.appendChild(barInfo);
@@ -25,7 +25,7 @@ for (let i = 0; i < products.length; i++) {
 
 class CZone extends WorkZone {
     constructor(x, y, type, layer) {
-        let rndMaxWorkers = 5 + rnd(10);
+        const rndMaxWorkers = 5 + rnd(10);
         super(x, y, 'assets/zones/c.png', rndMaxWorkers, rndMaxWorkers, 200, true, layer);
 
         this.customerQueue = [];
@@ -100,7 +100,7 @@ class CZone extends WorkZone {
 
         if (this.production <= 0) {
             while (this.customerQueue.length > 0){
-                let cCustomer = this.customerQueue.shift();
+                const cCustomer = this.customerQueue.shift();
                 cCustomer.calcRoute(cCustomer.originalTarget);
             }
         }

@@ -5,7 +5,7 @@ let iAllOptimalStorage = 0;
 
 class IZone extends WorkZone {
     constructor(x, y, layer) {
-        let rndMaxWorkers = 50 + rnd(100);
+        const rndMaxWorkers = 50 + rnd(100);
         super(x, y, 'assets/zones/i.png', rndMaxWorkers, Math.ceil(rndMaxWorkers / 10), 500 + rnd(10) * 100, false, layer);
 
         this.truckCount = Math.ceil(rndMaxWorkers / 20);
@@ -52,7 +52,7 @@ class IZone extends WorkZone {
         for (let i = 0; i < this.truckCount; i++) {
             if (!this.activeTrucks.includes(this.trucks[i])) {
                 this.activeTrucks.push(this.trucks[i]);
-                let cargo = (10 - this.trucks[i].cargo);
+                const cargo = (10 - this.trucks[i].cargo);
                 this.storage -= cargo;
                 iAllStorage -= cargo;
                 this.trucks[i].cargo = 10;

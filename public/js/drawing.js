@@ -27,8 +27,8 @@ function getImg(x, y, layerID) {
  */
 function setImgOfCell(x, y, src, layerID) {
     if (!getImg(x, y, layerID)) {
-        let cell = getCell(x, y, layerID);
-        let image = document.createElement("img");
+        const cell = getCell(x, y, layerID);
+        const image = document.createElement("img");
         image.src = src;
         image.id = `${layerID}-img(${x};${y})`;
         cell.appendChild(image);
@@ -44,9 +44,9 @@ function setImgOfCell(x, y, src, layerID) {
  * @param {*} layerID - The string id of the layer.
  */
 function addNewEmptyImgToCell(x, y, layerID) {
-    let cell = getCell(x, y, layerID);
+    const cell = getCell(x, y, layerID);
     if (cell.getElementsByTagName('img').length === 0) {
-        let image = document.createElement("img");
+        const image = document.createElement("img");
         image.id = `${layerID}-img(${x};${y})`;
         cell.appendChild(image);
     }
@@ -57,8 +57,8 @@ function addNewEmptyImgToCell(x, y, layerID) {
  * @param {*} layerID - The string id of the layer.
  */
 function ereaseCell(x, y, layerID) {
-    let cell = getCell(x, y, layerID);
-    let images = cell.getElementsByTagName('img');
+    const cell = getCell(x, y, layerID);
+    const images = cell.getElementsByTagName('img');
     for (let i = 0; i < images.length; i++)
         images[0].remove();
 }
@@ -68,7 +68,7 @@ function ereaseCell(x, y, layerID) {
  * @param {*} layerID - The string id of the layer.
  */
 function resizeImg(x, y, width, height, layerID) {
-    let img = getImg(x, y, layerID);
+    const img = getImg(x, y, layerID);
     if (layerID == LayerIDs.Main) {
         img.style.width = `calc(${width} * 100% + ${width} * var(--grid-gap))`;
         img.style.height = `calc(${height} * 100% + ${height} * var(--grid-gap))`;
@@ -97,7 +97,7 @@ function getIndicationColor(value) {
     //value from 0 to 1
     if(value > 1)
         value = 1;
-    var hue = ((1 - value) * 120).toString(10);
+    const hue = ((1 - value) * 120).toString(10);
     return ["hsl(", hue, ",100%,50%)"].join("");
 }
 

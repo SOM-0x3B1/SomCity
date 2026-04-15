@@ -14,17 +14,10 @@ let panning = false,
 let sideAreaInterval;
 let movementSpeed = 8;
 
-let sideAreas = document.getElementsByClassName('sideAreas');
-let movements = [
-    () => { pointY += movementSpeed },
-    () => { pointX -= movementSpeed },
-    () => { pointY -= movementSpeed },
-    () => { pointX += movementSpeed }
-];
 
 /** Updates the transform positions of the mainDisplay. */
 function setTransform() {
-    if(start.x != pointX || start.y != pointY || startScale != scale)
+    if (start.x != pointX || start.y != pointY || startScale != scale)
         mainDisplay.style.transform = "translate(" + pointX + "px, " + pointY + "px) scale(" + scale + ")";
 }
 
@@ -55,7 +48,7 @@ document.onwheel = (e) => {
         ys = (e.clientY - pointY) / scale,
         delta = (e.wheelDelta ? e.wheelDelta : -e.deltaY);
 
-    if (delta > 0) 
+    if (delta > 0)
         scale *= 1.2
     else
         scale /= 1.2;
@@ -77,7 +70,7 @@ document.ontouchstart = (e) => {
             e.touches[0].clientY - e.touches[1].clientY);
         startScale = scale;
 
-        start = { x: pointX, y: pointY};
+        start = { x: pointX, y: pointY };
     }
     else if (!inMenu) {
         start = { x: e.touches[0].clientX - pointX, y: e.touches[0].clientY - pointY };
@@ -157,6 +150,15 @@ document.onkeydown = (e) => {
     }
 }
 
+
+const sideAreas = document.getElementsByClassName('sideAreas');
+const movements = [
+    () => { pointY += movementSpeed },
+    () => { pointX -= movementSpeed },
+    () => { pointY -= movementSpeed },
+    () => { pointX += movementSpeed }
+];
+
 // Adds the camera movement events to the sideareas
 for (let i = 0; i < sideAreas.length; i++) {
     const sideArea = sideAreas[i];
@@ -174,9 +176,7 @@ for (let i = 0; i < sideAreas.length; i++) {
 }
 
 document.addEventListener('wheel', (e) => {
-    if (e.ctrlKey) {
-        e.preventDefault();
-    }
-},
-    { passive: false }
+        if (e.ctrlKey) 
+            e.preventDefault();    
+    }, { passive: false }
 );

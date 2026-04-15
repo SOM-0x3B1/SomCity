@@ -7,10 +7,10 @@ let bulldozingFirstPos;
 /** Wether the first position of a new road has been set */
 let firstOfTwoPoints = false;
 /** The new building that's being placed right now */
-let buildingUnderBuilding;
+let placedBuilding;
 let currentCategory;
 let currentBackStrip;
-let currentSecondaryBackstrip = document.getElementById('BS-z-commercial-5');
+const currentSecondaryBackstrip = document.getElementById('BS-z-commercial-5');
 let currentSubType = 5;
 
 /** The current cells that temporary contain new buildings on the plan layer */
@@ -35,9 +35,9 @@ function startBuilding(selectedBuilding, subType) {
     placing = true;
     document.getElementById('cancel').style.opacity = 1;
 
-    let id = selectedBuilding.split('-');
-    let category = id[0]; // eg. 'z', 'r'
-    let name = id[1]; // eg. 'residential', 'highway'
+    const id = selectedBuilding.split('-');
+    const category = id[0]; // eg. 'z', 'r'
+    const name = id[1]; // eg. 'residential', 'highway'
 
     if (currentCategory && currentCategory.id != category)
         currentCategory.style.display = '';
@@ -46,7 +46,7 @@ function startBuilding(selectedBuilding, subType) {
         currentCategory.style.display = 'inline-block';
     }
 
-    let newBackStripID = 'BS-' + selectedBuilding;
+    const newBackStripID = 'BS-' + selectedBuilding;
     if (currentBackStrip && currentBackStrip.id != newBackStripID)
         currentBackStrip.style.width = '';
     if (!currentBackStrip || currentBackStrip.id != newBackStripID) {
@@ -55,7 +55,7 @@ function startBuilding(selectedBuilding, subType) {
     }
 
     if (subType != undefined) {
-        let newSecBackStripID = 'BS-' + selectedBuilding + '-' + subType;
+        const newSecBackStripID = 'BS-' + selectedBuilding + '-' + subType;
         if (currentSecondaryBackstrip && currentSecondaryBackstrip.id != newSecBackStripID)
             currentSecondaryBackstrip.style.width = '';
         if (!currentSecondaryBackstrip || currentSecondaryBackstrip.id != newSecBackStripID) {
@@ -70,42 +70,42 @@ function startBuilding(selectedBuilding, subType) {
             firstOfTwoPoints = true;
             switch (name) {
                 case 'highway':
-                    buildingUnderBuilding = new Road(null, null, 'h', true, planLayer);
+                    placedBuilding = new Road(null, null, 'h', true, planLayer);
                     break;
                 case 'mainRoad':
-                    buildingUnderBuilding = new Road(null, null, 'm', true, planLayer);
+                    placedBuilding = new Road(null, null, 'm', true, planLayer);
                     break;
                 case 'street':
-                    buildingUnderBuilding = new Road(null, null, 's', true, planLayer);
+                    placedBuilding = new Road(null, null, 's', true, planLayer);
                     break;
             }
             break;
         case 'z':
             switch (name) {
                 case 'residential':
-                    buildingUnderBuilding = new RZone(null, null, planLayer);
+                    placedBuilding = new RZone(null, null, planLayer);
                     break;
                 case 'commercial':
                     if (!subType)
                         subType = currentSubType;
-                    buildingUnderBuilding = new CZone(null, null, subType, planLayer);
+                    placedBuilding = new CZone(null, null, subType, planLayer);
                     break;
                 case 'industrial':
-                    buildingUnderBuilding = new IZone(null, null, planLayer);
+                    placedBuilding = new IZone(null, null, planLayer);
                     break;
             }
             break;
         case 'u':
             switch (name) {
                 case 'powerPlant':
-                    buildingUnderBuilding = new PowerPlant(null, null, planLayer);
+                    placedBuilding = new PowerPlant(null, null, planLayer);
                     break;
                 case 'windTurbine':
-                    buildingUnderBuilding = new WindTurbine(null, null, planLayer);
+                    placedBuilding = new WindTurbine(null, null, planLayer);
                     showWindOL(document.getElementById('BS-ol-wind'));
                     break;
                 case 'waterTower':
-                    buildingUnderBuilding = new WaterTower(null, null, planLayer);
+                    placedBuilding = new WaterTower(null, null, planLayer);
                     showWaterOL(document.getElementById('BS-ol-water'));
                     break;
             }
@@ -113,7 +113,7 @@ function startBuilding(selectedBuilding, subType) {
         case 's':
             switch (name) {
                 case 'police':
-                    buildingUnderBuilding = new PoliceStation(null, null, planLayer);
+                    placedBuilding = new PoliceStation(null, null, planLayer);
                     break;
             }
             break;
@@ -126,7 +126,7 @@ function stopBuilding() {
 
     placing = false;
     firstOfTwoPoints = false;
-    buildingUnderBuilding = null;
+    placedBuilding = null;
 
     document.getElementById('cancel').style = '';
 
@@ -188,7 +188,7 @@ function isOccupied(x, y) {
 
 /** If the cell is deletable, draws the red overlay on top of them. */
 function drawBulldoze(x, y) {
-    let target = mainLayer[y][x];
+    const target = mainLayer[y][x];
     if (!bulldozingFirstPos)
         clearPlanned();
 

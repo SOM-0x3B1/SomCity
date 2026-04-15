@@ -3,7 +3,7 @@ let movingPoliceCars = 0;
 
 class PoliceCar extends Vehicle {
     constructor(station) {
-        let startingCell = entryPoints[rnd(entryPoints.length - 1)];
+        const startingCell = entryPoints[rnd(entryPoints.length - 1)];
         super(startingCell.x, startingCell.y);
 
         this.station = station;

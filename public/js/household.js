@@ -32,27 +32,28 @@ class Household {
     }
 
     addNeeds() {
-        let random = rnd(126);
+        const random = rnd(126);
         if (random < products.length) {
-            let need = random;
+            const need = random;
             productDemands[need]++;
 
+            let memberIndex;
             if (this.membersAtHome.length == 0) {
-                let member = rnd(this.members.length - 1);
-                if (this.members[member].car.targetShopTypes[need])
-                    this.members[member].car.targetShopTypes[need]++;
+                memberIndex = rnd(this.members.length - 1);
+                if (this.members[memberIndex].car.targetShopTypes[need])
+                    this.members[memberIndex].car.targetShopTypes[need]++;
                 else
-                    this.members[member].car.targetShopTypes[need] = 1;
+                    this.members[memberIndex].car.targetShopTypes[need] = 1;
             }
             else {
-                let member = rnd(this.membersAtHome.length - 1);
-                if (this.membersAtHome[member].car.targetShopTypes[need])
-                    this.membersAtHome[member].car.targetShopTypes[need]++;
+                memberIndex = rnd(this.membersAtHome.length - 1);
+                if (this.membersAtHome[memberIndex].car.targetShopTypes[need])
+                    this.membersAtHome[memberIndex].car.targetShopTypes[need]++;
                 else
-                    this.membersAtHome[member].car.targetShopTypes[need] = 1;
+                    this.membersAtHome[memberIndex].car.targetShopTypes[need] = 1;
 
-                if (this.membersAtHome[member].car.atHome)
-                    this.membersAtHome[member].car.goShopping();
+                if (this.membersAtHome[memberIndex].car.atHome)
+                    this.membersAtHome[memberIndex].car.goShopping();
             }
         }
     }

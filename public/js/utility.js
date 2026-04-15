@@ -35,7 +35,7 @@ function shuffle(array) {
 }
 
 function formatTime(aTime) {
-    let hours = Math.floor(aTime / 60);
+    const hours = Math.floor(aTime / 60);
     let res = hours;
     let minutes = aTime - hours * 60;
 

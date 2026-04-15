@@ -51,7 +51,7 @@ function buildGrid(rows, cols) {
 
                     cell.onclick = () => {
                         if (placing) {
-                            if (buildingUnderBuilding instanceof Road) {
+                            if (placedBuilding instanceof Road) {
                                 if (firstOfTwoPoints) {
                                     firstOfTwoPoints = false;
                                     aRoadPlanning.play();
@@ -61,19 +61,19 @@ function buildGrid(rows, cols) {
                                     aRoadPlanning.stop();
                                 }
                             }
-                            else if (buildingUnderBuilding instanceof Zone) {
+                            else if (placedBuilding instanceof Zone) {
                                 let newZone;
 
-                                if (buildingUnderBuilding instanceof RZone)
+                                if (placedBuilding instanceof RZone)
                                     newZone = new RZone(x, y, mainLayer);
-                                else if (buildingUnderBuilding instanceof CZone) {
-                                    let p = buildingUnderBuilding.products[0];
+                                else if (placedBuilding instanceof CZone) {
+                                    let p = placedBuilding.products[0];
                                     if (p == 5)
                                         newZone = new CZone(x, y, rnd(products.length - 1), mainLayer);
                                     else
                                         newZone = new CZone(x, y, p, mainLayer);
                                 }
-                                else if (buildingUnderBuilding instanceof IZone)
+                                else if (placedBuilding instanceof IZone)
                                     newZone = new IZone(x, y, mainLayer);
 
                                 if (newZone.place(x, y)) {
@@ -81,25 +81,25 @@ function buildGrid(rows, cols) {
                                     aAllocate.playRandom();
                                 }
                             }
-                            else if (buildingUnderBuilding instanceof WaterTower) {
+                            else if (placedBuilding instanceof WaterTower) {
                                 let newTower = new WaterTower(x, y, mainLayer);
                                 newTower.place(x, y);
                                 newTower.register();
                                 aWater.playNext();
                             }
-                            else if (buildingUnderBuilding instanceof WindTurbine) {
+                            else if (placedBuilding instanceof WindTurbine) {
                                 let newTower = new WindTurbine(x, y, mainLayer);
                                 newTower.place(x, y);
                                 newTower.register();
                                 aPower.playNext();
                             }
-                            else if (buildingUnderBuilding instanceof PowerPlant) {
+                            else if (placedBuilding instanceof PowerPlant) {
                                 let newPlant = new PowerPlant(x, y, mainLayer);
                                 newPlant.place(x, y);
                                 newPlant.register();
                                 aPower.playNext();
                             }
-                            else if (buildingUnderBuilding instanceof PoliceStation) {
+                            else if (placedBuilding instanceof PoliceStation) {
                                 let newPlant = new PoliceStation(x, y, mainLayer);
                                 newPlant.place(x, y);
                                 newPlant.register();
@@ -116,15 +116,15 @@ function buildGrid(rows, cols) {
                     }
                     cell.onmouseenter = () => {
                         if (placing) {
-                            if (buildingUnderBuilding instanceof Road) {
+                            if (placedBuilding instanceof Road) {
                                 clearPlanned();
                                 if (firstOfTwoPoints)
                                     Road.setRoadStart(x, y); // Shows the preview of the first roadpiece
                                 else
                                     Road.drawRoadLine(x, y); // Shows the whole preview line of the planned road
                             }
-                            else if (buildingUnderBuilding instanceof Building)
-                                buildingUnderBuilding.place(x, y);
+                            else if (placedBuilding instanceof Building)
+                                placedBuilding.place(x, y);
                         }
                         else if (bulldozing) {
                             if (bulldozingFirstPos) {

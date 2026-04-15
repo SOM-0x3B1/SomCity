@@ -48,7 +48,7 @@ class Vehicle {
         this.changeRouteNextTimeToTarget = undefined;
 
         this.target = target;
-        let targetEntrance = target.entrance;
+        const targetEntrance = target.entrance;
         if (targetEntrance)
             this.route = this.Dijkstra(coordsToKey(this.x, this.y), coordsToKey(targetEntrance.x, targetEntrance.y));
         else
@@ -60,9 +60,9 @@ class Vehicle {
 
 
     addToNextQueue() {
-        let route = this.route;
-        let nextWayPoint = route[this.nextRouteIndex];
-        let nextRoad = roads[coordsToKey(nextWayPoint.x, nextWayPoint.y)];
+        const route = this.route;
+        const nextWayPoint = route[this.nextRouteIndex];
+        const nextRoad = roads[coordsToKey(nextWayPoint.x, nextWayPoint.y)];
         nextRoad.queues[coordsToKey(this.x, this.y)].push(this);
         this.cQueue = nextRoad.queues[coordsToKey(this.x, this.y)];
         this.waiting = true;
@@ -70,19 +70,19 @@ class Vehicle {
 
     initiateMove() {
         if (!this.waiting) {
-            let route = this.route;
+            const route = this.route;
 
             this.nextRouteIndex++;
-        /*let nextWayPoint = route[this.nextRouteIndex];
-        let nextRoad = roads[coordsToKey(nextWayPoint.x, nextWayPoint.y)];*/;
+            /*let nextWayPoint = route[this.nextRouteIndex];
+            let nextRoad = roads[coordsToKey(nextWayPoint.x, nextWayPoint.y)];*/;
 
             if (route.length > 0 && !this.changeRouteNextTimeToTarget) {
                 if (this.nextRouteIndex < route.length) {
-                    let nextWayPoint = route[this.nextRouteIndex];
-                    let nextRoad = roads[coordsToKey(nextWayPoint.x, nextWayPoint.y)];
+                    const nextWayPoint = route[this.nextRouteIndex];
+                    const nextRoad = roads[coordsToKey(nextWayPoint.x, nextWayPoint.y)];
 
-                    let cRoad = roads[coordsToKey(this.x, this.y)];
-                    let adjacentShop = this.nextToAShop(cRoad.adjBuildings);
+                    const cRoad = roads[coordsToKey(this.x, this.y)];
+                    const adjacentShop = this.nextToAShop(cRoad.adjBuildings);
                     if (!this.shopping && adjacentShop && Object.keys(this.targetShopTypes).length > 0) {
                         this.changeRouteNextTimeToTarget = adjacentShop;
                         this.originalTarget = this.target;
@@ -91,7 +91,7 @@ class Vehicle {
 
                     if (cRoad.adjRoads.length > 2 && !this.shopping) {
                         if (Object.keys(this.targetShopTypes).length > 0) {
-                            let reachableTarget = this.findNearShops(6);
+                            const reachableTarget = this.findNearShops(6);
                             if (reachableTarget) {
                                 this.changeRouteNextTimeToTarget = reachableTarget;
                                 this.originalTarget = this.target;
@@ -137,7 +137,7 @@ class Vehicle {
     exitBuilding() {
         this.leaveTargetBuilding()
 
-        let entrance = this.housingBuilding.entrance;
+        const entrance = this.housingBuilding.entrance;
         this.x = entrance.x;
         this.y = entrance.y;
 
@@ -280,95 +280,3 @@ class BFSRoad {
         this.depth = depth;
     }
 }
-
-/*let astar = {
-    init: (nodes) => {
-        for (const key in nodes) {
-            let node = nodes[key];
-            node.f = 0;
-            node.g = 0;
-            node.h = 0;
-            node.cost = 1;
-            node.visited = false;
-            node.closed = false;
-            node.parent = null;
-        }
-    },
-    search: (startKey, endKey, heuristic) => {
-        let nodes = {};
-        for (const key in roads)
-            nodes[key] = {...roads[key]}
-        astar.init(nodes);
-
-        let start = nodes[startKey];
-        let end = nodes[endKey];
-        heuristic = heuristic || astar.manhattan;
-
-        let openHeap = new PriorityQueue((n) => {return n.f});
-        openHeap.insert(start);
-
-        while (openHeap.size() > 0) {
-
-            // Grab the lowest f(x) to process next.  Heap keeps this sorted for us.            
-            let currentNode = openHeap.extract_min();
-
-            // End case -- result has been found, return the traced path.
-            if (currentNode === end) {
-                let curr = currentNode;
-                let ret = [];
-                while (curr.parent != nodes[startKey]) {
-                    ret.push(new COORD(curr.x, curr.y));
-                    curr = curr.parent;
-                }
-                return ret.reverse();
-            }
-
-            // Normal case -- move currentNode from open to closed, process each of its neighbors.
-            currentNode.closed = true;
-
-            // Find all neighbors for the current node. Optionally find diagonal neighbors as well (false by default).
-            let neighbors = currentNode.adjRoads;         
-
-            for (let i = 0; i < neighbors.length; i++) {
-                let neighbor = nodes[neighbors[i]];
-
-
-                // The g score is the shortest distance from start to current node.
-                // We need to check if the path we have arrived at this neighbor is the shortest one we have seen yet.
-                let gScore = currentNode.g + neighbor.cost;
-                let beenVisited = neighbor.visited;
-                //console.log(beenVisited);
-
-                if (!beenVisited || gScore < neighbor.g) {
-
-                    // Found an optimal (so far) path to this node.  Take score for node to see how good it is.
-                    neighbor.visited = true;
-                    neighbor.parent = currentNode;
-                    neighbor.h = neighbor.h || heuristic(neighbor.x, neighbor.y, end.x, end.y);
-                    neighbor.g = gScore;
-                    neighbor.f = neighbor.g + neighbor.h;
-
-                    if (!beenVisited) {
-                        // Pushing to heap will put it in proper place based on the 'f' value.
-                        openHeap.insert(neighbor);
-                    }
-                    else {
-                        // Already seen the node, but since it has been rescored we need to reorder it in the heap
-                        //console.log(getCell(neighbor.x, neighbor.y, LayerIDs.Main));
-                        openHeap.heapify(openHeap._heap.indexOf(neighbor));                        
-                    }
-                }
-            }
-        }
-
-        // No result was found - empty array signifies failure to find path.
-        return [];
-    },
-    manhattan: (node1X, node1Y, node2X, node2Y) => {
-        // See list of heuristics: http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html
-
-        let d1 = Math.abs(node1X - node2X);
-        let d2 = Math.abs(node1Y - node2Y);
-        return d1 + d2;
-    }
-};*/
