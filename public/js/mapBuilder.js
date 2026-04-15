@@ -49,127 +49,10 @@ function buildGrid(rows, cols) {
                     cellBoder.id = `cellBorder-${container.id}(${x};${y})`
                     cell.appendChild(cellBoder); // The squares that show the borders of each cell
 
-                    cell.onclick = () => {
-                        if (placing) {
-                            if (placedBuilding instanceof Road) {
-                                if (firstOfTwoPoints) {
-                                    firstOfTwoPoints = false;
-                                    aRoadPlanning.play();
-                                }
-                                else {
-                                    Road.setRoadEnd(x, y);
-                                    aRoadPlanning.stop();
-                                }
-                            }
-                            else if (placedBuilding instanceof Zone) {
-                                let newZone;
-
-                                if (placedBuilding instanceof RZone)
-                                    newZone = new RZone(x, y, mainLayer);
-                                else if (placedBuilding instanceof CZone) {
-                                    let p = placedBuilding.products[0];
-                                    if (p == 5)
-                                        newZone = new CZone(x, y, rnd(products.length - 1), mainLayer);
-                                    else
-                                        newZone = new CZone(x, y, p, mainLayer);
-                                }
-                                else if (placedBuilding instanceof IZone)
-                                    newZone = new IZone(x, y, mainLayer);
-
-                                if (newZone.place(x, y)) {
-                                    newZone.register();
-                                    aAllocate.playRandom();
-                                }
-                            }
-                            else if (placedBuilding instanceof WaterTower) {
-                                let newTower = new WaterTower(x, y, mainLayer);
-                                newTower.place(x, y);
-                                newTower.register();
-                                aWater.playNext();
-                            }
-                            else if (placedBuilding instanceof WindTurbine) {
-                                let newTower = new WindTurbine(x, y, mainLayer);
-                                newTower.place(x, y);
-                                newTower.register();
-                                aPower.playNext();
-                            }
-                            else if (placedBuilding instanceof PowerPlant) {
-                                let newPlant = new PowerPlant(x, y, mainLayer);
-                                newPlant.place(x, y);
-                                newPlant.register();
-                                aPower.playNext();
-                            }
-                            else if (placedBuilding instanceof PoliceStation) {
-                                let newPlant = new PoliceStation(x, y, mainLayer);
-                                newPlant.place(x, y);
-                                newPlant.register();
-                                aPoliceStation.playNext();
-                            }
-                        }
-                        else if (!bulldozing && mainLayer[y][x] instanceof Building) {
-                            aCellinfo.playNext();
-                            cell.appendChild(cellInfo);
-                            cellInfo.style.display = 'inline-block';
-                            mainLayer[y][x].fillCellInfo();
-                            objectOfCellInfo = mainLayer[y][x];
-                        }
-                    }
-                    cell.onmouseenter = () => {
-                        if (placing) {
-                            if (placedBuilding instanceof Road) {
-                                clearPlanned();
-                                if (firstOfTwoPoints)
-                                    Road.setRoadStart(x, y); // Shows the preview of the first roadpiece
-                                else
-                                    Road.drawRoadLine(x, y); // Shows the whole preview line of the planned road
-                            }
-                            else if (placedBuilding instanceof Building)
-                                placedBuilding.place(x, y);
-                        }
-                        else if (bulldozing) {
-                            if (bulldozingFirstPos) {
-                                clearPlanned();
-                                // Please ignore the content of the following fors, I will make them prettier later
-                                for (let ix = bulldozingFirstPos.x; bulldozingFirstPos.x < x ? ix <= x : ix >= x; bulldozingFirstPos.x < x ? ix++ : ix--)
-                                    for (let iy = bulldozingFirstPos.y; bulldozingFirstPos.y < y ? iy <= y : iy >= y; bulldozingFirstPos.y < y ? iy++ : iy--)
-                                        drawBulldoze(ix, iy);
-                            }
-                            else
-                                drawBulldoze(x, y);
-                        }
-                        else if (cellInfo.style.display != 'none') {
-                            cellInfo.style.display = 'none';
-                            objectOfCellInfo = undefined;
-                        }
-                    }
-                    cell.onmousedown = () => {
-                        if (bulldozing)
-                            bulldozingFirstPos = new COORD(x, y);
-                    }
-                    cell.onmouseup = () => {
-                        if (bulldozing && bulldozingFirstPos) {
-                            for (let ix = bulldozingFirstPos.x; bulldozingFirstPos.x < x ? ix <= x : ix >= x; bulldozingFirstPos.x < x ? ix++ : ix--) {
-                                for (let iy = bulldozingFirstPos.y; bulldozingFirstPos.y < y ? iy <= y : iy >= y; bulldozingFirstPos.y < y ? iy++ : iy--) {
-                                    let target = mainLayer[iy][ix];
-                                    if (target && target instanceof Building && target.deletable) {
-                                        aBulldoze.playNext();
-                                        if (target instanceof Road)
-                                            delete simplRoads[coordsToKey(ix, iy)];
-                                        else if (target instanceof RZone)
-                                            target.removeRZone();
-                                        target.remove();
-                                    }
-                                    else if (target == 't') {
-                                        aBulldoze.playNext();
-                                        target = null;
-                                        ereaseCell(ix, iy, LayerIDs.Main);
-                                    }
-                                }
-                            }
-                            clearPlanned();
-                            bulldozingFirstPos = undefined;
-                        }
-                    }
+                    cell.addEventListener('click', () => cellClickEvent(x, y, cell));
+                    cell.addEventListener('mouseenter', () => cellMouseEnterEvent(x, y));
+                    cell.addEventListener('mousedown', () => cellMouseDownEvent(x, y));
+                    cell.addEventListener('mouseup', () => cellMouseUpEvent(x, y));
                 }
 
                 container.appendChild(cell).className = 'grid-item';
@@ -179,6 +62,132 @@ function buildGrid(rows, cols) {
 };
 
 buildGrid(mapWidth, mapHeight);
+
+
+function cellClickEvent(x, y, cell) {
+    if (placing) {
+        if (placedBuilding instanceof Road) {
+            if (firstOfTwoPoints) {
+                firstOfTwoPoints = false;
+                aRoadPlanning.play();
+            }
+            else {
+                Road.setRoadEnd(x, y);
+                aRoadPlanning.stop();
+            }
+        }
+        else if (placedBuilding instanceof Zone) {
+            let newZone;
+
+            if (placedBuilding instanceof RZone)
+                newZone = new RZone(x, y, mainLayer);
+            else if (placedBuilding instanceof CZone) {
+                let p = placedBuilding.products[0];
+                if (p == 5)
+                    newZone = new CZone(x, y, rnd(products.length - 1), mainLayer);
+                else
+                    newZone = new CZone(x, y, p, mainLayer);
+            }
+            else if (placedBuilding instanceof IZone)
+                newZone = new IZone(x, y, mainLayer);
+
+            if (newZone.place(x, y)) {
+                newZone.register();
+                aAllocate.playRandom();
+            }
+        }
+        else if (placedBuilding instanceof WaterTower) {
+            let newTower = new WaterTower(x, y, mainLayer);
+            newTower.place(x, y);
+            newTower.register();
+            aWater.playNext();
+        }
+        else if (placedBuilding instanceof WindTurbine) {
+            let newTower = new WindTurbine(x, y, mainLayer);
+            newTower.place(x, y);
+            newTower.register();
+            aPower.playNext();
+        }
+        else if (placedBuilding instanceof PowerPlant) {
+            let newPlant = new PowerPlant(x, y, mainLayer);
+            newPlant.place(x, y);
+            newPlant.register();
+            aPower.playNext();
+        }
+        else if (placedBuilding instanceof PoliceStation) {
+            let newPlant = new PoliceStation(x, y, mainLayer);
+            newPlant.place(x, y);
+            newPlant.register();
+            aPoliceStation.playNext();
+        }
+    }
+    else if (!bulldozing && mainLayer[y][x] instanceof Building) {
+        aCellinfo.playNext();
+        cell.appendChild(cellInfo);
+        cellInfo.style.display = 'inline-block';
+        mainLayer[y][x].fillCellInfo();
+        objectOfCellInfo = mainLayer[y][x];
+    }
+}
+
+function cellMouseEnterEvent(x, y) {
+    if (placing) {
+        if (placedBuilding instanceof Road) {
+            clearPlanned();
+            if (firstOfTwoPoints)
+                Road.setRoadStart(x, y); // Shows the preview of the first roadpiece
+            else
+                Road.drawRoadLine(x, y); // Shows the whole preview line of the planned road
+        }
+        else if (placedBuilding instanceof Building)
+            placedBuilding.place(x, y);
+    }
+    else if (bulldozing) {
+        if (bulldozingFirstPos) {
+            clearPlanned();
+            // Please ignore the content of the following fors, I will make them prettier later
+            for (let ix = bulldozingFirstPos.x; bulldozingFirstPos.x < x ? ix <= x : ix >= x; bulldozingFirstPos.x < x ? ix++ : ix--)
+                for (let iy = bulldozingFirstPos.y; bulldozingFirstPos.y < y ? iy <= y : iy >= y; bulldozingFirstPos.y < y ? iy++ : iy--)
+                    drawBulldoze(ix, iy);
+        }
+        else
+            drawBulldoze(x, y);
+    }
+    else if (cellInfo.style.display != 'none') {
+        cellInfo.style.display = 'none';
+        objectOfCellInfo = undefined;
+    }
+}
+
+function cellMouseDownEvent(x, y) {
+    if (bulldozing)
+        bulldozingFirstPos = new COORD(x, y);
+}
+
+function cellMouseUpEvent(x, y) {
+    if (bulldozing && bulldozingFirstPos) {
+        for (let ix = bulldozingFirstPos.x; bulldozingFirstPos.x < x ? ix <= x : ix >= x; bulldozingFirstPos.x < x ? ix++ : ix--) {
+            for (let iy = bulldozingFirstPos.y; bulldozingFirstPos.y < y ? iy <= y : iy >= y; bulldozingFirstPos.y < y ? iy++ : iy--) {
+                let target = mainLayer[iy][ix];
+                if (target && target instanceof Building && target.deletable) {
+                    aBulldoze.playNext();
+                    if (target instanceof Road)
+                        delete simplRoads[coordsToKey(ix, iy)];
+                    else if (target instanceof RZone)
+                        target.removeRZone();
+                    target.remove();
+                }
+                else if (target == 't') {
+                    aBulldoze.playNext();
+                    target = null;
+                    ereaseCell(ix, iy, LayerIDs.Main);
+                }
+            }
+        }
+        clearPlanned();
+        bulldozingFirstPos = undefined;
+    }
+}
 
 
 /** Fills the grid with objects  */
@@ -231,13 +240,13 @@ async function buildNewBaseMap() {
                         }
                         else if (layer == 'wind') {
                             switch (pixelData[0] + pixelData[1] + pixelData[2]) {
-                                case 255*3:
+                                case 255 * 3:
                                     windLayer[y][x] = 3;
                                     break;
-                                case 140*3:
+                                case 140 * 3:
                                     windLayer[y][x] = 2;
                                     break;
-                                case 80*3:
+                                case 80 * 3:
                                     windLayer[y][x] = 1;
                                     break;
                                 case 0:
